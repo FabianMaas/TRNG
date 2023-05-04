@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>TRNG WaveTech</title>
+  <link rel="shortcut icon" href="static/img/logo.png" />
+  <link rel="stylesheet" type="text/css" href="static/css/main.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>True Random Number Generator</h1>
+    <img src="static/img/logo.png" style="max-width: 200px; max-height: auto" alt="logo_wavetech" />
+
+    <div>
+      <button id="toggleBtn" class="button">Start</button>
+    </div>
+
+    <div>
+      <label for="quantity-input">Quantity:</label>
+      <input type="number" id="quantity-input" name="quantity" min="1" max="1000" class="my-input" />
+      <label for="numBits-input">NumBits:</label>
+      <input type="number" id="numBits-input" name="numBits" min="1" max="1000" class="my-input" />
+      <button id="generate-btn" class="button">Generate Random Hex Values</button>
+      <button disabled="true" id="export-btn" class="button">Export Random Hex Values</button>
+    </div>
+
+    <div id="loading-spinner" style="display: none;">
+      <img src="static/img/spinner.gif" alt="Loading...">
+    </div>
+
+
+    <table id="result-table"></table>
+  </div>
+
+  <script src="static/js/main.js"></script>
+</body>
+
+</html>
