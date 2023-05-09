@@ -2,11 +2,15 @@ from threading import Thread
 from flask import Flask, request, jsonify, render_template, redirect, url_for, make_response
 from lasersensor import Lasersensor
 from testsuite import Testsuite
+from models import db, Randbyte
 import time
 import random
+import math
 
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TRNG.db'
+db.init_app(app)
 laser = Lasersensor()
 
 
@@ -28,27 +32,34 @@ def get_random_bits():
     if not laser.getIsActive():
         response = make_response('system not ready; try init', 432)
         return response
+    
     quantity = request.args.get('quantity',default=1, type=int)
     num_bits = request.args.get('numBits', default=1, type=int)
 
-    random_bits = []
-    for i in range(quantity):
-        loop_thread = Thread(target=laser.consumer(num_bits))
-        loop_thread.start()
-        while (not laser.getFinished()):
-            time.sleep(1)
+    number_rows = math.ceil((quantity*num_bits)/8)
 
-        tmp = laser.getCurrentRandomArr()
-        result = "".join(str(x) for x in tmp)
-        random_bits.append(result)
-        print(random_bits)
-        laser.setNotFinished()
+    while db.session.query(Randbyte).count() < number_rows:
+        time.sleep(1)
+
+    rows_arr = []
+
+    oldest_rows = Randbyte.query.order_by(Randbyte.id).limit(number_rows).all()
     
-    hex_array = binaryToHex(random_bits)
+    for row in oldest_rows:
+        rows_arr.append(row.value)
+        db.session.delete(row)
 
+    db.session.commit()
+    
+    joined_string = ''.join(rows_arr)
+    print("numbits=",num_bits)
+    split_arr = [joined_string[i:i+num_bits] for i in range(0, (quantity*num_bits), num_bits)]
+    print(split_arr)
+    hex_arr = binaryToHex(split_arr)
+    print(hex_arr)
     data = {
         'description': 'successful operation; HEX-encoded bit arrays (with leading zeros if required)',
-        'randomBits': hex_array
+        'randomBits': hex_arr
     }
 
     response = make_response(jsonify(data), 200)
@@ -57,10 +68,14 @@ def get_random_bits():
 
 @app.route('/randomNum/init', methods=['GET'])
 def start_laser():
+    if laser.getIsActive():
+        return "system already initialized"
     laser.setStartFlag()
     producer_thread = Thread(target=laser.producer)
     producer_thread.start()
-
+    db_write_thread = Thread(target=laser.write_byte, args=(app,))
+    db_write_thread.start()
+ 
     if not laser.getIsActive():
         response = make_response(
             'unable to initialize the random number generator within a timeout of 60 seconds',
@@ -93,7 +108,6 @@ def stop_laser():
 
 def binaryToHex(binaryArray):
     hexArray = [hex(int(binary, 2))[2:] for binary in binaryArray]
-    print(hexArray)
     return hexArray
 
 
@@ -101,4 +115,8 @@ if __name__ == '__main__':
     #cert_file = os.path.join(os.path.dirname(__file__), 'cert.pem')
     #key_file = os.path.join(os.path.dirname(__file__), 'key.pem')
     #app.run(host='localhost', port=443, ssl_context=(cert_file, key_file))
-    app.run(host='localhost', port=8080)
+
+    # Datenbank-Tabellen erstellen
+    with app.app_context():
+        db.create_all()
+    app.run(host='localhost', port=8080, threaded=False)

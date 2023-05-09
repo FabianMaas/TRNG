@@ -72,6 +72,7 @@ generateBtn.addEventListener("click", () => {
       hideSpinner();
     })
     .catch((error) => {
+      hideSpinner();
       console.error(error);
     });
 

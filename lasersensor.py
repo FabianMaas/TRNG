@@ -3,6 +3,7 @@ import os, time
 import queue
 import threading
 import random
+import models
 
 class Lasersensor:
 
@@ -12,31 +13,39 @@ class Lasersensor:
     finished = False
 
 
-    def consumer(self,numBits):
-        while True:
-            print("Size:", self.q.qsize()) 
-            if (self.q.qsize() >= numBits):
-                self.tmp_arr.clear()
-                count = 0
-                while count < numBits:
-                    try:
-                        tmp = self.q.get()
-                        self.tmp_arr.append(tmp)
-                        count += 1
-                        print("Entnommen:", tmp)
-                    except:
-                        pass
-                self.finished = True
-                break
-            time.sleep(1) 
-
-
     def producer(self):
         for i in range(10000):
             random_number = random.randint(0, 1)
             self.q.put(random_number)
             print("Eingefügt:", i)
             time.sleep(0.1)
+            if not self.active:
+                break
+
+
+    def write_byte(self, app):
+        while True:
+            tmp_rand_arr = []
+            print("Size:", self.q.qsize()) 
+            if (self.q.qsize() >= 8):
+                tmp_rand_arr.clear()
+                count = 0
+                while count < 8:
+                    try:
+                        tmp = self.q.get()
+                        tmp_rand_arr.append(tmp)
+                        count += 1
+                        print("Entnommen:", tmp)
+                    except:
+                        pass
+
+                tmp_string = "".join(str(x) for x in tmp_rand_arr)
+
+                with app.app_context():
+                    new_byte = models.Randbyte(value=tmp_string) 
+                    models.db.session.add(new_byte)
+                    models.db.session.commit()
+            time.sleep(1) 
             if not self.active:
                 break
 
