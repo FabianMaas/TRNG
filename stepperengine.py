@@ -13,7 +13,10 @@ class Stepperengine:
 
 	def start(self):
 		self.setup()
-		self.loop()
+		try:
+			self.loop()
+		except:
+			pass
 
 	def setup(self):
 		GPIO.setmode(GPIO.BCM)
@@ -30,5 +33,8 @@ class Stepperengine:
 					sleep(self.delay)
 
 	def destroy(self):
-		GPIO.output(self.STEP, GPIO.LOW)
-		GPIO.cleanup()
+		try:
+			GPIO.output(self.STEP, GPIO.LOW)
+			GPIO.cleanup()
+		except:
+			pass
