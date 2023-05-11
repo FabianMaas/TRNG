@@ -26,7 +26,7 @@ class Lasersensor:
     def write_byte(self, app):
         while True:
             tmp_rand_arr = []
-            print("Size:", self.q.qsize()) 
+            #print("Size:", self.q.qsize()) 
             if (self.q.qsize() >= 8):
                 tmp_rand_arr.clear()
                 count = 0
@@ -35,7 +35,7 @@ class Lasersensor:
                         tmp = self.q.get()
                         tmp_rand_arr.append(tmp)
                         count += 1
-                        print("Entnommen:", tmp)
+                        #print("Entnommen:", tmp)
                     except:
                         pass
 
@@ -79,16 +79,16 @@ class Lasersensor:
         GPIO.setwarnings(False)
         
         GPIO.setup(RECEIVER_PIN1, GPIO.IN)
-        GPIO.add_event_detect(RECEIVER_PIN1, GPIO.RISING, callback=self._callback_func1, bouncetime=200)
+        GPIO.add_event_detect(RECEIVER_PIN1, GPIO.RISING, callback=self._callback_func1, bouncetime=50)
         
         GPIO.setup(RECEIVER_PIN2, GPIO.IN)
-        GPIO.add_event_detect(RECEIVER_PIN2, GPIO.RISING, callback=self._callback_func2, bouncetime=200)
+        GPIO.add_event_detect(RECEIVER_PIN2, GPIO.RISING, callback=self._callback_func2, bouncetime=50)
 
         GPIO.setup(RECEIVER_PIN3, GPIO.IN)
-        GPIO.add_event_detect(RECEIVER_PIN3, GPIO.RISING, callback=self._callback_func3, bouncetime=200)
+        GPIO.add_event_detect(RECEIVER_PIN3, GPIO.RISING, callback=self._callback_func3, bouncetime=50)
 
         GPIO.setup(RECEIVER_PIN4, GPIO.IN)
-        GPIO.add_event_detect(RECEIVER_PIN4, GPIO.RISING, callback=self._callback_func4, bouncetime=200)
+        GPIO.add_event_detect(RECEIVER_PIN4, GPIO.RISING, callback=self._callback_func4, bouncetime=50)
 
         try:
             while self.active:
