@@ -1,6 +1,7 @@
 from threading import Thread
 from flask import Flask, request, jsonify, render_template, redirect, url_for, make_response
 from lasersensor import Lasersensor
+from stepperengine import Stepperengine
 from testsuite import Testsuite
 from models import db, Randbyte
 import time
@@ -12,7 +13,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TRNG.db'
 db.init_app(app)
 laser = Lasersensor()
-
+engine = Stepperengine()
 
 @app.route('/')
 def index():
@@ -67,14 +68,16 @@ def get_random_bits():
 
 
 @app.route('/randomNum/init', methods=['GET'])
-def start_laser():
+def start():
     if laser.getIsActive():
         return "system already initialized"
     laser.setStartFlag()
-    producer_thread = Thread(target=laser.producer)
-    producer_thread.start()
+    laser_thread = Thread(target=laser.producer)
+    laser_thread.start()
     db_write_thread = Thread(target=laser.write_byte, args=(app,))
     db_write_thread.start()
+    engine_thread = Thread(target=engine.start)
+    engine_thread.start()
  
     if not laser.getIsActive():
         response = make_response(
@@ -93,6 +96,7 @@ def start_laser():
 @app.route('/randomNum/shutdown', methods=['GET'])
 def stop_laser():
     laser.setStopFlag()
+    engine.destroy()
     with laser.q.mutex:
         laser.q.queue.clear()
         laser.q.all_tasks_done.notify_all()
