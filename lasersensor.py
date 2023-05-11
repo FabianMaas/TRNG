@@ -72,8 +72,8 @@ class Lasersensor:
     def producer(self):
         RECEIVER_PIN1 = 23
         RECEIVER_PIN2 = 24
-        RECEIVER_PIN3 = 25
-        RECEIVER_PIN4 = 26
+        RECEIVER_PIN3 = 18
+        RECEIVER_PIN4 = 25
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
