@@ -110,11 +110,6 @@ def start():
 def stop_laser():
     laser.setStopFlag()
     engine.destroy()
-    with laser.q.mutex:
-        laser.q.queue.clear()
-        laser.q.all_tasks_done.notify_all()
-        laser.q.unfinished_tasks = 0
-    #print("queue size =", laser.q.qsize)
 
     laser_process.terminate()
     db_write_process.terminate()

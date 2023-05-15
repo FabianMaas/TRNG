@@ -1,13 +1,11 @@
 import RPi.GPIO as GPIO
 import os, time
-import queue
-import threading
 import random
 import models
-
+import multiprocessing
 class Lasersensor:
 
-    q = queue.Queue()
+    q = multiprocessing.Queue()
     tmp_arr = []
     active = False
     finished = False
@@ -35,7 +33,6 @@ class Lasersensor:
                         tmp = self.q.get()
                         tmp_rand_arr.append(tmp)
                         count += 1
-                        #print("Entnommen:", tmp)
                     except:
                         pass
 
