@@ -1,4 +1,4 @@
-import threading
+import multiprocessing
 from flask import Flask, request, jsonify, render_template, redirect, url_for, make_response
 from lasersensor import Lasersensor
 from stepperengine import Stepperengine
@@ -14,9 +14,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TRNG.db'
 db.init_app(app)
 laser = Lasersensor()
 engine = Stepperengine()
-laser_thread = threading.Thread(target=laser.producer)
-db_write_thread = threading.Thread(target=laser.write_byte, args=(app,))
-engine_thread = threading.Thread(target=engine.start)
+laser_process = multiprocessing.Process(target=laser.producer)
+db_write_process = multiprocessing.Process(target=laser.write_byte, args=(app,))
+engine_process = multiprocessing.Process(target=engine.start)
 
 
 @app.route('/')
@@ -77,32 +77,19 @@ def start():
         return "system already initialized"
     laser.setStartFlag()
 
-    laserRunning = False
-    dbRunning = False
-    engineRunning = False
+    global laser_process
+    global db_write_process
+    global engine_process
 
-    for thread in threading.enumerate():
-        print(thread.name)
-        if thread == laser_thread:
-            laserRunning = True
-            print("Der Laser Thread läuft.")
-        if thread == db_write_thread:
-            dbRunning = True
-            print("Der DB Thread läuft.")
-        if thread == engine_thread:
-            engineRunning = True
-            print("Der Engine Thread läuft.")
-
-    global laser_thread
-    global db_write_thread
-    global engine_thread
-
-    if not laserRunning:
-        laser_thread = threading.Thread(target=laser.producer).start()
-    if not dbRunning:
-        db_write_thread = threading.Thread(target=laser.write_byte, args=(app,)).start()
-    if not engineRunning:
-        engine_thread = threading.Thread(target=engine.start).start()
+    if not laser_process.is_alive():
+        laser_process = multiprocessing.Process(target=laser.producer)
+        laser_process.start()
+    if not db_write_process.is_alive():
+        db_write_process = multiprocessing.Process(target=laser.write_byte, args=(app,))
+        db_write_process.start()
+    if not engine_process.is_alive():
+        engine_process = multiprocessing.Process(target=engine.start)
+        engine_process.start()
 
  
     if not laser.getIsActive():
@@ -128,6 +115,12 @@ def stop_laser():
         laser.q.all_tasks_done.notify_all()
         laser.q.unfinished_tasks = 0
     #print("queue size =", laser.q.qsize)
+
+    laser_process.terminate()
+    db_write_process.terminate()
+    engine_process.terminate()
+
+    time.sleep(0.5)
 
     response = make_response(
         'successful operation; random number generator has been set to \'standby mode\'',
