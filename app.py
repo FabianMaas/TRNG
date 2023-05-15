@@ -1,4 +1,4 @@
-from threading import Thread
+import threading
 from flask import Flask, request, jsonify, render_template, redirect, url_for, make_response
 from lasersensor import Lasersensor
 from stepperengine import Stepperengine
@@ -76,12 +76,30 @@ def start():
     if laser.getIsActive():
         return "system already initialized"
     laser.setStartFlag()
-    if not laser_thread.is_alive():
+
+    laserRunning = False
+    dbRunning = False
+    engineRunning = False
+
+    for thread in threading.enumerate():
+        print(thread.name)
+        if thread == laser_thread:
+            laserRunning = True
+            print("Der Laser Thread läuft.")
+        if thread == db_write_thread:
+            dbRunning = True
+            print("Der DB Thread läuft.")
+        if thread == engine_thread:
+            engineRunning = True
+            print("Der Engine Thread läuft.")
+
+    if not laserRunning:
         laser_thread.start()
-    if not db_write_thread.is_alive():
+    if not dbRunning:
         db_write_thread.start()
-    if not engine_thread.is_alive():
+    if not engineRunning:
         engine_thread.start()
+
  
     if not laser.getIsActive():
         response = make_response(
