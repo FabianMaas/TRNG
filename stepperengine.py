@@ -1,5 +1,6 @@
 from time import sleep
 import RPi.GPIO as GPIO
+import warnings
 
 class Stepperengine:
 	# defining constants
@@ -12,7 +13,11 @@ class Stepperengine:
 	delay = .0001
 
 	def start(self):
-		self.setup()
+		warnings.filterwarnings("ignore", category=RuntimeWarning)
+		try:
+			self.setup()
+		except:
+			pass
 		try:
 			self.loop()
 		except:
