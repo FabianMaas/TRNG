@@ -14,6 +14,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TRNG.db'
 db.init_app(app)
 laser = Lasersensor()
 engine = Stepperengine()
+laser_thread = Thread(target=laser.producer)
+db_write_thread = Thread(target=laser.write_byte, args=(app,))
+engine_thread = Thread(target=engine.start)
+
 
 @app.route('/')
 def index():
@@ -72,12 +76,12 @@ def start():
     if laser.getIsActive():
         return "system already initialized"
     laser.setStartFlag()
-    laser_thread = Thread(target=laser.producer)
-    laser_thread.start()
-    db_write_thread = Thread(target=laser.write_byte, args=(app,))
-    db_write_thread.start()
-    engine_thread = Thread(target=engine.start)
-    engine_thread.start()
+    if not laser_thread.is_alive():
+        laser_thread.start()
+    if not db_write_thread.is_alive():
+        db_write_thread.start()
+    if not engine_thread.is_alive():
+        engine_thread.start()
  
     if not laser.getIsActive():
         response = make_response(
