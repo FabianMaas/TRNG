@@ -43,3 +43,20 @@ class Stepperengine:
 			GPIO.cleanup()
 		except:
 			pass
+
+	def fixStuckMarbles(self):
+		self.destroy()
+		self.CW = 0
+		self.CCW = 1
+		self.setup()
+		for x in range(0,1):
+			for x in range(self.step_count):
+					GPIO.output(self.STEP, GPIO.HIGH)
+					sleep(self.delay)
+					GPIO.output(self.STEP, GPIO.LOW)
+					sleep(self.delay)
+		self.destroy()
+		self.CW = 1
+		self.CCW = 0
+		self.setup()
+		self.loop()
