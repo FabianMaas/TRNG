@@ -31,7 +31,7 @@ class Testsuite:
             print("Run Test:                Failed!")
             run = 0
         longrun = self.long_run_test(randomNumberString,5)
-        poker = Pokertest.PokerTest(randomNumberString, 4)
+        poker = Pokertest.pokerTest(randomNumberString, 4)
         #monobit = self.monobit_test(randomNumberString)
         equaldistribution = self.equal_distribution_test(randomNumberString)
         #disjointness = self.disjointness_test(randomNumberString)
@@ -299,7 +299,7 @@ class Testsuite:
             else:
                 print("Invalid input! The bit sequence should only contain 0's and 1's.\n")
 
-
+'''
 if __name__ == '__main__':
     
     testsuite = TestSuite()
@@ -316,4 +316,4 @@ if __name__ == '__main__':
     testsuite.run_all_tests(randInput)
 
     print('\n##################################################################################################################\n')
-    
+'''    

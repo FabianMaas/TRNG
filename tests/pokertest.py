@@ -4,7 +4,7 @@ from collections import Counter
 import math
 
 class Pokertest:
-    def PokerTest(s,m):
+    def pokerTest(s,m):
         X2theoretical = [3.84,5.99,7.81,9.48,11.07,12.59,14.06]
         k = len(s)//m
         l = list(np.arange(0,k))
