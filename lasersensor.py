@@ -40,7 +40,7 @@ class Lasersensor:
                     models.db.session.add(new_byte)
                     models.db.session.commit()
             time.sleep(1) 
-            if not self.active:
+            if not self.is_running:
                 break
             
 
