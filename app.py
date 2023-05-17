@@ -15,7 +15,7 @@ db.init_app(app)
 laser = Lasersensor()
 engine = Stepperengine()
 laser_process = multiprocessing.Process(target=laser.start)
-db_write_process = multiprocessing.Process(target=laser.write_byte, args=(app,))
+db_write_process = multiprocessing.Process(target=laser.write_to_db, args=(app,))
 engine_process = multiprocessing.Process(target=engine.start)
 
 
