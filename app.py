@@ -73,14 +73,15 @@ def get_random_hex():
 
 @app.route('/randomNum/init', methods=['GET'])
 def init_system():
+    global laser_process
+    global db_write_process
+    global engine_process
+    
     if laser_process.is_alive():
         return "system already initialized"
     
     laser.setStartFlag()
     
-    global laser_process
-    global db_write_process
-    global engine_process
 
     if not laser_process.is_alive():
         laser_process = multiprocessing.Process(target=laser.start)
