@@ -61,10 +61,10 @@ class Lasersensor:
 
     # namen ändern in loop()
     def loop(self):
-        RECEIVER_PIN1 = 23
-        RECEIVER_PIN2 = 24
-        RECEIVER_PIN3 = 18
-        RECEIVER_PIN4 = 25
+        RECEIVER_PIN1 = 19
+        RECEIVER_PIN2 = 13
+        RECEIVER_PIN3 = 26
+        RECEIVER_PIN4 = 12
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
