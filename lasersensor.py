@@ -6,10 +6,7 @@ import multiprocessing
 class Lasersensor:
 
     q = multiprocessing.Queue()
-    tmp_arr = []
-    active = False
-    finished = False
-
+    is_running = False
 
     # def producer(self):
     #     for i in range(10000):
@@ -21,7 +18,7 @@ class Lasersensor:
     #             break
 
 
-    def write_byte(self, app):
+    def write_to_db(self, app):
         while True:
             tmp_rand_arr = []
             #print("Size:", self.q.qsize()) 
@@ -45,28 +42,25 @@ class Lasersensor:
             time.sleep(1) 
             if not self.active:
                 break
-
-
-    def getCurrentRandomArr(self):
-        return self.tmp_arr
+            
 
     def setStopFlag(self):
-        self.active = False
+        self.is_running = False
 
     def setStartFlag(self):
-        self.active = True
+        self.is_running = True
 
     def getIsActive(self):
-        return self.active
-    
-    def getFinished(self):
-        return self.finished
+        return self.is_running
 
-    def setNotFinished(self):
-        self.finished = False
+    def start(self):
+        try:
+            self.loop()
+        except:
+            pass
 
-
-    def producer(self):
+    # namen ändern in loop()
+    def loop(self):
         RECEIVER_PIN1 = 23
         RECEIVER_PIN2 = 24
         RECEIVER_PIN3 = 18
@@ -88,7 +82,7 @@ class Lasersensor:
         GPIO.add_event_detect(RECEIVER_PIN4, GPIO.RISING, callback=self._callback_func4, bouncetime=50)
 
         try:
-            while self.active:
+            while self.is_running:
                 time.sleep(0.1)
         except:
             GPIO.remove_event_detect(RECEIVER_PIN1)

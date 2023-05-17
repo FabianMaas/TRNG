@@ -1,9 +1,9 @@
-import multiprocessing
 from flask import Flask, request, jsonify, render_template, redirect, url_for, make_response
 from lasersensor import Lasersensor
 from stepperengine import Stepperengine
 from testsuite import Testsuite
 from models import db, Randbyte
+import multiprocessing
 import time
 import random
 import math
@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TRNG.db'
 db.init_app(app)
 laser = Lasersensor()
 engine = Stepperengine()
-laser_process = multiprocessing.Process(target=laser.producer)
+laser_process = multiprocessing.Process(target=laser.start)
 db_write_process = multiprocessing.Process(target=laser.write_byte, args=(app,))
 engine_process = multiprocessing.Process(target=engine.start)
 
@@ -33,8 +33,8 @@ def trng():
 
 
 @app.route('/randomNum/getRandom', methods=['GET'])
-def get_random_bits():
-    if not laser.getIsActive():
+def get_random_hex():
+    if not laser_process.is_alive:
         response = make_response('system not ready; try init', 432)
         return response
     
@@ -60,7 +60,7 @@ def get_random_bits():
     print("numbits=",num_bits)
     split_arr = [joined_string[i:i+num_bits] for i in range(0, (quantity*num_bits), num_bits)]
     print(split_arr)
-    hex_arr = binaryToHex(split_arr)
+    hex_arr = bin_to_hex(split_arr)
     print(hex_arr)
     data = {
         'description': 'successful operation; HEX-encoded bit arrays (with leading zeros if required)',
@@ -72,27 +72,29 @@ def get_random_bits():
 
 
 @app.route('/randomNum/init', methods=['GET'])
-def start():
-    if laser.getIsActive():
+def init_system():
+    if laser_process.is_alive():
         return "system already initialized"
+    
     laser.setStartFlag()
-
+    
     global laser_process
     global db_write_process
     global engine_process
 
     if not laser_process.is_alive():
-        laser_process = multiprocessing.Process(target=laser.producer)
+        laser_process = multiprocessing.Process(target=laser.start)
         laser_process.start()
     if not db_write_process.is_alive():
-        db_write_process = multiprocessing.Process(target=laser.write_byte, args=(app,))
+        db_write_process = multiprocessing.Process(target=laser.write_to_db, args=(app,))
         db_write_process.start()
     if not engine_process.is_alive():
         engine_process = multiprocessing.Process(target=engine.start)
         engine_process.start()
 
+    time.sleep(0.5)
  
-    if not laser.getIsActive():
+    if not laser_process.is_alive() or not db_write_process.is_alive() or not engine_process.is_alive():
         response = make_response(
             'unable to initialize the random number generator within a timeout of 60 seconds',
             555,
@@ -107,7 +109,7 @@ def start():
 
 
 @app.route('/randomNum/shutdown', methods=['GET'])
-def stop_laser():
+def shutdown_system():
     laser.setStopFlag()
     engine.destroy()
 
@@ -124,7 +126,7 @@ def stop_laser():
     return response
 
 
-def binaryToHex(binaryArray):
+def bin_to_hex(binaryArray):
     hexArray = [hex(int(binary, 2))[2:] for binary in binaryArray]
     return hexArray
 
