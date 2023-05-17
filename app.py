@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TRNG.db'
 db.init_app(app)
 laser = Lasersensor()
-laser_process = multiprocessing.Process(target=laser.start)
+laser_process = multiprocessing.Process(target=laser.producer)
 db_write_process = multiprocessing.Process(target=laser.write_to_db, args=(app,))
 
 
@@ -81,7 +81,7 @@ def start():
         laser_process = multiprocessing.Process(target=laser.producer)
         laser_process.start()
     if not db_write_process.is_alive():
-        db_write_process = multiprocessing.Process(target=laser.write_byte, args=(app,))
+        db_write_process = multiprocessing.Process(target=laser.write_to_db, args=(app,))
         db_write_process.start()
 
     if not laser_process.is_alive() or db_write_process.is_alive():

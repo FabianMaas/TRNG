@@ -14,7 +14,7 @@ class Lasersensor:
             self.q.put(random_number)
             print("Eingefügt:", i)
             time.sleep(0.1)
-            if not self.active:
+            if not self.is_running:
                 break
 
 
@@ -54,10 +54,3 @@ class Lasersensor:
 
     def getIsActive(self):
         return self.is_running
-
-
-    def start(self):
-        try:
-            self.producer()
-        except:
-            pass
