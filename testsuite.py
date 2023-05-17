@@ -2,7 +2,7 @@
 
 import math
 import random
-from tests.pokertest import Pokertest
+#from tests.pokertest import Pokertest
 
 class Testsuite:
 
