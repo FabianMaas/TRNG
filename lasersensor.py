@@ -1,4 +1,3 @@
-import RPi.GPIO as GPIO
 import os, time
 import random
 import models
@@ -6,22 +5,20 @@ import multiprocessing
 class Lasersensor:
 
     q = multiprocessing.Queue()
-    tmp_arr = []
-    active = False
-    finished = False
+    is_running = False
 
 
-    # def producer(self):
-    #     for i in range(10000):
-    #         random_number = random.randint(0, 1)
-    #         self.q.put(random_number)
-    #         print("Eingefügt:", i)
-    #         time.sleep(0.1)
-    #         if not self.active:
-    #             break
+    def producer(self):
+        for i in range(10000):
+            random_number = random.randint(0, 1)
+            self.q.put(random_number)
+            print("Eingefügt:", i)
+            time.sleep(0.1)
+            if not self.active:
+                break
 
 
-    def write_byte(self, app):
+    def write_to_db(self, app):
         while True:
             tmp_rand_arr = []
             #print("Size:", self.q.qsize()) 
@@ -43,75 +40,24 @@ class Lasersensor:
                     models.db.session.add(new_byte)
                     models.db.session.commit()
             time.sleep(1) 
-            if not self.active:
+            if not self.is_running:
                 break
-
-
-    def getCurrentRandomArr(self):
-        return self.tmp_arr
+            
 
     def setStopFlag(self):
-        self.active = False
+        self.is_running = False
+
 
     def setStartFlag(self):
-        self.active = True
+        self.is_running = True
+
 
     def getIsActive(self):
-        return self.active
-    
-    def getFinished(self):
-        return self.finished
-
-    def setNotFinished(self):
-        self.finished = False
+        return self.is_running
 
 
-    def producer(self):
-        RECEIVER_PIN1 = 23
-        RECEIVER_PIN2 = 24
-        RECEIVER_PIN3 = 18
-        RECEIVER_PIN4 = 25
-
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        
-        GPIO.setup(RECEIVER_PIN1, GPIO.IN)
-        GPIO.add_event_detect(RECEIVER_PIN1, GPIO.RISING, callback=self._callback_func1, bouncetime=50)
-        
-        GPIO.setup(RECEIVER_PIN2, GPIO.IN)
-        GPIO.add_event_detect(RECEIVER_PIN2, GPIO.RISING, callback=self._callback_func2, bouncetime=50)
-
-        GPIO.setup(RECEIVER_PIN3, GPIO.IN)
-        GPIO.add_event_detect(RECEIVER_PIN3, GPIO.RISING, callback=self._callback_func3, bouncetime=50)
-
-        GPIO.setup(RECEIVER_PIN4, GPIO.IN)
-        GPIO.add_event_detect(RECEIVER_PIN4, GPIO.RISING, callback=self._callback_func4, bouncetime=50)
-
+    def start(self):
         try:
-            while self.active:
-                time.sleep(0.1)
+            self.producer()
         except:
-            GPIO.remove_event_detect(RECEIVER_PIN1)
-            GPIO.remove_event_detect(RECEIVER_PIN2)
-            GPIO.remove_event_detect(RECEIVER_PIN3)
-            GPIO.remove_event_detect(RECEIVER_PIN4)
-
-    def _callback_func1(self, channel):
-        if GPIO.input(channel):
-            self.q.put(0)
-            print("first: 0")
-
-    def _callback_func2(self, channel):
-        if GPIO.input(channel):
-            self.q.put(1)
-            print("first: 1")
-    
-    def _callback_func3(self, channel):
-        if GPIO.input(channel):
-            self.q.put(0)
-            print("second: 0")
-
-    def _callback_func4(self, channel):
-        if GPIO.input(channel):
-            self.q.put(1)
-            print("second: 1")
+            pass
