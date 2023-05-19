@@ -2,6 +2,7 @@
 
 import math
 import random
+#from tests.pokertest import Pokertest
 
 class Testsuite:
 
@@ -30,7 +31,7 @@ class Testsuite:
             print("Run Test:                Failed!")
             run = 0
         longrun = self.long_run_test(randomNumberString,5)
-        poker = self.poker_test(randomNumberString)
+        poker = Pokertest.pokerTest(randomNumberString, 4)
         #monobit = self.monobit_test(randomNumberString)
         equaldistribution = self.equal_distribution_test(randomNumberString)
         #disjointness = self.disjointness_test(randomNumberString)
@@ -124,6 +125,7 @@ class Testsuite:
     whether to accept or reject the null hypothesis that the 
     sequence is random.
     '''
+    '''
     def poker_test(self, bit_sequence):
         counts = [0] * 16
         for i in range(0, len(bit_sequence), 4):
@@ -147,7 +149,7 @@ class Testsuite:
             #print("p-value:",p_value)
             print("Poker Test:              Failed!")
             return False
-            
+    '''        
     
     '''
     (Same as equal distribution test)
@@ -297,7 +299,7 @@ class Testsuite:
             else:
                 print("Invalid input! The bit sequence should only contain 0's and 1's.\n")
 
-
+'''
 if __name__ == '__main__':
     
     testsuite = TestSuite()
@@ -314,4 +316,4 @@ if __name__ == '__main__':
     testsuite.run_all_tests(randInput)
 
     print('\n##################################################################################################################\n')
-    
+'''    
