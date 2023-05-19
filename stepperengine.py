@@ -56,3 +56,4 @@ class Stepperengine:
 					sleep(self.__delay)
 		self.destroy()
 		self.__CW = 1
+		return True
