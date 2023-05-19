@@ -9,7 +9,7 @@ let isRunning = false;
 
 toggleBtn.addEventListener("click", () => {
   if (!isRunning) {
-    fetch("http://localhost:8080/randomNum/init")
+    fetch("http://192.168.137.27:8080/randomNum/init")
       .then((response) => {
         console.log("Started");
         toggleBtn.textContent = "Stop";
@@ -21,7 +21,7 @@ toggleBtn.addEventListener("click", () => {
         console.error("Error starting:", error);
       });
   } else {
-    fetch("http://localhost:8080/randomNum/shutdown")
+    fetch("http://192.168.137.27:8080/randomNum/shutdown")
       .then((response) => {
         console.log("Stopped");
         toggleBtn.textContent = "Start";
@@ -39,7 +39,7 @@ toggleBtn.addEventListener("click", () => {
 generateBtn.addEventListener("click", () => {
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
-  const url = `http://localhost:8080/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
+  const url = `http://192.168.137.27:8080/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
   resetTable();
   showSpinner();
   fetch(url)

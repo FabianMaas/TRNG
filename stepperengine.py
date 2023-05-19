@@ -4,8 +4,8 @@ import warnings
 
 class Stepperengine:
 	# defining constants
-	DIR = 20   # Direction GPIO Pin
-	STEP = 21  # Step GPIO Pin
+	DIR = 5   # Direction GPIO Pin
+	STEP = 6  # Step GPIO Pin
 	CW = 1     # Clockwise Rotation
 	CCW = 0    # Counterclockwise Rotation
 	SPR = 1600   # Steps per Revolution (360 / 7.5)
