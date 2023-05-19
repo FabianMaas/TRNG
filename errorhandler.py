@@ -13,9 +13,7 @@ class Errorhandler:
             errorEvent.wait()
             engine_process_param.terminate()
             self.engine_process = multiprocessing.Process(target=engine.start)
-            if self.engine_process.is_alive():
-                self.engine_process.terminate()
-                print("delete process")
+            self.engine_process.terminate()
             time.sleep(1)
             if engine.unstuck_marbles(3):
                 pass
