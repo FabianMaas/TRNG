@@ -13,7 +13,7 @@ class Stepperengine:
 	__delay = .0001
 
 	def start(self):
-		warnings.filterwarnings("ignore", category=RuntimeWarning)
+		#warnings.filterwarnings("ignore", category=RuntimeWarning)
 		try:
 			self.__setup()
 		except:
