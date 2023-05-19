@@ -5,7 +5,8 @@ import models
 import multiprocessing
 class Lasersensor:
 
-    __queue = multiprocessing.Queue()
+    __queue_top = multiprocessing.Queue()
+    __queue_bottom = multiprocessing.Queue()
     __is_running = False
 
 
@@ -13,23 +14,29 @@ class Lasersensor:
         last_executed_time = datetime.datetime.now()
         while True:
             current_time = datetime.datetime.now()
-            print("last_executed_time:",last_executed_time)
-            print("current:",current_time)
+            #print("last_executed_time:",last_executed_time)
+            #print("current:",current_time)
             difference = current_time - last_executed_time
             datetime.timedelta(0, 4, 316543)
-            print("difference:",difference.total_seconds())
+            #print("difference:",difference.total_seconds())
             
             if difference.total_seconds() > 15:
                 errorEvent.set()
                      
             tmp_rand_arr = []
+            current_queue = self.__queue_top
             #print("Size:", self.__queue.qsize()) 
-            if (self.__queue.qsize() >= 8):
+            if (self.__queue_top.qsize() >= 8 or self.__queue_bottom.qsize() >= 8):
+                if self.__queue_bottom.qsize() > self.__queue_top.qsize():
+                    current_queue = self.__queue_bottom
+                else:
+                    current_queue = self.__queue_top
+                    
                 tmp_rand_arr.clear()
                 count = 0
                 while count < 8:
                     try:
-                        tmp = self.__queue.get()
+                        tmp = current_queue.get()
                         tmp_rand_arr.append(tmp)
                         count += 1
                     except:
@@ -96,20 +103,20 @@ class Lasersensor:
 
     def __callback_func1(self, channel):
         if GPIO.input(channel):
-            self.__queue.put(0)
+            self.__queue_top.put(0)
             print("first: 0")
 
     def __callback_func2(self, channel):
         if GPIO.input(channel):
-            self.__queue.put(1)
+            self.__queue_top.put(1)
             print("first: 1")
     
     def __callback_func3(self, channel):
         if GPIO.input(channel):
-            self.__queue.put(0)
+            self.__queue_bottom.put(0)
             print("second: 0")
 
     def __callback_func4(self, channel):
         if GPIO.input(channel):
-            self.__queue.put(1)
+            self.__queue_bottom.put(1)
             print("second: 1")
