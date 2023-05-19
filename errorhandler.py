@@ -1,12 +1,13 @@
 from stepperengine import Stepperengine
 import multiprocessing
+from multiprocessing import Event
 import time
 
 class Errorhandler:
     
     engine_process = multiprocessing.Process()
     
-    def fix_engine(self, errorEvent, engine_process, engine):
+    def fix_engine(self, errorEvent, engine_process: multiprocessing.Process, engine):
         while True:
             errorEvent.wait()
             engine_process.terminate()
