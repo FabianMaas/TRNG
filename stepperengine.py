@@ -6,8 +6,8 @@ class Stepperengine:
 	# defining constants
 	__DIR = 5   # Direction GPIO Pin
 	__STEP = 6  # Step GPIO Pin
-	__CW = 1     # Clockwise Rotation
-	#CCW = 0    # Counterclockwise Rotation (not in use)
+	__CW = 0     # Clockwise Rotation
+	#CCW = 1    # Counterclockwise Rotation (not in use)
 	__SPR = 1600   # Steps per Revolution (360 / 7.5)
 	__step_count = __SPR
 	__delay = .0001
@@ -46,7 +46,7 @@ class Stepperengine:
 
 	def unstuck_marbles(self, rounds):
 		self.destroy()
-		self.__CW = 0
+		self.__CW = 1
 		self.__setup()
 		for x in range(rounds):
 			for y in range(self.__step_count):
@@ -55,5 +55,5 @@ class Stepperengine:
 					GPIO.output(self.__STEP, GPIO.LOW)
 					sleep(self.__delay)
 		self.destroy()
-		self.__CW = 1
+		self.__CW = 0
 		return True
