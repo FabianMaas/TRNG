@@ -80,6 +80,7 @@ def init_system():
     global __laser_process
     global __db_write_process
     global __engine_process
+    global __error_watcher_process
     
     if __laser_process.is_alive():
         return "system already initialized"
