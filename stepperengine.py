@@ -35,7 +35,7 @@ class Stepperengine:
 					GPIO.output(self.__STEP, GPIO.HIGH)
 					sleep(self.__delay)
 					GPIO.output(self.__STEP, GPIO.LOW)
-					sleep(self.delay)
+					sleep(self.__delay)
 
 	def destroy(self):
 		try:
