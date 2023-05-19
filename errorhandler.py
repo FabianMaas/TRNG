@@ -12,7 +12,8 @@ class Errorhandler:
             time.sleep(5)
             errorEvent.wait()
             engine_process_param.terminate()
-            self.engine_process.terminate()
+            if self.engine_process.is_alive():
+                self.engine_process.terminate()
             time.sleep(1)
             if engine.unstuck_marbles(3):
                 pass
