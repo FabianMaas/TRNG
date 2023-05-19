@@ -7,11 +7,11 @@ class Errorhandler:
     
     engine_process = multiprocessing.Process()
     
-    def fix_engine(self, errorEvent, engine_process: multiprocessing.Process, engine: Stepperengine):
+    def fix_engine(self, errorEvent, engine_process_param: multiprocessing.Process, engine: Stepperengine):
         while True:
             time.sleep(5)
             errorEvent.wait()
-            engine_process.terminate()
+            engine_process_param.terminate()
             self.engine_process.terminate()
             time.sleep(1)
             if engine.unstuck_marbles(3):
