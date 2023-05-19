@@ -47,7 +47,7 @@ class Stepperengine:
 	def unstuck_marbles(self, rounds):
 		self.destroy()
 		self.__CW = 0
-		self.setup()
+		self.__setup()
 		for x in range(rounds):
 			for y in range(self.__step_count):
 					GPIO.output(self.__STEP, GPIO.HIGH)
