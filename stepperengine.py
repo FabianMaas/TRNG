@@ -16,12 +16,12 @@ class Stepperengine:
 		#warnings.filterwarnings("ignore", category=RuntimeWarning)
 		try:
 			self.__setup()
-		except:
-			pass
+		except Exception as e:
+			print(str(e))
 		try:
 			self.__loop()
-		except:
-			pass
+		except Exception as e:
+			print(str(e))
 
 	def __setup(self):
 		GPIO.setmode(GPIO.BCM)
