@@ -47,7 +47,7 @@ def get_random_hex():
 
     number_rows = math.ceil((quantity*num_bits)/8)
 
-    while __db.session.query(Randbyte).count() < number_rows:
+    while db.session.query(Randbyte).count() < number_rows:
         time.sleep(1)
 
     rows_arr = []
@@ -91,28 +91,19 @@ def init_system():
     if not __laser_process.is_alive():
         __laser_process = multiprocessing.Process(target=__laser.start)
         __laser_process.start()
-        time.sleep(2)
-        print(__laser_process.is_alive())
     if not __db_write_process.is_alive():
         __db_write_process = multiprocessing.Process(target=__laser.write_to_db, args=(__app, errorEvent))
-        __db_write_process.start()
-        time.sleep(2)
-        print(__db_write_process.is_alive())        
+        __db_write_process.start()      
     if not __engine_process.is_alive():
         __engine_process = multiprocessing.Process(target=__engine.start)
         __engine_process.start()
-        time.sleep(2)
-        print(__engine_process.is_alive())
     if not __error_watcher_process.is_alive():
         __error_watcher_process = multiprocessing.Process(target=__errorhandler.fix_engine, args=(errorEvent, __engine_process, __engine))
-        __error_watcher_process.start()
-        time.sleep(2)
-        print(__error_watcher_process.is_alive())
-        
+        __error_watcher_process.start()     
 
     time.sleep(0.5)
  
-    if not __laser_process.is_alive() or not __db_write_process.is_alive() or not __engine_process.is_alive():
+    if not __laser_process.is_alive() or not __db_write_process.is_alive() or not __engine_process.is_alive() or not __error_watcher_process.is_alive():
         response = make_response(
             'unable to initialize the random number generator within a timeout of 60 seconds',
             555,

@@ -17,11 +17,11 @@ class Stepperengine:
 		try:
 			self.__setup()
 		except Exception as e:
-			print(str(e))
+			print("setup",str(e))
 		try:
 			self.__loop()
 		except Exception as e:
-			print(str(e))
+			print("loop",str(e))
 
 	def __setup(self):
 		GPIO.setmode(GPIO.BCM)
@@ -51,8 +51,8 @@ class Stepperengine:
 		for x in range(rounds):
 			for y in range(self.__step_count):
 					GPIO.output(self.__STEP, GPIO.HIGH)
-					sleep(self.delay)
+					sleep(self.__delay)
 					GPIO.output(self.__STEP, GPIO.LOW)
-					sleep(self.delay)
+					sleep(self.__delay)
 		self.destroy()
 		self.__CW = 1
