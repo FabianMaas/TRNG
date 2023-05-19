@@ -9,7 +9,7 @@ class Errorhandler:
     
     def fix_engine(self, errorEvent, engine_process: multiprocessing.Process, engine: Stepperengine):
         while True:
-
+            time.sleep(5)
             errorEvent.wait()
             engine_process.terminate()
             time.sleep(1)
