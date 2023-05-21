@@ -9,6 +9,8 @@ class LaserSensor:
     __queue_top = multiprocessing.Queue()
     __queue_bottom = multiprocessing.Queue()
     __is_running = False
+    __top_down = False
+    __bottom_down = False
 
 
     def write_to_db(self, rest_api, error_event):
@@ -27,21 +29,43 @@ class LaserSensor:
             tmp_rand_arr = []
             current_queue = self.__queue_top
             #print("Size:", self.__queue.qsize()) 
-            if (self.__queue_top.qsize() >= 8 or self.__queue_bottom.qsize() >= 8):
-                if self.__queue_bottom.qsize() > self.__queue_top.qsize():
-                    current_queue = self.__queue_bottom
-                else:
-                    current_queue = self.__queue_top
-                    
+            if (self.__queue_top.qsize() >= 8 and not self.__top_down or self.__queue_bottom.qsize() >= 8 and not self.__bottom_down):
+                
                 tmp_rand_arr.clear()
-                count = 0
-                while count < 8:
-                    try:
-                        tmp = current_queue.get()
-                        tmp_rand_arr.append(tmp)
-                        count += 1
-                    except:
-                        pass
+                
+                if self.__queue_bottom.qsize() > self.__queue_top.qsize() and not bottom_down:
+                    consecutive_number_count = 0
+                    previous_number = None
+                    count = 0
+                    while count < 8:
+                        try:
+                            tmp = self.__queue_bottom.get()
+                            tmp_rand_arr.append(tmp)
+                            if tmp == previous_number:
+                                consecutive_number_count += 1
+                            count += 1
+                            if consecutive_number_count >= 8:
+                                self.__bottom_down = True
+                                continue
+                        except:
+                            pass
+
+                if self.__queue_top.qsize() > self.__queue_bottom.qsize() and not top_down:
+                    consecutive_number_count = 0
+                    previous_number = None
+                    count = 0
+                    while count < 8:
+                        try:
+                            tmp = self.__queue_top.get()
+                            tmp_rand_arr.append(tmp)
+                            if tmp == previous_number:
+                                consecutive_number_count += 1
+                            count += 1
+                            if consecutive_number_count >= 8:
+                                self.__top_down = True
+                                continue
+                        except:
+                            pass
 
                 tmp_string = "".join(str(x) for x in tmp_rand_arr)
 
@@ -94,6 +118,15 @@ class LaserSensor:
 
         try:
             while self.__is_running:
+
+                if(self.__top_down):
+                    GPIO.remove_event_detect(RECEIVER_PIN1)
+                    GPIO.remove_event_detect(RECEIVER_PIN2)
+
+                if(self.__bottom_down):
+                    GPIO.remove_event_detect(RECEIVER_PIN3)
+                    GPIO.remove_event_detect(RECEIVER_PIN4)
+                    
                 time.sleep(0.1)
         except:
             GPIO.remove_event_detect(RECEIVER_PIN1)
