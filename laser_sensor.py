@@ -3,14 +3,15 @@ import os, time, datetime
 import random
 import models
 import multiprocessing
-class Lasersensor:
+
+class LaserSensor:
 
     __queue_top = multiprocessing.Queue()
     __queue_bottom = multiprocessing.Queue()
     __is_running = False
 
 
-    def write_to_db(self, __app, errorEvent):
+    def write_to_db(self, rest_api, error_event):
         last_executed_time = datetime.datetime.now()
         while True:
             current_time = datetime.datetime.now()
@@ -21,7 +22,7 @@ class Lasersensor:
             #print("difference:",difference.total_seconds())
             
             if difference.total_seconds() > 15:
-                errorEvent.set()
+                error_event.set()
                      
             tmp_rand_arr = []
             current_queue = self.__queue_top
@@ -44,7 +45,7 @@ class Lasersensor:
 
                 tmp_string = "".join(str(x) for x in tmp_rand_arr)
 
-                with __app.app_context():
+                with rest_api.app_context():
                     new_byte = models.Randbyte(value=tmp_string) 
                     models.db.session.add(new_byte)
                     models.db.session.commit()

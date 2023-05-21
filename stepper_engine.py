@@ -1,8 +1,9 @@
 from time import sleep
 import RPi.GPIO as GPIO
 import warnings
+import multiprocessing
 
-class Stepperengine:
+class StepperEngine:
 	# defining constants
 	__DIR = 5   # Direction GPIO Pin
 	__STEP = 6  # Step GPIO Pin
@@ -12,14 +13,14 @@ class Stepperengine:
 	__step_count = __SPR
 	__delay = .0001
 
-	def start(self):
+	def start(self, error_event):
 		#warnings.filterwarnings("ignore", category=RuntimeWarning)
 		try:
 			self.__setup()
 		except Exception as e:
 			print("setup",str(e))
 		try:
-			self.__loop()
+			self.__loop(error_event)
 		except Exception as e:
 			print("loop",str(e))
 
@@ -29,8 +30,11 @@ class Stepperengine:
 		GPIO.setup(self.__STEP, GPIO.OUT)
 		GPIO.output(self.__DIR, self.__CW)
 
-	def __loop(self):
+	def __loop(self,error_event):
 		while True:
+			if error_event.is_set():
+				self.unstuck_marbles(error_event)
+
 			for x in range(self.__step_count):
 					GPIO.output(self.__STEP, GPIO.HIGH)
 					sleep(self.__delay)
@@ -44,7 +48,7 @@ class Stepperengine:
 		except:
 			pass
 
-	def unstuck_marbles(self, rounds):
+	def unstuck_marbles(self, rounds, error_event):
 		self.destroy()
 		self.__CW = 1
 		self.__setup()
@@ -56,4 +60,5 @@ class Stepperengine:
 					sleep(self.__delay)
 		self.destroy()
 		self.__CW = 0
+		error_event.clear()
 		return True

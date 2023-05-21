@@ -4,7 +4,7 @@ import math
 import random
 #from tests.pokertest import Pokertest
 
-class Testsuite:
+class TestSuite:
 
 
     def banner(self):
