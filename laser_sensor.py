@@ -23,7 +23,7 @@ class LaserSensor:
             datetime.timedelta(0, 4, 316543)
             #print("difference:",difference.total_seconds())
             
-            if difference.total_seconds() > 15:
+            if difference.total_seconds() > 20:
                 error_event.set()
                      
             tmp_rand_arr = []
