@@ -25,7 +25,9 @@ class LaserSensor:
             
             if difference.total_seconds() > 20:
                 error_event.set()
-                     
+                last_executed_time = datetime.datetime.now()
+
+            
             tmp_rand_arr = []
             current_queue = self.__queue_top
             #print("Size:", self.__queue.qsize()) 
