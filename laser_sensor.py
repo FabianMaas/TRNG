@@ -35,7 +35,7 @@ class LaserSensor:
                 
                 tmp_rand_arr.clear()
                 
-                if self.__queue_bottom.qsize() > self.__queue_top.qsize() and not bottom_down:
+                if self.__queue_bottom.qsize() > self.__queue_top.qsize() and not self.__bottom_down:
                     consecutive_number_count = 0
                     previous_number = None
                     count = 0
