@@ -12,7 +12,6 @@ class StepperEngine:
 	__SPR = 1600   # Steps per Revolution (360 / 7.5)
 	__step_count = __SPR
 	__delay = .0001
-	__error_event = None
 
 	def start(self, error_event):
 		warnings.filterwarnings("ignore", category=RuntimeWarning)
@@ -36,6 +35,7 @@ class StepperEngine:
 
 	def __loop(self):
 		while True:
+			print(self.__error_event.is_set())
 			if self.__error_event.is_set():
 				self.unstuck_marbles(3)
 				self.__error_event.reset()
