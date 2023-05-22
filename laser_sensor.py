@@ -32,13 +32,14 @@ class LaserSensor:
             current_queue = self.__queue_top
             #print("Size:", self.__queue.qsize()) 
             if (self.__queue_top.qsize() >= 8 and not self.__top_down or self.__queue_bottom.qsize() >= 8 and not self.__bottom_down):
-                
+                print("----First if Debug----")
                 tmp_rand_arr.clear()
                 
                 if self.__queue_bottom.qsize() > self.__queue_top.qsize() and not self.__bottom_down:
                     consecutive_number_count = 0
                     previous_number = None
                     count = 0
+                    print("----second if Debug----")
                     while count < 8:
                         try:
                             tmp = self.__queue_bottom.get()
@@ -56,6 +57,7 @@ class LaserSensor:
                     consecutive_number_count = 0
                     previous_number = None
                     count = 0
+                    print("----First elif Debug----")
                     while count < 8:
                         try:
                             tmp = self.__queue_top.get()
