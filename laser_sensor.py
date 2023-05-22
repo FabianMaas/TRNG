@@ -69,8 +69,9 @@ class LaserSensor:
                             if consecutive_number_count >= 8:
                                 self.__top_down = True
                                 continue
-                        except:
-                            pass
+                        except Exception as e:
+                            print(e)
+                            #pass
 
                 tmp_string = "".join(str(x) for x in tmp_rand_arr)
                 if(not len(tmp_string) == 0):
