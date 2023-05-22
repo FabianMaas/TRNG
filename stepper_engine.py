@@ -34,9 +34,9 @@ class StepperEngine:
 
 	def __loop(self,error_event):
 		while True:
+			if error_event.is_set():
+				self.unstuck_marbles(3, error_event)
 			for x in range(self.__step_count):
-					if error_event.is_set():
-						self.unstuck_marbles(error_event)
 					GPIO.output(self.__STEP, GPIO.HIGH)
 					sleep(self.__delay)
 					GPIO.output(self.__STEP, GPIO.LOW)
