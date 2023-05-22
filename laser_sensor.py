@@ -65,13 +65,14 @@ class LaserSensor:
                             if tmp == previous_number:
                                 consecutive_number_count += 1
                             count += 1
-                            print("consecutive_number_count="+consecutive_number_count)
+
+                            print("consecutive_number_count="+str(consecutive_number_count))
                             if consecutive_number_count >= 8:
                                 self.__top_down = True
                                 continue
                         except Exception as e:
                             print(e)
-                            #pass
+                            pass
 
                 tmp_string = "".join(str(x) for x in tmp_rand_arr)
                 if(not len(tmp_string) == 0):
