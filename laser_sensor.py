@@ -51,8 +51,8 @@ class LaserSensor:
                                 continue
                         except:
                             pass
-
-                if self.__queue_top.qsize() > self.__queue_bottom.qsize() and not self.__top_down:
+                        
+                elif self.__queue_top.qsize() > self.__queue_bottom.qsize() and not self.__top_down:
                     consecutive_number_count = 0
                     previous_number = None
                     count = 0
