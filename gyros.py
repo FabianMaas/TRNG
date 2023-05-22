@@ -1,9 +1,11 @@
 import smbus            
-from time import sleep          
+from time import sleep
+from mpu6050 import mpu6050          
 import math
 import RPi.GPIO as GPIO
 import sys
- 
+
+mpu = mpu6050(0x68)
 PWR_MGMT_1   = 0x6B
 SMPLRT_DIV   = 0x19
 CONFIG       = 0x1A
@@ -21,7 +23,7 @@ def MPU_Init():
     bus.write_byte_data(Device_Address, SMPLRT_DIV, 7)
     bus.write_byte_data(Device_Address, PWR_MGMT_1, 1)
     bus.write_byte_data(Device_Address, CONFIG, 0)
-    bus.write_byte_data(Device_Address, GYRO_CONFIG, 0x00)
+    bus.write_byte_data(Device_Address, GYRO_CONFIG, 0x00) #24
     bus.write_byte_data(Device_Address, GYRO_CONFIG, 0x18)
     bus.write_byte_data(Device_Address, INT_ENABLE, 1)
  
@@ -63,8 +65,9 @@ if __name__ == "__main__":
              
             x_angle = get_x_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
             y_angle = get_y_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
-            print("X rotation: ", x_angle)
-            print("Y rotation: ",y_angle)
+            #print("X rotation: ", x_angle)
+            #print("Y rotation: ",y_angle)
+            print(str(mpu.get_temp()))
             sleep(.50)
     except KeyboardInterrupt:
         sys.exit(0)
