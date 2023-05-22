@@ -1,11 +1,10 @@
 import smbus            
-from time import sleep
-from mpu6050 import mpu6050          
+from time import sleep        
 import math
 import RPi.GPIO as GPIO
 import sys
 
-mpu = mpu6050(0x68)
+
 PWR_MGMT_1   = 0x6B
 SMPLRT_DIV   = 0x19
 CONFIG       = 0x1A
@@ -65,9 +64,8 @@ if __name__ == "__main__":
              
             x_angle = get_x_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
             y_angle = get_y_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
-            #print("X rotation: ", x_angle)
-            #print("Y rotation: ",y_angle)
-            print(str(mpu.get_temp()))
+            print("X rotation: ", x_angle)
+            print("Y rotation: ",y_angle)
             sleep(.50)
     except KeyboardInterrupt:
         sys.exit(0)
