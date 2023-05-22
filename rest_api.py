@@ -142,4 +142,4 @@ class RestApi:
     
 if __name__ == "__main__":
     api = RestApi()
-    api.start(api)
+    api.start()
