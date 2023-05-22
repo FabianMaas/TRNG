@@ -62,4 +62,5 @@ class StepperEngine:
 		self.destroy()
 		self.__CW = 0
 		error_event.clear()
+		self.__setup()
 		return True
