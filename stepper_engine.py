@@ -12,16 +12,18 @@ class StepperEngine:
 	__SPR = 1600   # Steps per Revolution (360 / 7.5)
 	__step_count = __SPR
 	__delay = .0001
+	__error_event = None
 
 	def start(self, error_event):
 		warnings.filterwarnings("ignore", category=RuntimeWarning)
+		self.__error_event = error_event
 		try:
 			self.__setup()
 		except Exception as e:
 			pass
 			#print("setup",str(e))
 		try:
-			self.__loop(error_event)
+			self.__loop()
 		except Exception as e:
 			pass
 			#print("loop",str(e))
@@ -32,10 +34,11 @@ class StepperEngine:
 		GPIO.setup(self.__STEP, GPIO.OUT)
 		GPIO.output(self.__DIR, self.__CW)
 
-	def __loop(self,error_event):
+	def __loop(self):
 		while True:
-			if error_event.is_set():
-				self.unstuck_marbles(3, error_event)
+			if self.__error_event.is_set():
+				self.unstuck_marbles(3)
+				self.__error_event.reset()
 			for x in range(self.__step_count):
 					GPIO.output(self.__STEP, GPIO.HIGH)
 					sleep(self.__delay)
@@ -49,7 +52,7 @@ class StepperEngine:
 		except:
 			pass
 
-	def unstuck_marbles(self, rounds, error_event):
+	def unstuck_marbles(self, rounds):
 		self.destroy()
 		self.__CW = 1
 		self.__setup()
@@ -61,6 +64,5 @@ class StepperEngine:
 					sleep(self.__delay)
 		self.destroy()
 		self.__CW = 0
-		error_event.clear()
 		self.__setup()
 		return True
