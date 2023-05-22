@@ -32,7 +32,7 @@ class RestApi:
 
 
     @rest_api.route('/')
-    def index():
+    def index(self):
         response = make_response(redirect(url_for('trng')))
         response.status_code = 301
         response.description = 'redirecting to trng page'
@@ -40,7 +40,7 @@ class RestApi:
 
 
     @rest_api.route('/trng')
-    def trng():
+    def trng(self):
         return render_template('index.html')
 
 
@@ -141,4 +141,5 @@ class RestApi:
         return hexArray
     
 if __name__ == "__main__":
-    RestApi.start(RestApi)
+    api = RestApi()
+    api.start(api)
