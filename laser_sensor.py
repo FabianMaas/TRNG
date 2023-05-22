@@ -70,12 +70,12 @@ class LaserSensor:
                             pass
 
                 tmp_string = "".join(str(x) for x in tmp_rand_arr)
-
-                with rest_api.app_context():
-                    new_byte = models.Randbyte(value=tmp_string) 
-                    models.db.session.add(new_byte)
-                    models.db.session.commit()
-                last_executed_time = datetime.datetime.now()
+                if(not len(tmp_string) == 0):
+                    with rest_api.app_context():
+                        new_byte = models.Randbyte(value=tmp_string) 
+                        models.db.session.add(new_byte)
+                        models.db.session.commit()
+                    last_executed_time = datetime.datetime.now()
             time.sleep(1) 
             if not self.__is_running:
                 break
