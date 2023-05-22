@@ -14,15 +14,17 @@ class StepperEngine:
 	__delay = .0001
 
 	def start(self, error_event):
-		#warnings.filterwarnings("ignore", category=RuntimeWarning)
+		warnings.filterwarnings("ignore", category=RuntimeWarning)
 		try:
 			self.__setup()
 		except Exception as e:
-			print("setup",str(e))
+			pass
+			#print("setup",str(e))
 		try:
 			self.__loop(error_event)
 		except Exception as e:
-			print("loop",str(e))
+			pass
+			#print("loop",str(e))
 
 	def __setup(self):
 		GPIO.setmode(GPIO.BCM)
