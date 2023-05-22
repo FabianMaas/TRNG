@@ -141,4 +141,4 @@ class RestApi:
         return hexArray
     
 if __name__ == "__main__":
-    RestApi.start()
+    RestApi.start(RestApi)
