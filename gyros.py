@@ -22,8 +22,7 @@ def MPU_Init():
     bus.write_byte_data(Device_Address, SMPLRT_DIV, 7)
     bus.write_byte_data(Device_Address, PWR_MGMT_1, 1)
     bus.write_byte_data(Device_Address, CONFIG, 0)
-    bus.write_byte_data(Device_Address, GYRO_CONFIG, 0x00) #24
-    bus.write_byte_data(Device_Address, GYRO_CONFIG, 0x18)
+    bus.write_byte_data(Device_Address, GYRO_CONFIG, 24) 
     bus.write_byte_data(Device_Address, INT_ENABLE, 1)
  
 def read_raw_data(addr):
