@@ -57,9 +57,16 @@ def get_random_hex():
 
     db.session.commit()
     
+    remainder = num_bits % 4
     joined_string = ''.join(rows_arr)
     print("numbits=",num_bits)
-    split_arr = [joined_string[i:i+num_bits] for i in range(0, (quantity*num_bits), num_bits)]
+    split_arr = []
+    for i in range(0, quantity * num_bits, num_bits):
+        substring = joined_string[i : i + num_bits]
+        for i in range(4-remainder):
+            substring = "0" + substring
+        split_arr.append(substring)
+    
     print(split_arr)
     hex_arr = __bin_to_hex(split_arr)
     print(hex_arr)
@@ -128,9 +135,13 @@ def shutdown_system():
     return response
 
 
-def __bin_to_hex(binaryArray):
-    hexArray = [hex(int(binary, 2))[2:] for binary in binaryArray]
-    return hexArray
+def __bin_to_hex(bin_array):
+    hex_array = []
+    for binary in bin_array:
+        binary = binary.zfill((len(binary) + 3) // 4 * 4)
+        hex_string = format(int(binary, 2), '0' + str(len(binary) // 4) + 'X')
+        hex_array.append(hex_string)
+    return hex_array
     
 if __name__ == "__main__":
     #cert_file = os.path.join(os.path.dirname(__file__), 'cert.pem')
