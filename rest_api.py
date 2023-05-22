@@ -20,8 +20,7 @@ class RestApi:
     __engine_process = multiprocessing.Process(target=__engine.start)
 
 
-
-    def start(self):
+    def __init__(self):
         #cert_file = os.path.join(os.path.dirname(__file__), 'cert.pem')
         #key_file = os.path.join(os.path.dirname(__file__), 'key.pem')
         #app.run(host='localhost', port=443, ssl_context=(cert_file, key_file))
@@ -142,4 +141,3 @@ class RestApi:
     
 if __name__ == "__main__":
     api = RestApi()
-    api.start()
