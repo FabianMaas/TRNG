@@ -148,39 +148,39 @@ class LaserSensor:
     def __callback_func1(self, channel):
         if GPIO.input(channel):
             if(not self.__top_down):
-                self.__queue_top.put(0)
+                #self.__queue_top.put(0)
                 microsecond = bin(datetime.datetime.now().microsecond)
                 bits = microsecond[len(microsecond)-2:]
                 for bit in bits:
                     self.__queue_top.put(bit)
-                print("first: 0"+bits)         
+                print("first: "+bits)         
 
     def __callback_func2(self, channel):
         if GPIO.input(channel):
             if(not self.__top_down):
-                self.__queue_top.put(1)
+                #self.__queue_top.put(1)
                 microsecond = bin(datetime.datetime.now().microsecond)
                 bits = microsecond[len(microsecond)-2:]
                 for bit in bits:
                     self.__queue_top.put(bit)
-                print("first: 1"+bits)
+                print("first: "+bits)
     
     def __callback_func3(self, channel):
         if GPIO.input(channel):
             if(not self.__bottom_down):
-                self.__queue_bottom.put(0)
+                #self.__queue_bottom.put(0)
                 microsecond = bin(datetime.datetime.now().microsecond)
                 bits = microsecond[len(microsecond)-2:]
                 for bit in bits:
                     self.__queue_bottom.put(bit)
-                print("second: 0"+bits)
+                print("second: "+bits)
 
     def __callback_func4(self, channel):
         if GPIO.input(channel):
             if(not self.__bottom_down):
-                self.__queue_bottom.put(1)
+                #self.__queue_bottom.put(1)
                 microsecond = bin(datetime.datetime.now().microsecond)
                 bits = microsecond[len(microsecond)-2:]
                 for bit in bits:
                     self.__queue_bottom.put(bit)
-                print("second: 1"+bits)
+                print("second: "+bits)
