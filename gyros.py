@@ -70,8 +70,8 @@ if __name__ == "__main__":
             
             #print("X rotation: ", round(x_angle, 2))
             #print("Y rotation: ", round(y_angle, 2))
-            print("Y-Mittelwert: " +(y_angle/count))
-            print("X-Mittelwert: " +(x_angle/count))
+            print("Y-Mittelwert: " +str(y_angle/count))
+            print("X-Mittelwert: " +str(x_angle/count))
             sleep(.50)
     except KeyboardInterrupt:
         sys.exit(0)
