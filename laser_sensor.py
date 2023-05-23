@@ -4,6 +4,7 @@ import random
 import models
 import multiprocessing
 
+
 class LaserSensor:
 
     __queue_top = multiprocessing.Queue()
@@ -147,19 +148,35 @@ class LaserSensor:
     def __callback_func1(self, channel):
         if GPIO.input(channel):
             self.__queue_top.put(0)
-            print("first: 0")
+            microsecond = bin(datetime.datetime.now().microsecond)
+            bits = microsecond[len(microsecond)-3:]
+            for bit in bits:
+                self.__queue_top.put(bit)
+            print("first: 0"+bits)         
 
     def __callback_func2(self, channel):
         if GPIO.input(channel):
             self.__queue_top.put(1)
-            print("first: 1")
+            microsecond = bin(datetime.datetime.now().microsecond)
+            bits = microsecond[len(microsecond)-3:]
+            for bit in bits:
+                self.__queue_top.put(bit)
+            print("first: 1"+bits)
     
     def __callback_func3(self, channel):
         if GPIO.input(channel):
             self.__queue_bottom.put(0)
-            print("second: 0")
+            microsecond = bin(datetime.datetime.now().microsecond)
+            bits = microsecond[len(microsecond)-3:]
+            for bit in bits:
+                self.__queue_bottom.put(bit)
+            print("second: 0"+bits)
 
     def __callback_func4(self, channel):
         if GPIO.input(channel):
             self.__queue_bottom.put(1)
-            print("second: 1")
+            microsecond = bin(datetime.datetime.now().microsecond)
+            bits = microsecond[len(microsecond)-3:]
+            for bit in bits:
+                self.__queue_bottom.put(bit)
+            print("second: 1"+bits)
