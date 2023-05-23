@@ -35,7 +35,7 @@ class StepperEngine:
 
 	def __loop(self):
 		while True:
-			print("Resetter:"+ self.__error_event.is_set())
+			print("Resetter:"+ str(self.__error_event.is_set()))
 			if self.__error_event.is_set():
 				self.unstuck_marbles(3)
 				self.__error_event.clear()
