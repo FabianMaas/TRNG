@@ -56,15 +56,17 @@ if __name__ == "__main__":
             acc_x = read_raw_data(ACCEL_XOUT_H)
             acc_y = read_raw_data(ACCEL_YOUT_H)
             acc_z = read_raw_data(ACCEL_ZOUT_H)
-             
+            print("x: ", acc_x) 
+            print("y: ", acc_y)
+            print("z: ", acc_z)  
             acclX_scaled = acc_x * .000061 * 9.80665
             acclY_scaled = acc_y * .000061 * 9.80665
             acclZ_scaled = acc_z * .000061 * 9.80665
              
             x_angle = get_x_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
             y_angle = get_y_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
-            print("X rotation: ", x_angle)
-            print("Y rotation: ",y_angle)
+            #print("X rotation: ", x_angle)
+            #print("Y rotation: ",y_angle)
             sleep(.50)
     except KeyboardInterrupt:
         sys.exit(0)
