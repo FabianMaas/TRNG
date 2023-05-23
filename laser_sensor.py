@@ -24,7 +24,7 @@ class LaserSensor:
             datetime.timedelta(0, 4, 316543)
             #print("difference:",difference.total_seconds())
             
-            if difference.total_seconds() > 20:
+            if difference.total_seconds() > 10:
                 error_event.set()
                 last_executed_time = datetime.datetime.now()
 
@@ -33,14 +33,14 @@ class LaserSensor:
             current_queue = self.__queue_top
             #print("Size:", self.__queue.qsize()) 
             if (self.__queue_top.qsize() >= 8 and not self.__top_down or self.__queue_bottom.qsize() >= 8 and not self.__bottom_down):
-                print("----First if Debug----")
+                #print("----First if Debug----")
                 tmp_rand_arr.clear()
                 
                 if self.__queue_bottom.qsize() > self.__queue_top.qsize() and not self.__bottom_down:
                     consecutive_number_count = 0
                     previous_number = None
                     count = 0
-                    print("----second if Debug----")
+                    #print("----second if Debug----")
                     while count < 8:
                         try:
                             tmp = self.__queue_bottom.get()
@@ -59,7 +59,7 @@ class LaserSensor:
                     consecutive_number_count = 0
                     previous_number = None
                     count = 0
-                    print("----First elif Debug----")
+                    #print("----First elif Debug----")
                     while count < 8:
                         try:
                             tmp = self.__queue_top.get()
@@ -147,36 +147,40 @@ class LaserSensor:
 
     def __callback_func1(self, channel):
         if GPIO.input(channel):
-            self.__queue_top.put(0)
-            microsecond = bin(datetime.datetime.now().microsecond)
-            bits = microsecond[len(microsecond)-3:]
-            for bit in bits:
-                self.__queue_top.put(bit)
-            print("first: 0"+bits)         
+            if(not self.__top_down):
+                self.__queue_top.put(0)
+                microsecond = bin(datetime.datetime.now().microsecond)
+                bits = microsecond[len(microsecond)-2:]
+                for bit in bits:
+                    self.__queue_top.put(bit)
+                print("first: 0"+bits)         
 
     def __callback_func2(self, channel):
         if GPIO.input(channel):
-            self.__queue_top.put(1)
-            microsecond = bin(datetime.datetime.now().microsecond)
-            bits = microsecond[len(microsecond)-3:]
-            for bit in bits:
-                self.__queue_top.put(bit)
-            print("first: 1"+bits)
+            if(not self.__top_down):
+                self.__queue_top.put(1)
+                microsecond = bin(datetime.datetime.now().microsecond)
+                bits = microsecond[len(microsecond)-2:]
+                for bit in bits:
+                    self.__queue_top.put(bit)
+                print("first: 1"+bits)
     
     def __callback_func3(self, channel):
         if GPIO.input(channel):
-            self.__queue_bottom.put(0)
-            microsecond = bin(datetime.datetime.now().microsecond)
-            bits = microsecond[len(microsecond)-3:]
-            for bit in bits:
-                self.__queue_bottom.put(bit)
-            print("second: 0"+bits)
+            if(not self.__bottom_down):
+                self.__queue_bottom.put(0)
+                microsecond = bin(datetime.datetime.now().microsecond)
+                bits = microsecond[len(microsecond)-2:]
+                for bit in bits:
+                    self.__queue_bottom.put(bit)
+                print("second: 0"+bits)
 
     def __callback_func4(self, channel):
         if GPIO.input(channel):
-            self.__queue_bottom.put(1)
-            microsecond = bin(datetime.datetime.now().microsecond)
-            bits = microsecond[len(microsecond)-3:]
-            for bit in bits:
-                self.__queue_bottom.put(bit)
-            print("second: 1"+bits)
+            if(not self.__bottom_down):
+                self.__queue_bottom.put(1)
+                microsecond = bin(datetime.datetime.now().microsecond)
+                bits = microsecond[len(microsecond)-2:]
+                for bit in bits:
+                    self.__queue_bottom.put(bit)
+                print("second: 1"+bits)
