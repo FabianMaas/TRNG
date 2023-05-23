@@ -63,8 +63,8 @@ if __name__ == "__main__":
              
             x_angle = get_x_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
             y_angle = get_y_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
-            print("X rotation: ", round(x_angle, 4))
-            print("Y rotation: ", round(y_angle, 4))
+            print("X rotation: ", round(x_angle, 2))
+            print("Y rotation: ", round(y_angle, 2))
             sleep(.50)
     except KeyboardInterrupt:
         sys.exit(0)
