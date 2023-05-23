@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template, redirect, url_for, m
 from laser_sensor import LaserSensor
 from stepper_engine import StepperEngine
 from test_suite import TestSuite
+from gyroscope import Gyroscope
 from models import db, Randbyte
 import multiprocessing
 from multiprocessing import Event
@@ -14,6 +15,7 @@ rest_api.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TRNG.db'
 db.init_app(rest_api)
 __laser = LaserSensor()
 __engine = StepperEngine()
+__gyroscope = Gyroscope()
 
 __laser_process = multiprocessing.Process(target=__laser.start)
 __db_write_process = multiprocessing.Process(target=__laser.write_to_db, args=(rest_api,))
@@ -86,6 +88,10 @@ def init_system():
     global __db_write_process
     global __engine_process
     
+    # angle_map = __gyroscope.get_angles()
+    # if angle_map["x_angle"] > 95 or angle_map["x_angle"] < 85 or angle_map["y_angle"] > 95 or angle_map["y_angle"] < 85:
+    #     return 'Could not initalize system, system must be properly aligned before. X_Angle='+ str(angle_map["x_angle"]) + 'Y_Angle' + str(angle_map["y_angle"]) + '.'
+        
     if __laser_process.is_alive():
         return "system already initialized"
     
