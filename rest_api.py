@@ -63,9 +63,10 @@ def get_random_hex():
     split_arr = []
     for i in range(0, quantity * num_bits, num_bits):
         substring = joined_string[i : i + num_bits]
-        for i in range(4-remainder):
-            substring = "0" + substring
-        split_arr.append(substring)
+        if(not remainder == 0):
+            for i in range(4-remainder):
+                substring = "0" + substring
+            split_arr.append(substring)
     
     print(split_arr)
     hex_arr = __bin_to_hex(split_arr)
