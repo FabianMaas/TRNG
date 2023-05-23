@@ -19,7 +19,7 @@ GYRO_ZOUT_H  = 0x47
 bus = smbus.SMBus(1)
  
 def MPU_Init():
-    bus.write_byte_data(Device_Address, SMPLRT_DIV, 79)
+    bus.write_byte_data(Device_Address, SMPLRT_DIV, 799)
     bus.write_byte_data(Device_Address, PWR_MGMT_1, 1)
     bus.write_byte_data(Device_Address, CONFIG, 0)
     bus.write_byte_data(Device_Address, GYRO_CONFIG, 24) 
