@@ -19,7 +19,7 @@ GYRO_ZOUT_H  = 0x47
 bus = smbus.SMBus(1)
  
 def MPU_Init():
-    bus.write_byte_data(Device_Address, SMPLRT_DIV, 1599)
+    bus.write_byte_data(Device_Address, SMPLRT_DIV, 79)
     bus.write_byte_data(Device_Address, PWR_MGMT_1, 1)
     bus.write_byte_data(Device_Address, CONFIG, 0)
     bus.write_byte_data(Device_Address, GYRO_CONFIG, 24) 
@@ -61,10 +61,13 @@ if __name__ == "__main__":
             acclY_scaled = acc_y * .000061 * 9.80665
             acclZ_scaled = acc_z * .000061 * 9.80665
              
-            x_angle = get_x_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
-            y_angle = get_y_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
-            print("X rotation: ", round(x_angle, 2))
-            print("Y rotation: ", round(y_angle, 2))
+            x_angle =+ get_x_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
+            y_angle =+ get_y_rotation(acclX_scaled, acclY_scaled, acclZ_scaled)
+            count =+ 1
+            #print("X rotation: ", round(x_angle, 2))
+            #print("Y rotation: ", round(y_angle, 2))
+            print("Y-Mittelwert: " +(y_angle/count))
+            print("X-Mittelwert: " +(x_angle/count))
             sleep(.50)
     except KeyboardInterrupt:
         sys.exit(0)
