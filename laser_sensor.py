@@ -26,6 +26,7 @@ class LaserSensor:
             
             if difference.total_seconds() > 10:
                 error_event.set()
+                print("Setter:"+ error_event.is_set())
                 last_executed_time = datetime.datetime.now()
 
             
