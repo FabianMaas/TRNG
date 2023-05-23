@@ -66,7 +66,7 @@ def get_random_hex():
         if(not remainder == 0):
             for i in range(4-remainder):
                 substring = "0" + substring
-            split_arr.append(substring)
+        split_arr.append(substring)
     
     print(split_arr)
     hex_arr = __bin_to_hex(split_arr)
