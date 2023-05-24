@@ -75,6 +75,12 @@ if __name__ == "__main__":
             print(acc_x)
             gyrodata = bin(acc_x)
             bits = gyrodata[len(gyrodata)-7:len(gyrodata)-3]
+            try:
+                for bit in bits:
+                    with open("gyrodata.txt", "w") as file:
+                        file.write(bits) 
+            except:
+                pass
             print(bits)
             sleep(.50)
     except KeyboardInterrupt:
