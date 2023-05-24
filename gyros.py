@@ -72,7 +72,7 @@ if __name__ == "__main__":
             #print("Y rotation: ", round(y_angle, 2))
             #print("Y-Mittelwert: " +str(y_angle/count))
             #print("X-Mittelwert: " +str(x_angle/count))
-            gyrodata = bin(acclX_scaled + acclY_scaled + acclZ_scaled)
+            gyrodata = bin(int(acclX_scaled) + int(acclY_scaled) + int(acclZ_scaled))
             bits = gyrodata[len(gyrodata):]
             print(bits)
             sleep(.50)
