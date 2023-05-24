@@ -75,7 +75,7 @@ if __name__ == "__main__":
             z_angle = round(get_z_rotation(acclX_scaled, acclY_scaled, acclZ_scaled),0)
             count += 1
             
-            print("X rotation: ", round(x_angle, 2))
+            #print("X rotation: ", round(x_angle, 2))
             print("Y rotation: ", round(y_angle, 2))
             print("Z rotation: ", round(z_angle, 2))
             # print("Y-Mittelwert: " +str(y_angle/count))
