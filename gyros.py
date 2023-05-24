@@ -74,7 +74,7 @@ if __name__ == "__main__":
             #print("X-Mittelwert: " +str(x_angle/count))
             print(acc_x)
             gyrodata = bin(acc_x+acc_y+acc_z)
-            bits = gyrodata[len(gyrodata):]
+            bits = gyrodata[len(gyrodata)-1:]
             print(bits)
             sleep(.50)
     except KeyboardInterrupt:
