@@ -70,9 +70,9 @@ if __name__ == "__main__":
             
             #print("X rotation: ", round(x_angle, 2))
             #print("Y rotation: ", round(y_angle, 2))
-            #print("Y-Mittelwert: " +str(y_angle/count))
-            #print("X-Mittelwert: " +str(x_angle/count))
-            print(acc_x)
+            print("Y-Mittelwert: " +str(y_angle/count))
+            print("X-Mittelwert: " +str(x_angle/count))
+            #print(acc_x)
             gyrodata = bin(acc_x)
             bits = gyrodata[len(gyrodata)-7:len(gyrodata)-3]
             try:
@@ -81,7 +81,7 @@ if __name__ == "__main__":
                         file.write(bits) 
             except:
                 pass
-            print(bits)
+            #print(bits)
             sleep(.50)
     except KeyboardInterrupt:
         sys.exit(0)
