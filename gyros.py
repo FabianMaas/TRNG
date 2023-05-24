@@ -64,15 +64,15 @@ if __name__ == "__main__":
             acclY_scaled = acc_y * .000061 * 9.80665
             acclZ_scaled = acc_z * .000061 * 9.80665
              
-            x_angle += round(get_x_rotation(acclX_scaled, acclY_scaled, acclZ_scaled),0) + 83
-            y_angle += round(get_y_rotation(acclX_scaled, acclY_scaled, acclZ_scaled),0) - 96
+            x_angle += round(get_x_rotation(acclX_scaled, acclY_scaled, acclZ_scaled),0)
+            y_angle += round(get_y_rotation(acclX_scaled, acclY_scaled, acclZ_scaled),0)
             count += 1
             
             #print("X rotation: ", round(x_angle, 2))
             #print("Y rotation: ", round(y_angle, 2))
             #print("Y-Mittelwert: " +str(y_angle/count))
             #print("X-Mittelwert: " +str(x_angle/count))
-            gyrodata = bin(acclX_scaled + acclY_scaled + acclZ_scaled)
+            gyrodata = bin(int(acclX_scaled + acclY_scaled + acclZ_scaled))
             bits = gyrodata[len(gyrodata):]
             print(bits)
             sleep(.50)
