@@ -77,7 +77,7 @@ if __name__ == "__main__":
             bits = gyrodata[len(gyrodata)-7:len(gyrodata)-3]
             try:
                 for bit in bits:
-                    with open("gyrodata.txt", "w") as file:
+                    with open("gyrodata.txt", "a") as file:
                         file.write(bits) 
             except:
                 pass
