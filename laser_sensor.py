@@ -48,6 +48,7 @@ class LaserSensor:
                             self.__list_bottom.append(tmp)
 
                             if self.__list_bottom.size() >= 32:
+                                print("DEBUG: " + self.__list_bottom)
                                 if self.__list_bottom.count(0) > 30 or self.__list_bottom.count(1) > 30:
                                     self.__bottom_down = True   
                                     continue
@@ -66,6 +67,7 @@ class LaserSensor:
                             self.__list_top.append(tmp)
 
                             if self.__list_top.size() >= 32:
+                                print("DEBUG: " + self.__list_top)
                                 if self.__list_top.count(0) > 30 or self.__list_top.count(1) > 30:
                                     self.__top_down = True  
                                     continue
