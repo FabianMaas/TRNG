@@ -12,7 +12,8 @@ class LaserSensor:
     __is_running = False
     __top_down = False
     __bottom_down = False
-
+    __list_top = []
+    __list_bottom = []
 
     def write_to_db(self, rest_api, error_event):
         last_executed_time = datetime.datetime.now()
@@ -32,50 +33,45 @@ class LaserSensor:
             
             tmp_rand_arr = []
             current_queue = self.__queue_top
-            #print("Size:", self.__queue.qsize()) 
+
             if (self.__queue_top.qsize() >= 8 and not self.__top_down or self.__queue_bottom.qsize() >= 8 and not self.__bottom_down):
-                #print("----First if Debug----")
                 tmp_rand_arr.clear()
                 
                 if self.__queue_bottom.qsize() > self.__queue_top.qsize() and not self.__bottom_down:
-                    consecutive_number_count = 0
                     previous_number = None
                     count = 0
-                    #print("----second if Debug----")
+                    
                     while count < 8:
                         try:
                             tmp = self.__queue_bottom.get()
                             tmp_rand_arr.append(tmp)
-                            if tmp == previous_number:
-                                consecutive_number_count += 1
-                            previous_number = tmp
-                            count += 1
-                            if consecutive_number_count >= 7:
-                                self.__bottom_down = True
-                                continue
-                        except:
+                            self.__list_bottom.append(tmp)
+
+                            if self.__list_bottom.size() >= 32:
+                                if self.__list_bottom.count(0) > 30 or self.__list_bottom.count(1) > 30:
+                                    self.__bottom_down = True   
+                                    continue
+                                self.__list_bottom.pop(0)
+                        except Exception as e:
+                            print("EXCEPTION from top queue write: " + e)
                             pass
                         
                 elif self.__queue_top.qsize() > self.__queue_bottom.qsize() and not self.__top_down:
-                    consecutive_number_count = 0
-                    previous_number = None
                     count = 0
                     #print("----First elif Debug----")
                     while count < 8:
                         try:
                             tmp = self.__queue_top.get()
                             tmp_rand_arr.append(tmp)
-                            if tmp == previous_number:
-                                consecutive_number_count += 1
-                            previous_number = tmp
-                            count += 1
+                            self.__list_top.append(tmp)
 
-                            #print("consecutive_number_count="+str(consecutive_number_count))
-                            if consecutive_number_count >= 7:
-                                self.__top_down = True
-                                continue
+                            if self.__list_top.size() >= 32:
+                                if self.__list_top.count(0) > 30 or self.__list_top.count(1) > 30:
+                                    self.__top_down = True  
+                                    continue
+                                self.__list_top.pop(0)
                         except Exception as e:
-                            print(e)
+                            print("EXCEPTION from top queue write: " + e)
                             pass
 
                 tmp_string = "".join(str(x) for x in tmp_rand_arr)
@@ -102,7 +98,8 @@ class LaserSensor:
     def start(self):
         try:
             self.__loop()
-        except:
+        except Exception as e:
+            print("EXCEPTION from queue loop: " + e)
             pass
 
 
@@ -149,39 +146,48 @@ class LaserSensor:
     def __callback_func1(self, channel):
         if GPIO.input(channel):
             if(not self.__top_down):
-                #self.__queue_top.put(0)
+                self.__queue_top.put(0)
+                '''
                 microsecond = bin(datetime.datetime.now().microsecond)
                 bits = microsecond[len(microsecond)-2:]
                 for bit in bits:
                     self.__queue_top.put(bit)
-                print("first: "+bits)         
+                '''
+                print("first: 0")         
 
     def __callback_func2(self, channel):
         if GPIO.input(channel):
             if(not self.__top_down):
-                #self.__queue_top.put(1)
+                self.__queue_top.put(1)
+                '''
                 microsecond = bin(datetime.datetime.now().microsecond)
                 bits = microsecond[len(microsecond)-2:]
                 for bit in bits:
                     self.__queue_top.put(bit)
-                print("first: "+bits)
+                '''
+                print("first: 1")
     
     def __callback_func3(self, channel):
         if GPIO.input(channel):
             if(not self.__bottom_down):
-                #self.__queue_bottom.put(0)
+                self.__queue_bottom.put(0)
+                '''
                 microsecond = bin(datetime.datetime.now().microsecond)
+                
                 bits = microsecond[len(microsecond)-2:]
                 for bit in bits:
                     self.__queue_bottom.put(bit)
-                print("second: "+bits)
+                '''
+                print("second: 0")
 
     def __callback_func4(self, channel):
         if GPIO.input(channel):
             if(not self.__bottom_down):
-                #self.__queue_bottom.put(1)
+                self.__queue_bottom.put(1)
+                '''
                 microsecond = bin(datetime.datetime.now().microsecond)
                 bits = microsecond[len(microsecond)-2:]
                 for bit in bits:
                     self.__queue_bottom.put(bit)
-                print("second: "+bits)
+                '''
+                print("second: 1")
