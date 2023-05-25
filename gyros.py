@@ -76,10 +76,11 @@ if __name__ == "__main__":
             count += 1
             
             #print("X rotation: ", round(x_angle, 2))
-            print("Y rotation: ", round(y_angle, 2))
-            print("Z rotation: ", round(z_angle, 2))
-            # print("Y-Mittelwert: " +str(y_angle/count))
-            # print("X-Mittelwert: " +str(x_angle/count))
+            #print("Y rotation: ", round(y_angle, 2))
+            #print("Z rotation: ", round(z_angle, 2))
+            print("Y-Mittelwert: " +str(y_angle/count))
+            print("X-Mittelwert: " +str(x_angle/count))
+            sleep(2)
             #print(acc_x)
             # gyrodata = bin(acc_x)
             # bits = gyrodata[len(gyrodata)-7:len(gyrodata)-3]
