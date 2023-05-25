@@ -80,7 +80,7 @@ if __name__ == "__main__":
             #print("Z rotation: ", round(z_angle, 2))
             print("Y-Mittelwert: " +str(y_angle/count))
             print("X-Mittelwert: " +str(x_angle/count))
-            print("Z-Mittelwert: " +str(z_angle(count)))
+            print("Z-Mittelwert: " +str(z_angle/count))
             print("-------")
             sleep(2)
             #print(acc_x)
