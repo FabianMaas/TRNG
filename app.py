@@ -29,8 +29,8 @@ def trng():
 
 
 @app.route('/randomNum/getRandom', methods=['GET'])
-def get_random_bits():
-    if not laser.getIsActive():
+def get_random_hex():
+    if not laser_process.is_alive():
         response = make_response('system not ready; try init', 432)
         return response
     
@@ -39,9 +39,8 @@ def get_random_bits():
 
     number_rows = math.ceil((quantity*num_bits)/8)
 
-    while db.session.query(Randbyte).count() < number_rows:
-        time.sleep(1)
-
+    wait_for_rows(number_rows)
+    
     rows_arr = []
 
     oldest_rows = Randbyte.query.order_by(Randbyte.id).limit(number_rows).all()
@@ -52,11 +51,19 @@ def get_random_bits():
 
     db.session.commit()
     
+    remainder = num_bits % 4
     joined_string = ''.join(rows_arr)
     print("numbits=",num_bits)
-    split_arr = [joined_string[i:i+num_bits] for i in range(0, (quantity*num_bits), num_bits)]
+    split_arr = []
+    for i in range(0, quantity * num_bits, num_bits):
+        substring = joined_string[i : i + num_bits]
+        if(not remainder == 0):
+            for i in range(4-remainder):
+                substring = "0" + substring
+        split_arr.append(substring)
+    
     print(split_arr)
-    hex_arr = bin_to_hex(split_arr)
+    hex_arr = __bin_to_hex(split_arr)
     print(hex_arr)
     data = {
         'description': 'successful operation; HEX-encoded bit arrays (with leading zeros if required)',
@@ -84,7 +91,7 @@ def start():
         db_write_process = multiprocessing.Process(target=laser.write_to_db, args=(app,))
         db_write_process.start()
 
-    if not laser_process.is_alive() or db_write_process.is_alive():
+    if not laser_process.is_alive() or not db_write_process.is_alive():
         response = make_response(
             'unable to initialize the random number generator within a timeout of 60 seconds',
             555,
@@ -114,9 +121,17 @@ def stop_laser():
     return response
 
 
-def bin_to_hex(binaryArray):
-    hexArray = [hex(int(binary, 2))[2:] for binary in binaryArray]
-    return hexArray
+def wait_for_rows(number_rows):
+        while db.session.query(Randbyte).count() < number_rows:
+            time.sleep(1)
+
+def __bin_to_hex(bin_array):
+    hex_array = []
+    for binary in bin_array:
+        binary = binary.zfill((len(binary) + 3) // 4 * 4)
+        hex_string = format(int(binary, 2), '0' + str(len(binary) // 4) + 'X')
+        hex_array.append(hex_string)
+    return hex_array
 
 
 if __name__ == '__main__':
@@ -127,4 +142,4 @@ if __name__ == '__main__':
     # Datenbank-Tabellen erstellen
     with app.app_context():
         db.create_all()
-    app.run(host='0.0.0.0', port=8080, threaded=False)
+    app.run(host='0.0.0.0', port=8080, threaded=True)
