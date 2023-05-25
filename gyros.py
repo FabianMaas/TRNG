@@ -81,7 +81,7 @@ if __name__ == "__main__":
             print("Y-Mittelwert: " +str(y_angle/count))
             print("X-Mittelwert: " +str(x_angle/count))
             print("Z-Mittelwert: " +str(z_angle(count))
-            print("...")
+            print("OOOOO")
             sleep(2)
             #print(acc_x)
             # gyrodata = bin(acc_x)
