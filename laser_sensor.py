@@ -46,9 +46,9 @@ class LaserSensor:
                             tmp = self.__queue_bottom.get()
                             tmp_rand_arr.append(tmp)
                             self.__list_bottom.append(tmp)
-                            print("DEBUG: " + str(self.__list_bottom))
+
                             if len(self.__list_bottom) >= 32:
-                                print("DEBUG: " + str(self.__list_bottom))
+                                print("DEBUG bottom-list: " + str(self.__list_bottom))
                                 if self.__list_bottom.count(0) > 30 or self.__list_bottom.count(1) > 30:
                                     self.__bottom_down = True   
                                     continue
@@ -65,9 +65,9 @@ class LaserSensor:
                             tmp = self.__queue_top.get()
                             tmp_rand_arr.append(tmp)
                             self.__list_top.append(tmp)
-                            print("DEBUG: " + str(self.__list_top))
+
                             if len(self.__list_top) >= 32:
-                                print("DEBUG: " + str(self.__list_top))
+                                print("DEBUG top-list: " + str(self.__list_top))
                                 if self.__list_top.count(0) > 30 or self.__list_top.count(1) > 30:
                                     self.__top_down = True  
                                     continue
