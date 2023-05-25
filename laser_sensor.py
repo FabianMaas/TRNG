@@ -54,7 +54,7 @@ class LaserSensor:
                                     continue
                                 self.__list_bottom.pop(0)
                         except Exception as e:
-                            print("EXCEPTION from top queue write: " + e)
+                            print("EXCEPTION from top queue write: " + e.__str__)
                             pass
                         
                 elif self.__queue_top.qsize() > self.__queue_bottom.qsize() and not self.__top_down:
@@ -73,7 +73,7 @@ class LaserSensor:
                                     continue
                                 self.__list_top.pop(0)
                         except Exception as e:
-                            print("EXCEPTION from top queue write: " + e)
+                            print("EXCEPTION from top queue write: " + e.__str__)
                             pass
 
                 tmp_string = "".join(str(x) for x in tmp_rand_arr)
@@ -101,7 +101,7 @@ class LaserSensor:
         try:
             self.__loop()
         except Exception as e:
-            print("EXCEPTION from queue loop: " + e)
+            print("EXCEPTION from queue loop: " + e.__str__)
             pass
 
 
