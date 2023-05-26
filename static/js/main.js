@@ -40,7 +40,6 @@ toggleBtn.addEventListener("click", () => {
         quantity_input.value = 1;
         const numBits_input = document.getElementById('numBits-input');
         numBits_input.value = 1;
-        quantity_input.value = 1;
         toggleBtn.textContent = "Start";
         toggleBtn.classList.remove("stop");
         toggleBtn.style.backgroundColor = "green";
