@@ -108,11 +108,13 @@ generateBtn.addEventListener("click", () => {
 
 function copyRow(row) {
   const numberValue = row.querySelector("td:nth-child(2)").textContent;
-  navigator.clipboard.writeText(numberValue);
+  const stringWithoutLineBreaks = numberValue.replace(/\r?\n|\r/g, '');
+  navigator.clipboard.writeText(stringWithoutLineBreaks);
 }
 
 function exportToFile(hexArray) {
-  const fileContents = hexArray.join('\n');
+  const arrayWithoutLineBreaks = hexArray.map(str => str.replace(/\r?\n|\r/g, ''));
+  const fileContents = arrayWithoutLineBreaks.join('\n');
 
   const blob = new Blob([fileContents], { type: 'text/plain' });
 
