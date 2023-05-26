@@ -29,12 +29,18 @@ toggleBtn.addEventListener("click", () => {
       .then((response) => {
         console.log("Stopped");
         hideSpinner();
+        resetTable();
         const button = document.getElementById('generate-btn');
         button.disabled = true;
         const button2 = document.getElementById('export-btn');
         button2.disabled = true;
         const galton_image = document.getElementById('galton');
         galton_image.hidden = true;
+        const quantity_input = document.getElementById('quantity-input');
+        quantity_input.value = 1;
+        const numBits_input = document.getElementById('numBits-input');
+        numBits_input.value = 1;
+        quantity_input.value = 1;
         toggleBtn.textContent = "Start";
         toggleBtn.classList.remove("stop");
         toggleBtn.style.backgroundColor = "green";
