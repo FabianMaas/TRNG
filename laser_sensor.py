@@ -4,6 +4,7 @@ import random
 import models
 import multiprocessing
 
+
 class LaserSensor:
 
     __queue_top = multiprocessing.Queue()
@@ -11,7 +12,8 @@ class LaserSensor:
     __is_running = False
     __top_down = False
     __bottom_down = False
-
+    __list_top = []
+    __list_bottom = []
 
     def write_to_db(self, rest_api, error_event):
         last_executed_time = datetime.datetime.now()
@@ -22,58 +24,56 @@ class LaserSensor:
             difference = current_time - last_executed_time
             datetime.timedelta(0, 4, 316543)
             #print("difference:",difference.total_seconds())
-            
-            if difference.total_seconds() > 20:
+            #print("Setter:"+ str(error_event.is_set()))
+            if difference.total_seconds() > 15:
                 error_event.set()
+                
                 last_executed_time = datetime.datetime.now()
 
             
             tmp_rand_arr = []
             current_queue = self.__queue_top
-            #print("Size:", self.__queue.qsize()) 
+
             if (self.__queue_top.qsize() >= 8 and not self.__top_down or self.__queue_bottom.qsize() >= 8 and not self.__bottom_down):
-                print("----First if Debug----")
                 tmp_rand_arr.clear()
                 
                 if self.__queue_bottom.qsize() > self.__queue_top.qsize() and not self.__bottom_down:
-                    consecutive_number_count = 0
                     previous_number = None
                     count = 0
-                    print("----second if Debug----")
+                    
                     while count < 8:
                         try:
                             tmp = self.__queue_bottom.get()
                             tmp_rand_arr.append(tmp)
-                            if tmp == previous_number:
-                                consecutive_number_count += 1
-                            previous_number = tmp
-                            count += 1
-                            if consecutive_number_count >= 7:
-                                self.__bottom_down = True
-                                continue
-                        except:
+                            self.__list_bottom.append(tmp)
+
+                            if len(self.__list_bottom) >= 32:
+                                print("DEBUG bottom-list: " + str(self.__list_bottom))
+                                if self.__list_bottom.count(0) > 30 or self.__list_bottom.count(1) > 30:
+                                    self.__bottom_down = True   
+                                    continue
+                                self.__list_bottom.pop(0)
+                        except Exception as e:
+                            print("EXCEPTION from top queue write: " + str(e))
                             pass
                         
                 elif self.__queue_top.qsize() > self.__queue_bottom.qsize() and not self.__top_down:
-                    consecutive_number_count = 0
-                    previous_number = None
                     count = 0
-                    print("----First elif Debug----")
+                    #print("----First elif Debug----")
                     while count < 8:
                         try:
                             tmp = self.__queue_top.get()
                             tmp_rand_arr.append(tmp)
-                            if tmp == previous_number:
-                                consecutive_number_count += 1
-                            previous_number = tmp
-                            count += 1
+                            self.__list_top.append(tmp)
 
-                            #print("consecutive_number_count="+str(consecutive_number_count))
-                            if consecutive_number_count >= 7:
-                                self.__top_down = True
-                                continue
+                            if len(self.__list_top) >= 32:
+                                print("DEBUG top-list: " + str(self.__list_top))
+                                if self.__list_top.count(0) > 30 or self.__list_top.count(1) > 30:
+                                    self.__top_down = True  
+                                    continue
+                                self.__list_top.pop(0)
                         except Exception as e:
-                            print(e)
+                            print("EXCEPTION from top queue write: " + str(e))
                             pass
 
                 tmp_string = "".join(str(x) for x in tmp_rand_arr)
@@ -100,7 +100,8 @@ class LaserSensor:
     def start(self):
         try:
             self.__loop()
-        except:
+        except Exception as e:
+            print("EXCEPTION from queue loop: " + str(e))
             pass
 
 
@@ -146,20 +147,49 @@ class LaserSensor:
 
     def __callback_func1(self, channel):
         if GPIO.input(channel):
-            self.__queue_top.put(0)
-            print("first: 0")
+            if(not self.__top_down):
+                self.__queue_top.put(0)
+                '''
+                microsecond = bin(datetime.datetime.now().microsecond)
+                bits = microsecond[len(microsecond)-2:]
+                for bit in bits:
+                    self.__queue_top.put(bit)
+                '''
+                print("first: 0")         
 
     def __callback_func2(self, channel):
         if GPIO.input(channel):
-            self.__queue_top.put(1)
-            print("first: 1")
+            if(not self.__top_down):
+                self.__queue_top.put(1)
+                '''
+                microsecond = bin(datetime.datetime.now().microsecond)
+                bits = microsecond[len(microsecond)-2:]
+                for bit in bits:
+                    self.__queue_top.put(bit)
+                '''
+                print("first: 1")
     
     def __callback_func3(self, channel):
         if GPIO.input(channel):
-            self.__queue_bottom.put(0)
-            print("second: 0")
+            if(not self.__bottom_down):
+                self.__queue_bottom.put(0)
+                '''
+                microsecond = bin(datetime.datetime.now().microsecond)
+                
+                bits = microsecond[len(microsecond)-2:]
+                for bit in bits:
+                    self.__queue_bottom.put(bit)
+                '''
+                print("second: 0")
 
     def __callback_func4(self, channel):
         if GPIO.input(channel):
-            self.__queue_bottom.put(1)
-            print("second: 1")
+            if(not self.__bottom_down):
+                self.__queue_bottom.put(1)
+                '''
+                microsecond = bin(datetime.datetime.now().microsecond)
+                bits = microsecond[len(microsecond)-2:]
+                for bit in bits:
+                    self.__queue_bottom.put(bit)
+                '''
+                print("second: 1")
