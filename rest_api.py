@@ -50,9 +50,6 @@ def get_random_hex():
         time.sleep(1)
 
     rows_arr = []
-    """
-    Merging Conflict
-    """
 
     oldest_rows = Randbyte.query.order_by(Randbyte.id).limit(number_rows).all()
     
