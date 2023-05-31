@@ -5,6 +5,7 @@ from testsuite import Testsuite
 from models import db, Randbyte
 import time
 import math
+import os
 
 
 app = Flask(__name__)
@@ -135,11 +136,12 @@ def __bin_to_hex(bin_array):
 
 
 if __name__ == '__main__':
-    #cert_file = os.path.join(os.path.dirname(__file__), 'cert.pem')
-    #key_file = os.path.join(os.path.dirname(__file__), 'key.pem')
-    #app.run(host='localhost', port=443, ssl_context=(cert_file, key_file))
+    
 
     # Datenbank-Tabellen erstellen
     with app.app_context():
         db.create_all()
-    app.run(host='0.0.0.0', port=8080, threaded=True)
+    # openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365
+    cert_file = os.path.join('cert.pem')
+    key_file = os.path.join('key.pem')
+    app.run(host='0.0.0.0', port=443, threaded=True, ssl_context=(cert_file, key_file))
