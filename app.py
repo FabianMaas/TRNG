@@ -122,9 +122,18 @@ def stop_laser():
     return response
 
 
+@app.route('/getCount', methods=['GET'])
+def get_safed_number_count():
+    with app.app_context():
+        rows = db.session.query(Randbyte).count()
+        bitCount = rows * 8
+    response = make_response(jsonify(bitCount), 200)
+    return response
+
+
 def wait_for_rows(number_rows):
-        while db.session.query(Randbyte).count() < number_rows:
-            time.sleep(1)
+    while db.session.query(Randbyte).count() < number_rows:
+        time.sleep(1)
 
 def __bin_to_hex(bin_array):
     hex_array = []

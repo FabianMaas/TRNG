@@ -5,11 +5,12 @@ const quantityInput = document.getElementById("quantity-input");
 const numBitsInput = document.getElementById("numBits-input");
 const resultTable = document.getElementById("result-table");
 const toggleBtn = document.getElementById("toggleBtn");
+const alertDiv = document.getElementById("alertDiv");
 let isRunning = false;
 
 toggleBtn.addEventListener("click", () => {
   if (!isRunning) {
-    fetch("https://141.19.155.235/randomNum/init")
+    fetch("https://localhost/randomNum/init")
       .then((response) => {
         console.log("Started");
         const button = document.getElementById('generate-btn');
@@ -25,7 +26,7 @@ toggleBtn.addEventListener("click", () => {
         console.error("Error starting:", error);
       });
   } else {
-    fetch("https://141.19.155.235/randomNum/shutdown")
+    fetch("https://localhost/randomNum/shutdown")
       .then((response) => {
         console.log("Stopped");
         hideSpinner();
@@ -40,6 +41,8 @@ toggleBtn.addEventListener("click", () => {
         numBits_input.value = 1;
         const canvas = document.getElementById('canvas');
         canvas.hidden = true;
+        let alert = alertDiv;
+        alert.hidden = true;
         toggleBtn.textContent = "Start";
         toggleBtn.classList.remove("stop");
         toggleBtn.style.backgroundColor = "green";
@@ -55,17 +58,19 @@ toggleBtn.addEventListener("click", () => {
 generateBtn.addEventListener("click", () => {
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
-  const url = `https://141.19.155.235/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
+  const url = `https://localhost/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
   const button = document.getElementById('generate-btn');
   button.disabled = true;
   const button2 = document.getElementById('export-btn');
   button2.disabled = true;
   resetTable();
+  const requiredBits = quantity * numBits;
+  showTimeAlert(requiredBits);
   showSpinner();
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.randomBits);
+      //console.log(data.randomBits);
       exportToFile(data.randomBits);
       const tableRows = data.randomBits.map((num, index) => {
         const tableData1 = document.createElement("td");
@@ -175,4 +180,51 @@ function resetTable() {
 function insertLineBreaks(str, breakInterval) {
   var regex = new RegExp(`(.{${breakInterval}})`, 'g');
   return str.replace(regex, '$1\n');
+}
+
+function showTimeAlert(requiredBits) {
+  
+  var currentBits = 0;
+  var remainderBits = 0;
+
+  fetch("https://localhost/getCount")
+      .then((response) => response.json())
+      .then((data) => {
+        currentBits = data;
+        if (currentBits > requiredBits) {
+          remainderBits = 0;
+        } else {
+          remainderBits = requiredBits - currentBits;
+        }
+
+        var seconds = remainderBits/2;
+        var time = convertSecondsToTime(seconds);
+        
+        var description = "Bits currently stored: " + currentBits + "<br>Bits to be generated: " + remainderBits + "<br>Estimated time to wait: " + time + " (hh:mm:ss)";
+
+        let alert = alertDiv;
+        alert.innerHTML = description;
+        alert.hidden = false;
+
+        setTimeout(function() {
+          alert.hidden = true;
+        }, 10000);
+
+       })
+      .catch((error) => {
+        console.error(error);
+      });
+}
+
+function convertSecondsToTime(seconds) {
+  var hours = Math.floor(seconds / 3600);
+  var minutes = Math.floor((seconds % 3600) / 60);
+  var remainingSeconds = seconds % 60;
+
+  var timeString = padNumber(hours) + ":" + padNumber(minutes) + ":" + padNumber(remainingSeconds);
+  return timeString;
+}
+
+function padNumber(number) {
+  return number.toString().padStart(2, "0");
 }
