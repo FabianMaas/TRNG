@@ -1,39 +1,55 @@
 from time import sleep
 import RPi.GPIO as GPIO
 import warnings
-import multiprocessing
+from multiprocessing import Event
 
 class StepperEngine:
-	# defining constants
 	__DIR = 5   # Direction GPIO Pin
 	__STEP = 6  # Step GPIO Pin
 	__CW = 0     # Clockwise Rotation
 	#CCW = 1    # Counterclockwise Rotation (not in use)
-	__SPR = 1600   # Steps per Revolution (360 / 7.5)
-	__step_count = __SPR
-	__delay = .0001
+	__step_count = 1600   # Steps per Revolution
+	__delay = .0001	# Turning speed
 
-	def start(self, error_event):
+	def start(self, error_event: Event):
+		"""
+		Starts the whole process with setting up the GPIO and
+		runs the engine until the reset functions gets called.
+
+		Params:
+		- error_event: a object of the type Event from multiprocessing library
+		"""
 		warnings.filterwarnings("ignore", category=RuntimeWarning)
 		self.__error_event = error_event
 		try:
 			self.__setup()
 		except Exception as e:
+			print("EXCEPTION from engine setup: " + str(e))
 			pass
-			#print("setup",str(e))
 		try:
 			self.__loop()
 		except Exception as e:
+			print("EXCEPTION from engine loop: " + str(e))
 			pass
-			#print("loop",str(e))
 
 	def __setup(self):
+		"""
+		Sets up the physical location of the GPIO pins
+		and their behavior. 
+		"""
 		GPIO.setmode(GPIO.BCM)
 		GPIO.setup(self.__DIR, GPIO.OUT)
 		GPIO.setup(self.__STEP, GPIO.OUT)
 		GPIO.output(self.__DIR, self.__CW)
 
 	def __loop(self):
+		"""
+		Starts the whole process with setting up the GPIO and
+		runs the engine until the reset functions gets called.
+
+		Params:
+		- error_event: a object of the type Event from multiprocessing library
+		"""
 		while True:
 			#print("Resetter:"+ str(self.__error_event.is_set()))
 			if self.__error_event.is_set():
@@ -45,7 +61,10 @@ class StepperEngine:
 					GPIO.output(self.__STEP, GPIO.LOW)
 					sleep(self.__delay)
 
-	def destroy(self):
+	def reset(self):
+		"""
+		The endless run of the engine will be reseted with a call of this function.
+		"""
 		try:
 			GPIO.output(self.__STEP, GPIO.LOW)
 			GPIO.cleanup()
@@ -53,7 +72,14 @@ class StepperEngine:
 			pass
 
 	def unstuck_marbles(self, rounds):
-		self.destroy()
+		"""
+		If there are marbles stuck in front of the lift
+		call this function to let the engine spin backwards for x rounds.
+
+		Params:
+		- rounds: An integer to tell how many rounds the engine will be spinning backwards.
+		"""
+		self.reset()
 		self.__CW = 1
 		self.__setup()
 		for x in range(rounds):
@@ -62,6 +88,6 @@ class StepperEngine:
 					sleep(self.__delay)
 					GPIO.output(self.__STEP, GPIO.LOW)
 					sleep(self.__delay)
-		self.destroy()
+		self.reset()
 		self.__CW = 0
 		self.__setup()

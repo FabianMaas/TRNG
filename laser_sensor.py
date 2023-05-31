@@ -27,20 +27,19 @@ class LaserSensor:
         last_executed_time = datetime.datetime.now()
         while True:
             current_time = datetime.datetime.now()
-            #print("last_executed_time:",last_executed_time)
-            #print("current:",current_time)
             difference = current_time - last_executed_time
             datetime.timedelta(0, 4, 316543)
-            #print("difference:",difference.total_seconds())
-            #print("Setter:"+ str(error_event.is_set()))
+            
+            """
+            if no bits going to be generated within 15 seconds an error object will be set to true.
+            The error object is needed to let the engine turn backwards to fix stuck marbles.
+            """
             if difference.total_seconds() > 15:
                 error_event.set()
                 
                 last_executed_time = datetime.datetime.now()
-
             
             tmp_rand_arr = []
-            current_queue = self.__queue_top
 
             if (self.__queue_top.qsize() >= 8 and not self.__top_down or self.__queue_bottom.qsize() >= 8 and not self.__bottom_down):
                 tmp_rand_arr.clear()
@@ -67,7 +66,6 @@ class LaserSensor:
                         
                 elif self.__queue_top.qsize() > self.__queue_bottom.qsize() and not self.__top_down:
                     count = 0
-                    #print("----First elif Debug----")
                     while count < 8:
                         try:
                             tmp = self.__queue_top.get()
