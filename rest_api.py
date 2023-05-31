@@ -127,7 +127,7 @@ def init_system():
 @rest_api.route('/randomNum/shutdown', methods=['GET'])
 def shutdown_system():
     __laser.setStopFlag()
-    __engine.destroy()
+    __engine.reset()
 
     __laser_process.terminate()
     __db_write_process.terminate()

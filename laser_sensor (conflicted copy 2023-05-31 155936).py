@@ -112,6 +112,10 @@ class LaserSensor:
 
 
     def __loop(self):
+        """
+        An endless loop waiting for callback functions,
+        which detect an interruption of the ray. 
+        """
         RECEIVER_PIN1 = 19
         RECEIVER_PIN2 = 13
         RECEIVER_PIN3 = 26
