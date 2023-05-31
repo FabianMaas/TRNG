@@ -16,6 +16,14 @@ class LaserSensor:
     __list_bottom = []
 
     def write_to_db(self, rest_api, error_event):
+        """
+        Checks the data queues constantly and writes to the db,
+        if the queue reaches 8 Bit.
+
+        Params: 
+        - rest_api is an flask instance object.
+        - error_event is an object of the type Event from multiprocessing library.
+        """
         last_executed_time = datetime.datetime.now()
         while True:
             current_time = datetime.datetime.now()
