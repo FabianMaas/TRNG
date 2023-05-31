@@ -9,13 +9,13 @@ let isRunning = false;
 
 toggleBtn.addEventListener("click", () => {
   if (!isRunning) {
-    fetch("http://localhost:8080/randomNum/init")
+    fetch("https://141.19.155.235/randomNum/init")
       .then((response) => {
         console.log("Started");
         const button = document.getElementById('generate-btn');
         button.disabled = false;
-        const galton_image = document.getElementById('galton');
-        galton_image.hidden = false;
+        const canvas = document.getElementById('canvas');
+        canvas.hidden = false;
         toggleBtn.textContent = "Stop";
         toggleBtn.classList.add("stop");
         toggleBtn.style.backgroundColor = "red";
@@ -25,7 +25,7 @@ toggleBtn.addEventListener("click", () => {
         console.error("Error starting:", error);
       });
   } else {
-    fetch("http://localhost:8080/randomNum/shutdown")
+    fetch("https://141.19.155.235/randomNum/shutdown")
       .then((response) => {
         console.log("Stopped");
         hideSpinner();
@@ -34,12 +34,12 @@ toggleBtn.addEventListener("click", () => {
         button.disabled = true;
         const button2 = document.getElementById('export-btn');
         button2.disabled = true;
-        const galton_image = document.getElementById('galton');
-        galton_image.hidden = true;
         const quantity_input = document.getElementById('quantity-input');
         quantity_input.value = 1;
         const numBits_input = document.getElementById('numBits-input');
         numBits_input.value = 1;
+        const canvas = document.getElementById('canvas');
+        canvas.hidden = true;
         toggleBtn.textContent = "Start";
         toggleBtn.classList.remove("stop");
         toggleBtn.style.backgroundColor = "green";
@@ -55,7 +55,7 @@ toggleBtn.addEventListener("click", () => {
 generateBtn.addEventListener("click", () => {
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
-  const url = `http://localhost:8080/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
+  const url = `https://141.19.155.235/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
   const button = document.getElementById('generate-btn');
   button.disabled = true;
   const button2 = document.getElementById('export-btn');

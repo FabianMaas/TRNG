@@ -9,10 +9,11 @@
 </head>
 
 <body>
-  <div class="container">
+  <canvas id="canvas" hidden="true"></canvas>
+  <div class="container" class="content">
+    
     <h1>True Random Number Generator</h1>
     <img src="static/img/logo.png" style="max-width: 200px; max-height: auto" alt="logo_wavetech" />
-    <img id="galton" hidden="true" src="static/img/galton.gif" style="max-width: 200px; max-height: auto" alt="galton_board" />
 
     <div>
       <button id="toggleBtn" class="button">Start</button>
@@ -36,6 +37,7 @@
   </div>
 
   <script src="static/js/main.js"></script>
+  <script src="static/js/background.js"></script>
 </body>
 
 </html>
