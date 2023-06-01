@@ -15,7 +15,7 @@ class LaserSensor:
     __list_top = []
     __list_bottom = []
 
-    def write_to_db(self, rest_api, error_event):
+    def write_to_db(self, rest_api, error_event: multiprocessing.Event):
         """
         Checks the data queues constantly and writes to the db,
         if the queue reaches 8 Bit.
@@ -54,36 +54,37 @@ class LaserSensor:
                     count = 0
                     while count < 8:
                         try:
+                            tmp = self.__queue_bottom.get()
+                            tmp_rand_arr.append(tmp)
+                            self.__list_bottom.append(tmp)
+
                             if len(self.__list_bottom) >= 32:
                                 print("DEBUG bottom-list: " + str(self.__list_bottom))
                                 if self.__list_bottom.count(0) > 30 or self.__list_bottom.count(1) > 30:
                                     self.__bottom_down = True   
                                     continue
-
-                            tmp = self.__queue_bottom.get()
-                            tmp_rand_arr.append(tmp)
-                            self.__list_bottom.append(tmp)
+                            
                             self.__list_bottom.pop(0)
                             count += 1
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
-                            pass
-                        
+                            pass    
                 elif not self.__top_down and self.__queue_top.qsize() > self.__queue_bottom.qsize():
                     count = 0
                     while count < 8:
                         try:
+                            tmp = self.__queue_top.get()
+                            tmp_rand_arr.append(tmp)
+                            self.__list_top.append(tmp)
+                            
                             if len(self.__list_top) >= 32:
                                 print("DEBUG top-list: " + str(self.__list_top))
                                 if self.__list_top.count(0) > 30 or self.__list_top.count(1) > 30:
                                     self.__top_down = True  
                                     continue
 
-                            tmp = self.__queue_top.get()
-                            tmp_rand_arr.append(tmp)
-                            self.__list_top.append(tmp)
-                            count += 1
                             self.__list_top.pop(0)
+                            count += 1
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
                             pass
@@ -95,10 +96,10 @@ class LaserSensor:
                         models.db.session.add(new_byte)
                         models.db.session.commit()
                     last_executed_time = datetime.datetime.now()
+            
             time.sleep(1) 
             if not self.__is_running:
                 break
-            
 
     def setStopFlag(self):
         self.__is_running = False
