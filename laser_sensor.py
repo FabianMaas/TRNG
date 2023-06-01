@@ -56,16 +56,17 @@ class LaserSensor:
                     
                     while count < 8:
                         try:
-                            tmp = self.__queue_bottom.get()
-                            tmp_rand_arr.append(tmp)
-                            self.__list_bottom.append(tmp)
-
                             if len(self.__list_bottom) >= 32:
                                 print("DEBUG bottom-list: " + str(self.__list_bottom))
                                 if self.__list_bottom.count(0) > 30 or self.__list_bottom.count(1) > 30:
                                     self.__bottom_down = True   
                                     continue
-                                self.__list_bottom.pop(0)
+
+                            tmp = self.__queue_bottom.get()
+                            tmp_rand_arr.append(tmp)
+                            self.__list_bottom.append(tmp)
+                            self.__list_bottom.pop(0)
+                            count += count
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
                             pass
@@ -74,16 +75,17 @@ class LaserSensor:
                     count = 0
                     while count < 8:
                         try:
-                            tmp = self.__queue_top.get()
-                            tmp_rand_arr.append(tmp)
-                            self.__list_top.append(tmp)
-
                             if len(self.__list_top) >= 32:
                                 print("DEBUG top-list: " + str(self.__list_top))
                                 if self.__list_top.count(0) > 30 or self.__list_top.count(1) > 30:
                                     self.__top_down = True  
                                     continue
-                                self.__list_top.pop(0)
+
+                            tmp = self.__queue_top.get()
+                            tmp_rand_arr.append(tmp)
+                            self.__list_top.append(tmp)
+                            count += count
+                            self.__list_top.pop(0)
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
                             pass
