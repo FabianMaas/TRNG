@@ -47,13 +47,11 @@ class LaserSensor:
 
             tmp_rand_arr = []
 
-            if (self.__queue_top.qsize() >= 8 and not self.__top_down or self.__queue_bottom.qsize() >= 8 and not self.__bottom_down):
+            if ((self.__queue_top.qsize() >= 8 and not self.__top_down) or (self.__queue_bottom.qsize() >= 8 and not self.__bottom_down)):
                 tmp_rand_arr.clear()
 
-                if self.__queue_bottom.qsize() > self.__queue_top.qsize() and not self.__bottom_down:
-                    previous_number = None
+                if not self.__bottom_down and self.__queue_bottom.qsize() > self.__queue_top.qsize():
                     count = 0
-                    
                     while count < 8:
                         try:
                             if len(self.__list_bottom) >= 32:
@@ -66,12 +64,12 @@ class LaserSensor:
                             tmp_rand_arr.append(tmp)
                             self.__list_bottom.append(tmp)
                             self.__list_bottom.pop(0)
-                            count += count
+                            count += 1
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
                             pass
                         
-                elif self.__queue_top.qsize() > self.__queue_bottom.qsize() and not self.__top_down:
+                elif not self.__top_down and self.__queue_top.qsize() > self.__queue_bottom.qsize():
                     count = 0
                     while count < 8:
                         try:
@@ -84,14 +82,14 @@ class LaserSensor:
                             tmp = self.__queue_top.get()
                             tmp_rand_arr.append(tmp)
                             self.__list_top.append(tmp)
-                            count += count
+                            count += 1
                             self.__list_top.pop(0)
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
                             pass
 
                 tmp_string = "".join(str(x) for x in tmp_rand_arr)
-                if(not len(tmp_string) == 0):
+                if len(tmp_string) != 0:
                     with rest_api.app_context():
                         new_byte = models.Randbyte(value=tmp_string) 
                         models.db.session.add(new_byte)
