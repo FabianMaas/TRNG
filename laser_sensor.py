@@ -35,8 +35,7 @@ class LaserSensor:
             The error object is needed to let the engine turn backwards to fix stuck marbles.
             """
             if difference.total_seconds() > 15:
-                error_event.set()
-                
+                error_event.set()               
                 last_executed_time = datetime.datetime.now()
             
             tmp_rand_arr = []
@@ -45,7 +44,9 @@ class LaserSensor:
                 tmp_rand_arr.clear()
                 
                 print("Bottom queue size: " + str(self.__queue_bottom.qsize()))
-                print("Bottom queue size: " + str(self.__queue_bottom.qsize()))
+                print("Top queue size: " + str(self.__queue_top.qsize()))
+                print("Bottom down: " + str(self.__bottom_down))
+                print("Top down: " + str(self.__top_down))
 
                 if self.__queue_bottom.qsize() > self.__queue_top.qsize() and not self.__bottom_down:
                     previous_number = None
