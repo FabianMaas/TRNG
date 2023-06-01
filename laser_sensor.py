@@ -44,6 +44,9 @@ class LaserSensor:
             if (self.__queue_top.qsize() >= 8 and not self.__top_down or self.__queue_bottom.qsize() >= 8 and not self.__bottom_down):
                 tmp_rand_arr.clear()
                 
+                print("Bottom queue size: " + str(self.__queue_bottom.qsize()))
+                print("Bottom queue size: " + str(self.__queue_bottom.qsize()))
+
                 if self.__queue_bottom.qsize() > self.__queue_top.qsize() and not self.__bottom_down:
                     previous_number = None
                     count = 0
