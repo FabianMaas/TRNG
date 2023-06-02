@@ -150,7 +150,10 @@ if __name__ == '__main__':
     # Datenbank-Tabellen erstellen
     with app.app_context():
         db.create_all()
+        
     # openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365
-    cert_file = os.path.join('cert.pem')
-    key_file = os.path.join('key.pem')
-    app.run(host='0.0.0.0', port=443, threaded=True, ssl_context=(cert_file, key_file))
+    # cert_file = os.path.join('cert.pem')
+    # key_file = os.path.join('key.pem')
+    # app.run(host='0.0.0.0', port=443, threaded=True, ssl_context=(cert_file, key_file))
+
+    app.run(host='0.0.0.0', port=8080, threaded=True)
