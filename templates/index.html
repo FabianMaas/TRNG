@@ -13,8 +13,14 @@
   <div class="container" class="content">
     
     <h1>True Random Number Generator</h1>
-    <img src="static/img/logo.png" style="max-width: 200px; max-height: auto" alt="logo_wavetech" />
 
+    <img src="static/img/logo.png" style="max-width: 200px; max-height: auto; margin-bottom: 20px;" alt="logo_wavetech" />
+    
+    <div class="toggle-container">
+      <span class="toggle-label">Light/Dark</span>
+      <div class="toggle-btn" onclick="toggleTheme()"></div>
+    </div>
+    
     <div>
       <button id="toggleBtn" class="button">Start</button>
     </div>
@@ -43,3 +49,14 @@
 </body>
 
 </html>
+
+
+<script>
+  function toggleTheme() {
+    const body = document.querySelector('body');
+    const toggleBtn = document.querySelector('.toggle-btn');
+    
+    body.classList.toggle('dark');
+    toggleBtn.classList.toggle('animate');
+  }
+</script>
