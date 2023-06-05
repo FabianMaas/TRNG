@@ -142,6 +142,15 @@ def shutdown_system():
     return response
 
 
+@rest_api.route('/getCount', methods=['GET'])
+def get_safed_number_count():
+    with rest_api.app_context():
+        rows = db.session.query(Randbyte).count()
+        bitCount = rows * 8
+    response = make_response(jsonify(bitCount), 200)
+    return response
+
+
 def __bin_to_hex(bin_array):
     hex_array = []
     for binary in bin_array:
@@ -157,4 +166,4 @@ if __name__ == "__main__":
 
     with rest_api.app_context():
         db.create_all()
-    rest_api.run(host='0.0.0.0', port=8080, threaded=False)
+    rest_api.run(host='0.0.0.0', port=8080, threaded=True)

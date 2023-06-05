@@ -9,7 +9,9 @@
 </head>
 
 <body>
-  <div class="container">
+  <canvas id="canvas" hidden="true"></canvas>
+  <div class="container" class="content">
+    
     <h1>True Random Number Generator</h1>
     <img src="static/img/logo.png" style="max-width: 200px; max-height: auto" alt="logo_wavetech" />
 
@@ -19,12 +21,14 @@
 
     <div>
       <label for="quantity-input">Quantity:</label>
-      <input type="number" id="quantity-input" name="quantity" min="1" max="1000" class="my-input" />
+      <input type="number" id="quantity-input" name="quantity" min="1" max="1000" class="my-input" value="1"/>
       <label for="numBits-input">NumBits:</label>
-      <input type="number" id="numBits-input" name="numBits" min="1" max="1000" class="my-input" />
-      <button id="generate-btn" class="button">Generate Random Hex Values</button>
+      <input type="number" id="numBits-input" name="numBits" min="1" max="1000" class="my-input" value="1"/>
+      <button disabled="true" id="generate-btn" class="button">Generate Random Hex Values</button>
       <button disabled="true" id="export-btn" class="button">Export Random Hex Values</button>
     </div>
+
+    <div id="alertDiv" class="alert" hidden="true"></div>
 
     <div id="loading-spinner" style="display: none;">
       <img src="static/img/spinner.gif" alt="Loading...">
@@ -35,6 +39,7 @@
   </div>
 
   <script src="static/js/main.js"></script>
+  <script src="static/js/background.js"></script>
 </body>
 
 </html>
