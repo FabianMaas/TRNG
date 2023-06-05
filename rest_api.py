@@ -24,6 +24,15 @@ __engine_process = multiprocessing.Process(target=__engine.start)
 
 @rest_api.route('/')
 def index():
+    """
+    Redirects to the TRNG (True Random Number Generator) page.
+
+    This endpoint '/' performs a redirect to the TRNG page, which provides access to a True Random Number Generator.\n
+    The endpoint returns an HTTP response with a status code of 301  and a description indicating the redirection.
+
+    Returns:
+        flask.wrappers.Response: An HTTP response representing the redirect to the TRNG page.
+    """
     response = make_response(redirect(url_for('trng')))
     response.status_code = 301
     response.description = 'redirecting to trng page'
@@ -32,11 +41,32 @@ def index():
 
 @rest_api.route('/trng')
 def trng():
+    """
+    Renders the TRNG (True Random Number Generator) page.
+
+    This endpoint '/trng' renders the TRNG page, which provides access to a True Random Number Generator.
+    The page typically contains user interface elements to request and display random numbers.
+
+    Returns:
+        flask.wrappers.Response: An HTTP response representing the rendered TRNG page.
+    """
     return render_template('index.html')
 
 
 @rest_api.route('/randomNum/getRandom', methods=['GET'])
 def get_random_hex():
+    """
+    Retrieves random bits from the SQLite database and converts them to HEX encoding.
+
+    This endpoint '/randomNum/getRandom' retrieves random bits from the SQLite database and converts them to HEX encoding.\n
+    The quantity and number of bits per array can be specified as query parameters.
+
+    Returns:
+        flask.wrappers.Response: An HTTP response containing the HEX-encoded bit arrays.
+
+    Raises:
+        HTTPException: If the system is not ready and needs initialization (status code 432).
+    """
     if not __laser_process.is_alive:
         response = make_response('system not ready; try init', 432)
         return response
@@ -84,6 +114,18 @@ def get_random_hex():
 
 @rest_api.route('/randomNum/init', methods=['GET'])
 def init_system():
+    """
+    Initializes the true random number generator system.
+
+    This endpoint '/randomNum/init' initializes the true random number generator system by starting the necessary processes and components.\n
+    The system requires multiple global variables (__laser_process, __db_write_process, and __engine_process) to be set properly.
+
+    Returns:
+        flask.wrappers.Response: An HTTP response indicating the initialization status.
+
+    Raises:
+        HTTPException: If the system fails to initialize within a timeout of 60 seconds (status code 555).
+    """    
     global __laser_process
     global __db_write_process
     global __engine_process
@@ -126,6 +168,19 @@ def init_system():
 
 @rest_api.route('/randomNum/shutdown', methods=['GET'])
 def shutdown_system():
+    """
+    Shuts down the true random number generator system.
+
+    This endpoint '/randomNum/shutdown' shuts down the random number generator system by stopping the necessary processes and resetting components.\n
+    The system relies on global variables (__laser_process, __db_write_process, and __engine_process) to perform the shutdown.
+
+    Returns:
+        flask.wrappers.Response: An HTTP response indicating the successful shutdown.
+
+    Notes:
+        The random number generator will be set to 'standby mode' after the shutdown.
+
+    """
     __laser.setStopFlag()
     __engine.reset()
 
@@ -144,6 +199,15 @@ def shutdown_system():
 
 @rest_api.route('/getCount', methods=['GET'])
 def get_safed_number_count():
+    """
+    Retrieves the count of stored random bits.
+
+    This endpoint '/getCount' retrieves the count of stored random bits from the database.\n
+    It calculates the total number of bits by multiplying the count of database rows with 8, because the DB stores 8 bit per row.
+
+    Returns:
+        flask.wrappers.Response: An HTTP response containing the count of stored random numbers in bits.
+    """
     with rest_api.app_context():
         rows = db.session.query(Randbyte).count()
         bitCount = rows * 8
@@ -152,12 +216,27 @@ def get_safed_number_count():
 
 
 def __bin_to_hex(bin_array):
+    """
+    Converts a list of binary strings to a list of HEX-encoded strings.
+
+    This function takes a list of binary strings and converts each string to a corresponding HEX-encoded string.\n
+    The binary strings are padded with leading zeros to ensure each binary string has a length divisible by 4 before conversion.\n
+    The resulting HEX-encoded strings are returned in a list.
+
+    Args:
+        bin_array (list): A list of binary strings.
+
+    Returns:
+        list: A list of HEX-encoded strings.
+
+    """    
     hex_array = []
     for binary in bin_array:
         binary = binary.zfill((len(binary) + 3) // 4 * 4)
         hex_string = format(int(binary, 2), '0' + str(len(binary) // 4) + 'X')
         hex_array.append(hex_string)
     return hex_array
+    
     
 if __name__ == "__main__":
     #cert_file = os.path.join(os.path.dirname(__file__), 'cert.pem')
