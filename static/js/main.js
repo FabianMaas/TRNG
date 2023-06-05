@@ -228,3 +228,11 @@ function convertSecondsToTime(seconds) {
 function padNumber(number) {
   return number.toString().padStart(2, "0");
 }
+
+function toggleTheme() {
+  const body = document.querySelector('body');
+  const toggleBtn = document.querySelector('.toggle-btn');
+  
+  body.classList.toggle('dark');
+  toggleBtn.classList.toggle('animate');
+}
