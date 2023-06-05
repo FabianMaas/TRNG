@@ -1,7 +1,7 @@
 import multiprocessing
 from flask import Flask, request, jsonify, render_template, redirect, url_for, make_response
 from lasersensor import Lasersensor
-from testsuite import Testsuite
+from testsuite import TestSuite
 from models import db, Randbyte
 import time
 import math
@@ -12,6 +12,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TRNG.db'
 db.init_app(app)
 laser = Lasersensor()
+testsuite = TestSuite()
 laser_process = multiprocessing.Process(target=laser.producer)
 db_write_process = multiprocessing.Process(target=laser.write_to_db, args=(app,))
 
@@ -52,16 +53,9 @@ def get_random_hex():
 
     db.session.commit()
     
-    remainder = num_bits % 4
-    joined_string = ''.join(rows_arr)
-    print("numbits=",num_bits)
-    split_arr = []
-    for i in range(0, quantity * num_bits, num_bits):
-        substring = joined_string[i : i + num_bits]
-        if(not remainder == 0):
-            for i in range(4-remainder):
-                substring = "0" + substring
-        split_arr.append(substring)
+    print(rows_arr)
+    
+    split_arr = __row_arr_to_split_arr(rows_arr, quantity, num_bits)
     
     print(split_arr)
     hex_arr = __bin_to_hex(split_arr)
@@ -134,6 +128,21 @@ def get_safed_number_count():
 def wait_for_rows(number_rows):
     while db.session.query(Randbyte).count() < number_rows:
         time.sleep(1)
+
+
+def __row_arr_to_split_arr(rows_arr, quantity, num_bits):
+    remainder = num_bits % 4
+    joined_string = ''.join(rows_arr)
+    print("numbits=",num_bits)
+    split_arr = []
+    for i in range(0, quantity * num_bits, num_bits):
+        substring = joined_string[i : i + num_bits]
+        if(not remainder == 0):
+            for i in range(4-remainder):
+                substring = "0" + substring
+        split_arr.append(substring)
+    return split_arr
+
 
 def __bin_to_hex(bin_array):
     hex_array = []
