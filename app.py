@@ -15,7 +15,7 @@ laser = Lasersensor()
 testsuite = TestSuite()
 laser_process = multiprocessing.Process(target=laser.producer)
 db_write_process = multiprocessing.Process(target=laser.write_to_db, args=(app,))
-
+test_generated_bits = True
 
 @app.route('/')
 def index():
@@ -52,7 +52,14 @@ def get_random_hex():
         db.session.delete(row)
 
     db.session.commit()
-    
+
+    success = False
+
+    if (test_generated_bits):
+        success = testsuite.run_all_tests(rows_arr)
+        
+    print(success)
+
     print(rows_arr)
     
     split_arr = __row_arr_to_split_arr(rows_arr, quantity, num_bits)
