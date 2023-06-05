@@ -53,12 +53,12 @@ def trng():
     return render_template('index.html')
 
 
-@rest_api.route('/randomNum/getRandom', methods=['GET'])
+@rest_api.route('/trng/randomNum/getRandom', methods=['GET'])
 def get_random_hex():
     """
     Retrieves random bits from the SQLite database and converts them to HEX encoding.
 
-    This endpoint '/randomNum/getRandom' retrieves random bits from the SQLite database and converts them to HEX encoding.\n
+    This endpoint '/trng/randomNum/getRandom' retrieves random bits from the SQLite database and converts them to HEX encoding.\n
     The quantity and number of bits per array can be specified as query parameters.
 
     Returns:
@@ -112,12 +112,12 @@ def get_random_hex():
     return response
 
 
-@rest_api.route('/randomNum/init', methods=['GET'])
+@rest_api.route('/trng/randomNum/init', methods=['GET'])
 def init_system():
     """
     Initializes the true random number generator system.
 
-    This endpoint '/randomNum/init' initializes the true random number generator system by starting the necessary processes and components.\n
+    This endpoint '/trng/randomNum/init' initializes the true random number generator system by starting the necessary processes and components.\n
     The system requires multiple global variables (__laser_process, __db_write_process, and __engine_process) to be set properly.
 
     Returns:
@@ -166,12 +166,12 @@ def init_system():
     return response
 
 
-@rest_api.route('/randomNum/shutdown', methods=['GET'])
+@rest_api.route('/trng/randomNum/shutdown', methods=['GET'])
 def shutdown_system():
     """
     Shuts down the true random number generator system.
 
-    This endpoint '/randomNum/shutdown' shuts down the random number generator system by stopping the necessary processes and resetting components.\n
+    This endpoint '/trng/randomNum/shutdown' shuts down the random number generator system by stopping the necessary processes and resetting components.\n
     The system relies on global variables (__laser_process, __db_write_process, and __engine_process) to perform the shutdown.
 
     Returns:
@@ -197,12 +197,12 @@ def shutdown_system():
     return response
 
 
-@rest_api.route('/getCount', methods=['GET'])
+@rest_api.route('/trng/getCount', methods=['GET'])
 def get_safed_number_count():
     """
     Retrieves the count of stored random bits.
 
-    This endpoint '/getCount' retrieves the count of stored random bits from the database.\n
+    This endpoint '/trng/getCount' retrieves the count of stored random bits from the database.\n
     It calculates the total number of bits by multiplying the count of database rows with 8, because the DB stores 8 bit per row.
 
     Returns:
@@ -237,7 +237,7 @@ def __bin_to_hex(bin_array):
         hex_array.append(hex_string)
     return hex_array
     
-    
+
 if __name__ == "__main__":
     #cert_file = os.path.join(os.path.dirname(__file__), 'cert.pem')
     #key_file = os.path.join(os.path.dirname(__file__), 'key.pem')
