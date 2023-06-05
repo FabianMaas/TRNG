@@ -89,16 +89,7 @@ def get_random_hex():
 
     db.session.commit()
     
-    remainder = num_bits % 4
-    joined_string = ''.join(rows_arr)
-    print("numbits=",num_bits)
-    split_arr = []
-    for i in range(0, quantity * num_bits, num_bits):
-        substring = joined_string[i : i + num_bits]
-        if(not remainder == 0):
-            for i in range(4-remainder):
-                substring = "0" + substring
-        split_arr.append(substring)
+    split_arr = __row_arr_to_split_arr(rows_arr, quantity, num_bits)
     
     print(split_arr)
     hex_arr = __bin_to_hex(split_arr)
@@ -213,6 +204,38 @@ def get_safed_number_count():
         bitCount = rows * 8
     response = make_response(jsonify(bitCount), 200)
     return response
+
+
+def __row_arr_to_split_arr(rows_arr, quantity, num_bits):
+    """
+    Converts a row array into a split array of fixed-length substrings.
+
+    Args:
+        rows_arr (list): A list of strings representing rows each containing 8 bit.\n
+        quantity (int): The number of substrings to split the row array into.\n
+        num_bits (int): The desired length of each substring.
+
+    Returns:
+        list: A list of fixed-length substrings created from the row array.
+
+    Example:
+        rows_arr = ['11001100', '10101010', '00110011', '10100110']\n
+        quantity = 2\n
+        num_bits = 16\n
+        __row_arr_to_split_arr(rows_arr, quantity, num_bits)\n
+        Output: ['1100110010101010', '0011001110100110']
+    """
+    remainder = num_bits % 4
+    joined_string = ''.join(rows_arr)
+    print("numbits=",num_bits)
+    split_arr = []
+    for i in range(0, quantity * num_bits, num_bits):
+        substring = joined_string[i : i + num_bits]
+        if(not remainder == 0):
+            for i in range(4-remainder):
+                substring = "0" + substring
+        split_arr.append(substring)
+    return split_arr
 
 
 def __bin_to_hex(bin_array):
