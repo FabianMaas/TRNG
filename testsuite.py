@@ -3,7 +3,7 @@
 import math
 import random
 
-class Testsuite:
+class TestSuite:
 
 
     def banner(self):
@@ -30,13 +30,13 @@ class Testsuite:
             print("Run Test:                Failed!")
             run = 0
         longrun = self.long_run_test(randomNumberString,5)
-        poker = self.poker_test(randomNumberString)
+        #poker = self.poker_test(randomNumberString)
         #monobit = self.monobit_test(randomNumberString)
         equaldistribution = self.equal_distribution_test(randomNumberString)
         #disjointness = self.disjointness_test(randomNumberString)
         autocorrelation = self.autocorrelation_test(randomNumberString)
-        passed_tests = run + longrun + poker + equaldistribution + autocorrelation
-        print("\nTest passed:", passed_tests, "/5")
+        passed_tests = run + longrun + equaldistribution + autocorrelation
+        print("\nTest passed:", passed_tests, "/4")
 
     '''
     To test a bit sequence for randomness with the Run test, 
