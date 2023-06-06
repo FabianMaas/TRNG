@@ -16,20 +16,20 @@ db.init_app(rest_api)
 __laser = LaserSensor()
 __engine = StepperEngine()
 __gyroscope = Gyroscope()
+__testsuite = TestSuite()
 
 __laser_process = multiprocessing.Process(target=__laser.start)
 __db_write_process = multiprocessing.Process(target=__laser.write_to_db, args=(rest_api,))
 __engine_process = multiprocessing.Process(target=__engine.start)
 
+__test_bit_sequence = True
 
 @rest_api.route('/')
 def index():
     """
-    Redirects to the TRNG (True Random Number Generator) page.
-
+    Redirects to the TRNG (True Random Number Generator) page.\n
     This endpoint '/' performs a redirect to the TRNG page, which provides access to a True Random Number Generator.\n
-    The endpoint returns an HTTP response with a status code of 301  and a description indicating the redirection.
-
+    The endpoint returns an HTTP response with a status code of 301  and a description indicating the redirection.\n
     Returns:
         flask.wrappers.Response: An HTTP response representing the redirect to the TRNG page.
     """
@@ -42,11 +42,9 @@ def index():
 @rest_api.route('/trng')
 def trng():
     """
-    Renders the TRNG (True Random Number Generator) page.
-
+    Renders the TRNG (True Random Number Generator) page.\n
     This endpoint '/trng' renders the TRNG page, which provides access to a True Random Number Generator.
-    The page typically contains user interface elements to request and display random numbers.
-
+    The page typically contains user interface elements to request and display random numbers.\n
     Returns:
         flask.wrappers.Response: An HTTP response representing the rendered TRNG page.
     """
@@ -56,44 +54,44 @@ def trng():
 @rest_api.route('/trng/randomNum/getRandom', methods=['GET'])
 def get_random_hex():
     """
-    Retrieves random bits from the SQLite database and converts them to HEX encoding.
-
+    Retrieves random bits from the SQLite database and converts them to HEX encoding.\n
     This endpoint '/trng/randomNum/getRandom' retrieves random bits from the SQLite database and converts them to HEX encoding.\n
-    The quantity and number of bits per array can be specified as query parameters.
-
+    The quantity and number of bits per array can be specified as query parameters.\n
     Returns:
-        flask.wrappers.Response: An HTTP response containing the HEX-encoded bit arrays.
-
+        flask.wrappers.Response: An HTTP response containing the HEX-encoded bit arrays.\n
     Raises:
         HTTPException: If the system is not ready and needs initialization (status code 432).
     """
-    if not __laser_process.is_alive:
+    if not __laser_process.is_alive():
         response = make_response('system not ready; try init', 432)
         return response
     
     quantity = request.args.get('quantity',default=1, type=int)
     num_bits = request.args.get('numBits', default=1, type=int)
 
-    number_rows = math.ceil((quantity*num_bits)/8)
+    if ((quantity < 1) or (num_bits < 1)):
+        response = make_response('invalid query parameter', 400)
+        return response
 
-    while db.session.query(Randbyte).count() < number_rows:
-        time.sleep(1)
+    test_blocks = math.ceil(((quantity*num_bits) / 256))
+    test_rows = (test_blocks * 256) / 8
+
+    actually_required_rows = math.ceil((quantity*num_bits)/8) 
 
     rows_arr = []
 
-    oldest_rows = Randbyte.query.order_by(Randbyte.id).limit(number_rows).all()
-    
-    for row in oldest_rows:
-        rows_arr.append(row.value)
-        db.session.delete(row)
+    if(__test_bit_sequence == True):
+        rows_arr = __get_tested_bits(test_rows, actually_required_rows)
+    else:
+        rows_arr = __get_not_tested_bits(actually_required_rows)
 
-    db.session.commit()
+    print("rows_arr =",rows_arr)
     
     split_arr = __row_arr_to_split_arr(rows_arr, quantity, num_bits)
     
-    print(split_arr)
+    print("split_arr =",split_arr)
     hex_arr = __bin_to_hex(split_arr)
-    print(hex_arr)
+    print("hex_arr =",hex_arr)
     data = {
         'description': 'successful operation; HEX-encoded bit arrays (with leading zeros if required)',
         'randomBits': hex_arr
@@ -106,14 +104,11 @@ def get_random_hex():
 @rest_api.route('/trng/randomNum/init', methods=['GET'])
 def init_system():
     """
-    Initializes the true random number generator system.
-
+    Initializes the true random number generator system.\n
     This endpoint '/trng/randomNum/init' initializes the true random number generator system by starting the necessary processes and components.\n
-    The system requires multiple global variables (__laser_process, __db_write_process, and __engine_process) to be set properly.
-
+    The system requires multiple global variables (__laser_process, __db_write_process, and __engine_process) to be set properly.\n
     Returns:
-        flask.wrappers.Response: An HTTP response indicating the initialization status.
-
+        flask.wrappers.Response: An HTTP response indicating the initialization status.\n
     Raises:
         HTTPException: If the system fails to initialize within a timeout of 60 seconds (status code 555).
     """    
@@ -160,17 +155,13 @@ def init_system():
 @rest_api.route('/trng/randomNum/shutdown', methods=['GET'])
 def shutdown_system():
     """
-    Shuts down the true random number generator system.
-
+    Shuts down the true random number generator system.\n
     This endpoint '/trng/randomNum/shutdown' shuts down the random number generator system by stopping the necessary processes and resetting components.\n
-    The system relies on global variables (__laser_process, __db_write_process, and __engine_process) to perform the shutdown.
-
+    The system relies on global variables (__laser_process, __db_write_process, and __engine_process) to perform the shutdown.\n
     Returns:
-        flask.wrappers.Response: An HTTP response indicating the successful shutdown.
-
+        flask.wrappers.Response: An HTTP response indicating the successful shutdown.\n
     Notes:
         The random number generator will be set to 'standby mode' after the shutdown.
-
     """
     __laser.setStopFlag()
     __engine.reset()
@@ -191,11 +182,9 @@ def shutdown_system():
 @rest_api.route('/trng/getCount', methods=['GET'])
 def get_safed_number_count():
     """
-    Retrieves the count of stored random bits.
-
+    Retrieves the count of stored random bits.\n
     This endpoint '/trng/getCount' retrieves the count of stored random bits from the database.\n
-    It calculates the total number of bits by multiplying the count of database rows with 8, because the DB stores 8 bit per row.
-
+    It calculates the total number of bits by multiplying the count of database rows with 8, because the DB stores 8 bit per row.\n
     Returns:
         flask.wrappers.Response: An HTTP response containing the count of stored random numbers in bits.
     """
@@ -204,6 +193,106 @@ def get_safed_number_count():
         bitCount = rows * 8
     response = make_response(jsonify(bitCount), 200)
     return response
+
+
+def __wait_for_rows(number_rows):
+    """
+    Waits until the specified number of rows is available in the database.\n
+    Args:
+        number_rows (int): The desired number of rows to wait for.\n
+    Returns:
+        None\n
+    Note:
+        This method uses a loop to continuously check the count of rows in the database
+        until the desired number of rows is reached. It sleeps for 1 second between each check.\n
+    """
+    while db.session.query(Randbyte).count() < number_rows:
+        time.sleep(1)
+
+
+def __get_tested_bits(test_rows, actually_required_rows):
+    """
+    Retrieves and tests a specified number of rows from the database,
+    ensuring the success of the tests before returning the requested rows.\n
+    Args:
+        test_rows (int): The number of rows to be tested.
+        actually_required_rows (int): The number of rows required in the final result.\n
+    Returns:
+        list: A list of the requested rows if the tests are successful,
+              otherwise a response indicating test failure.\n
+    Note:
+        This method retrieves the specified number of rows from the database and
+        performs a series of tests on the values. The tests are repeated up to
+        five times or until the tests succeed. If the tests succeed, the method
+        returns a list of the requested rows, deletes them from the database, and
+        commits the changes. If the tests fail, all retrieved rows are deleted from
+        the database, and a response with an appropriate status code is returned.
+    """
+    test_success = False
+    test_count = 0
+    test_arr = []
+    rows_arr = []
+    while ((test_success == False) and (test_count < 5)):
+        test_arr.clear()
+        __wait_for_rows(test_rows)
+        rows = Randbyte.query.order_by(Randbyte.id).limit(test_rows).all()
+
+        for row in rows:
+            test_arr.append(row.value)
+            
+        test_success = __testsuite.run_all_tests(test_arr)
+        test_count += 1
+        
+
+        if (test_success == True):
+            counter = 0
+            for row in rows:
+                if(counter < actually_required_rows):
+                    rows_arr.append(row.value)
+                    db.session.delete(row)
+                    counter += 1
+                else:
+                    break
+            db.session.commit()
+
+        if(test_success == False):
+            for row in rows:
+                db.session.delete(row)
+            db.session.commit()
+
+    if(test_success == False):
+
+        response = make_response(
+            'tests for the requested bit sequence failed',
+            500,
+        )
+        return response 
+    
+    return rows_arr
+
+
+def __get_not_tested_bits(actually_required_rows):
+    """
+    Retrieves and also deletes the specified number of rows from the database,
+    and returns the corresponding values.\n
+    Args:
+        actually_required_rows (int): The number of rows required in the final result.\n
+    Returns:
+        list: A list of the values from the requested rows.\n
+    Note:
+        This method waits until the specified number of rows is available in the database.
+        Once the required rows are available, it retrieves and also deletes them from the database,
+        and commits the changes.
+        Finally, it returns a list of the values from the requested rows.
+    """
+    rows_arr = []
+    __wait_for_rows(actually_required_rows)
+    rows = Randbyte.query.order_by(Randbyte.id).limit(actually_required_rows).all()
+    for row in rows:
+        rows_arr.append(row.value)
+        db.session.delete(row)
+    db.session.commit()
+    return rows_arr
 
 
 def __row_arr_to_split_arr(rows_arr, quantity, num_bits):

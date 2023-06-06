@@ -2,7 +2,6 @@
 
 import math
 import random
-#from tests.pokertest import Pokertest
 
 class TestSuite:
 
@@ -23,21 +22,26 @@ class TestSuite:
         print('\n##################################################################################################################\n')
 
 
-    def run_all_tests(self, randomNumber):
-        randomNumberString = str(randomNumber)
+    def run_all_tests(self, bit_arr):
+        bit_sequence = ''.join(bit_arr)
+        print("test bit_sequence =",bit_sequence)
         try:
-            run = self.run_test(randomNumberString)
+            run = self.run_test(bit_sequence)
         except:
             print("Run Test:                Failed!")
             run = 0
-        longrun = self.long_run_test(randomNumberString,5)
-        poker = Pokertest.pokerTest(randomNumberString, 4)
+        longrun = self.long_run_test(bit_sequence,5)
+        #poker = self.poker_test(randomNumberString)
         #monobit = self.monobit_test(randomNumberString)
-        equaldistribution = self.equal_distribution_test(randomNumberString)
+        equaldistribution = self.equal_distribution_test(bit_sequence)
         #disjointness = self.disjointness_test(randomNumberString)
-        autocorrelation = self.autocorrelation_test(randomNumberString)
-        passed_tests = run + longrun + poker + equaldistribution + autocorrelation
-        print("\nTest passed:", passed_tests, "/5")
+        autocorrelation = self.autocorrelation_test(bit_sequence)
+        passed_tests = run + longrun + equaldistribution + autocorrelation
+        print("\nTest passed:", passed_tests, "/4")
+        if (passed_tests >= 2) :
+            return True
+        else:
+            return False
 
     '''
     To test a bit sequence for randomness with the Run test, 
@@ -125,7 +129,6 @@ class TestSuite:
     whether to accept or reject the null hypothesis that the 
     sequence is random.
     '''
-    '''
     def poker_test(self, bit_sequence):
         counts = [0] * 16
         for i in range(0, len(bit_sequence), 4):
@@ -149,7 +152,7 @@ class TestSuite:
             #print("p-value:",p_value)
             print("Poker Test:              Failed!")
             return False
-    '''        
+            
     
     '''
     (Same as equal distribution test)
@@ -299,7 +302,7 @@ class TestSuite:
             else:
                 print("Invalid input! The bit sequence should only contain 0's and 1's.\n")
 
-'''
+
 if __name__ == '__main__':
     
     testsuite = TestSuite()
@@ -316,4 +319,4 @@ if __name__ == '__main__':
     testsuite.run_all_tests(randInput)
 
     print('\n##################################################################################################################\n')
-'''    
+    
