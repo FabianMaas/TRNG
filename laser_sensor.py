@@ -52,7 +52,7 @@ class LaserSensor:
 
                 if (not self.__bottom_down) and self.__queue_bottom.qsize() > self.__queue_top.qsize():
                     count = 0
-                    while (not self.__list_bottom) and count < 8:
+                    while (not self.__bottom_down) and count < 8:
                         try:
                             tmp = self.__queue_bottom.get()
                             tmp_rand_arr.append(tmp)
@@ -72,7 +72,7 @@ class LaserSensor:
                             pass    
                 elif (not self.__top_down) and self.__queue_top.qsize() > self.__queue_bottom.qsize():
                     count = 0
-                    while (not self.__list_bottom) and count < 8:
+                    while (not self.__top_down) and count < 8:
                         try:
                             tmp = self.__queue_top.get()
                             tmp_rand_arr.append(tmp)
