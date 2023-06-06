@@ -7,11 +7,12 @@ const resultTable = document.getElementById("result-table");
 const toggleBtn = document.getElementById("toggleBtn");
 const alertDiv = document.getElementById("alertDiv");
 const infoAlertDiv = document.getElementById("infoAlertDiv");
+const github_icon = document.getElementById("github-icon");
 let isRunning = false;
 
 toggleBtn.addEventListener("click", () => {
   if (!isRunning) {
-    fetch("http://192.168.137.27:8080/trng/randomNum/init")
+    fetch("http://192.168.137.27:8080/randomNum/init")
       .then((response) => {
         console.log("Started");
         const button = document.getElementById('generate-btn');
@@ -27,7 +28,7 @@ toggleBtn.addEventListener("click", () => {
         console.error("Error starting:", error);
       });
   } else {
-    fetch("http://192.168.137.27:8080/trng/randomNum/shutdown")
+    fetch("http://192.168.137.27:8080/randomNum/shutdown")
       .then((response) => {
         console.log("Stopped");
         hideSpinner();
@@ -59,7 +60,7 @@ toggleBtn.addEventListener("click", () => {
 generateBtn.addEventListener("click", () => {
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
-  const url = `http://192.168.137.27:8080/trng/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
+  const url = `http://192.168.137.27:8080/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
   
   if(quantity < 1 || numBits < 1){
     showInfoAlert();
@@ -194,7 +195,7 @@ function showTimeAlert(requiredBits) {
   var currentBits = 0;
   var remainderBits = 0;
 
-  fetch("http://192.168.137.27:8080/trng/getCount")
+  fetch("http://192.168.137.27:8080/getCount")
       .then((response) => response.json())
       .then((data) => {
         currentBits = data;
@@ -236,14 +237,6 @@ function padNumber(number) {
   return number.toString().padStart(2, "0");
 }
 
-function toggleTheme() {
-  const body = document.querySelector('body');
-  const toggleBtn = document.querySelector('.toggle-btn');
-  
-  body.classList.toggle('dark');
-  toggleBtn.classList.toggle('animate');
-}
-
 function showInfoAlert(){
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
@@ -268,5 +261,50 @@ function showInfoAlert(){
   setTimeout(function() {
     alert.hidden = true;
   }, 3000);
-
 }
+
+function toggleTheme() {
+  const body = document.querySelector('body');
+  const toggleBtn = document.querySelector('.toggle-btn');
+  
+  body.classList.toggle('dark');
+  toggleBtn.classList.toggle('animate');
+
+  if (document.body.classList.contains('dark')) {
+    console.log('Die Klasse "dark" ist gesetzt.');
+    github_icon.src = 'static/img/github-mark-white.png';
+    setThemePreference('dark')
+  } else {
+    console.log('Die Klasse "dark" ist nicht gesetzt.');
+    github_icon.src = 'static/img/github-mark.png';
+    setThemePreference('light')
+  }
+}
+
+function setThemePreference(theme) {
+  document.cookie = `themePreference=${theme}; expires=${new Date(Date.now() + 31536000000).toUTCString()}; path=/; SameSite=Strict`;
+}
+
+function getThemePreference() {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith('themePreference=')) {
+      const theme = cookie.substring('themePreference='.length);
+      return theme;
+    }
+  }
+  return 'light';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const body = document.querySelector('body');
+  const toggleBtn = document.querySelector('.toggle-btn');
+  const savedTheme = getThemePreference();
+  if (savedTheme === 'dark') {
+    body.classList.toggle('dark');
+    toggleBtn.classList.toggle('animate');
+  } else {
+
+  }
+});
