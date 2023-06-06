@@ -50,9 +50,9 @@ class LaserSensor:
             if ((self.__queue_top.qsize() >= 8 and not self.__top_down) or (self.__queue_bottom.qsize() >= 8 and not self.__bottom_down)):
                 tmp_rand_arr.clear()
 
-                if not self.__bottom_down and self.__queue_bottom.qsize() > self.__queue_top.qsize():
+                if (not self.__bottom_down) and self.__queue_bottom.qsize() > self.__queue_top.qsize():
                     count = 0
-                    while count < 8:
+                    while (not self.__list_bottom) and count < 8:
                         try:
                             tmp = self.__queue_bottom.get()
                             tmp_rand_arr.append(tmp)
@@ -70,9 +70,9 @@ class LaserSensor:
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
                             pass    
-                elif not self.__top_down and self.__queue_top.qsize() > self.__queue_bottom.qsize():
+                elif (not self.__top_down) and self.__queue_top.qsize() > self.__queue_bottom.qsize():
                     count = 0
-                    while count < 8:
+                    while (not self.__list_bottom) and count < 8:
                         try:
                             tmp = self.__queue_top.get()
                             tmp_rand_arr.append(tmp)
@@ -85,7 +85,7 @@ class LaserSensor:
                                     continue
 
                                 self.__list_top.pop(0)
-                                
+
                             count += 1
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
