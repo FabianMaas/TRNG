@@ -7,6 +7,7 @@ const resultTable = document.getElementById("result-table");
 const toggleBtn = document.getElementById("toggleBtn");
 const alertDiv = document.getElementById("alertDiv");
 const infoAlertDiv = document.getElementById("infoAlertDiv");
+const github_icon = document.getElementById("github-icon");
 let isRunning = false;
 
 toggleBtn.addEventListener("click", () => {
@@ -236,14 +237,6 @@ function padNumber(number) {
   return number.toString().padStart(2, "0");
 }
 
-function toggleTheme() {
-  const body = document.querySelector('body');
-  const toggleBtn = document.querySelector('.toggle-btn');
-  
-  body.classList.toggle('dark');
-  toggleBtn.classList.toggle('animate');
-}
-
 function showInfoAlert(){
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
@@ -268,5 +261,50 @@ function showInfoAlert(){
   setTimeout(function() {
     alert.hidden = true;
   }, 3000);
-
 }
+
+function toggleTheme() {
+  const body = document.querySelector('body');
+  const toggleBtn = document.querySelector('.toggle-btn');
+  
+  body.classList.toggle('dark');
+  toggleBtn.classList.toggle('animate');
+
+  if (document.body.classList.contains('dark')) {
+    console.log('Die Klasse "dark" ist gesetzt.');
+    github_icon.src = 'static/img/github-mark-white.png';
+    setThemePreference('dark')
+  } else {
+    console.log('Die Klasse "dark" ist nicht gesetzt.');
+    github_icon.src = 'static/img/github-mark.png';
+    setThemePreference('light')
+  }
+}
+
+function setThemePreference(theme) {
+  document.cookie = `themePreference=${theme}; expires=${new Date(Date.now() + 31536000000).toUTCString()}; path=/; SameSite=Strict`;
+}
+
+function getThemePreference() {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith('themePreference=')) {
+      const theme = cookie.substring('themePreference='.length);
+      return theme;
+    }
+  }
+  return 'light';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const body = document.querySelector('body');
+  const toggleBtn = document.querySelector('.toggle-btn');
+  const savedTheme = getThemePreference();
+  if (savedTheme === 'dark') {
+    body.classList.toggle('dark');
+    toggleBtn.classList.toggle('animate');
+  } else {
+
+  }
+});
