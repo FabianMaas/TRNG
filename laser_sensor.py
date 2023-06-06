@@ -63,8 +63,9 @@ class LaserSensor:
                                 if self.__list_bottom.count(0) > 30 or self.__list_bottom.count(1) > 30:
                                     self.__bottom_down = True   
                                     continue
-                            
-                            self.__list_bottom.pop(0)
+
+                                self.__list_bottom.pop(0)
+
                             count += 1
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
@@ -83,7 +84,8 @@ class LaserSensor:
                                     self.__top_down = True  
                                     continue
 
-                            self.__list_top.pop(0)
+                                self.__list_top.pop(0)
+                                
                             count += 1
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
