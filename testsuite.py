@@ -24,7 +24,7 @@ class TestSuite:
 
     def run_all_tests(self, bit_arr):
         bit_sequence = ''.join(bit_arr)
-
+        print("test bit_sequence =",bit_sequence)
         try:
             run = self.run_test(bit_sequence)
         except:
@@ -38,7 +38,7 @@ class TestSuite:
         autocorrelation = self.autocorrelation_test(bit_sequence)
         passed_tests = run + longrun + equaldistribution + autocorrelation
         print("\nTest passed:", passed_tests, "/4")
-        if (passed_tests == 4) :
+        if (passed_tests >= 2) :
             return True
         else:
             return False

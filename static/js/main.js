@@ -6,6 +6,7 @@ const numBitsInput = document.getElementById("numBits-input");
 const resultTable = document.getElementById("result-table");
 const toggleBtn = document.getElementById("toggleBtn");
 const alertDiv = document.getElementById("alertDiv");
+const infoAlertDiv = document.getElementById("infoAlertDiv");
 let isRunning = false;
 
 toggleBtn.addEventListener("click", () => {
@@ -59,6 +60,12 @@ generateBtn.addEventListener("click", () => {
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
   const url = `http://localhost:8080/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
+  
+  if(quantity < 1 || numBits < 1){
+    showInfoAlert();
+    return;
+  }
+
   const button = document.getElementById('generate-btn');
   button.disabled = true;
   const button2 = document.getElementById('export-btn');
@@ -235,4 +242,31 @@ function toggleTheme() {
   
   body.classList.toggle('dark');
   toggleBtn.classList.toggle('animate');
+}
+
+function showInfoAlert(){
+  const quantity = quantityInput.value;
+  const numBits = numBitsInput.value;
+  let description = "";
+  if (quantity < 1 && numBits >= 1){
+    description = "quantity must be at least 1";
+    quantityInput.value = 1;
+  }
+  if (quantity >= 1 && numBits < 1){
+    description = "numBits must be at least 1";
+    numBitsInput.value = 1;
+  }
+  if(quantity < 1 && numBits < 1){
+    description = "quantity and numBits must be at least 1";
+    quantityInput.value = 1;
+    numBitsInput.value = 1;
+  }
+
+  let alert = infoAlertDiv;
+  alert.innerHTML = description;
+  alert.hidden = false;
+  setTimeout(function() {
+    alert.hidden = true;
+  }, 3000);
+
 }

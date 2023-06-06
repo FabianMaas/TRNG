@@ -15,7 +15,8 @@ laser = Lasersensor()
 testsuite = TestSuite()
 laser_process = multiprocessing.Process(target=laser.producer)
 db_write_process = multiprocessing.Process(target=laser.write_to_db, args=(app,))
-test_generated_bits = True
+test_bit_sequence = True
+
 
 @app.route('/')
 def index():
@@ -39,34 +40,29 @@ def get_random_hex():
     quantity = request.args.get('quantity',default=1, type=int)
     num_bits = request.args.get('numBits', default=1, type=int)
 
-    number_rows = math.ceil((quantity*num_bits)/8)
+    if ((quantity < 1) or (num_bits < 1)):
+        response = make_response('invalid query parameter', 400)
+        return response
 
-    wait_for_rows(number_rows)
-    
+    test_blocks = math.ceil(((quantity*num_bits) / 256))
+    test_rows = (test_blocks * 256) / 8
+
+    actually_required_rows = math.ceil((quantity*num_bits)/8) 
+
     rows_arr = []
 
-    oldest_rows = Randbyte.query.order_by(Randbyte.id).limit(number_rows).all()
-    
-    for row in oldest_rows:
-        rows_arr.append(row.value)
-        db.session.delete(row)
+    if(test_bit_sequence == True):
+        rows_arr = get_tested_bits(test_rows, actually_required_rows)
+    else:
+        rows_arr = get_not_tested_bits(actually_required_rows)
 
-    db.session.commit()
-
-    success = False
-
-    if (test_generated_bits):
-        success = testsuite.run_all_tests(rows_arr)
-        
-    print(success)
-
-    print(rows_arr)
+    print("rows_arr =",rows_arr)
     
     split_arr = __row_arr_to_split_arr(rows_arr, quantity, num_bits)
     
-    print(split_arr)
+    print("split_arr =",split_arr)
     hex_arr = __bin_to_hex(split_arr)
-    print(hex_arr)
+    print("hex_arr =",hex_arr)
     data = {
         'description': 'successful operation; HEX-encoded bit arrays (with leading zeros if required)',
         'randomBits': hex_arr
@@ -135,6 +131,61 @@ def get_safed_number_count():
 def wait_for_rows(number_rows):
     while db.session.query(Randbyte).count() < number_rows:
         time.sleep(1)
+
+
+def get_tested_bits(test_rows, actually_required_rows):
+    test_success = False
+    test_count = 0
+    test_arr = []
+    rows_arr = []
+    while ((test_success == False) and (test_count < 5)):
+        test_arr.clear()
+        wait_for_rows(test_rows)
+        rows = Randbyte.query.order_by(Randbyte.id).limit(test_rows).all()
+
+        for row in rows:
+            test_arr.append(row.value)
+            
+        test_success = testsuite.run_all_tests(test_arr)
+        test_count += 1
+        
+
+        if (test_success == True):
+            counter = 0
+            for row in rows:
+                if(counter < actually_required_rows):
+                    rows_arr.append(row.value)
+                    db.session.delete(row)
+                    counter += 1
+                else:
+                    break
+            db.session.commit()
+
+        if(test_success == False):
+            for row in rows:
+                db.session.delete(row)
+            db.session.commit()
+
+    if(test_success == False):
+
+        response = make_response(
+            'tests for the requested bit sequence failed',
+            500,
+        )
+        return response 
+    
+    return rows_arr
+
+
+def get_not_tested_bits(actually_required_rows):
+    rows_arr = []
+    wait_for_rows(actually_required_rows)
+    rows = Randbyte.query.order_by(Randbyte.id).limit(actually_required_rows).all()
+    for row in rows:
+        rows_arr.append(row.value)
+        db.session.delete(row)
+    db.session.commit()
+    return rows_arr
 
 
 def __row_arr_to_split_arr(rows_arr, quantity, num_bits):

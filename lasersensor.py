@@ -12,7 +12,7 @@ class Lasersensor:
         for i in range(100000):
             random_number = random.randint(0, 1)
             self.q.put(random_number)
-            print("Eingefügt:", i)
+            #print("Eingefügt:", i)
             time.sleep(0.05)
             if not self.is_running:
                 break
