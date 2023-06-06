@@ -10,7 +10,7 @@ let isRunning = false;
 
 toggleBtn.addEventListener("click", () => {
   if (!isRunning) {
-    fetch("http://localhost:8080/trng/randomNum/init")
+    fetch("http://192.168.136.27:8080/trng/randomNum/init")
       .then((response) => {
         console.log("Started");
         const button = document.getElementById('generate-btn');
@@ -26,7 +26,7 @@ toggleBtn.addEventListener("click", () => {
         console.error("Error starting:", error);
       });
   } else {
-    fetch("http://localhost:8080/trng/randomNum/shutdown")
+    fetch("http://192.168.136.27:8080/trng/randomNum/shutdown")
       .then((response) => {
         console.log("Stopped");
         hideSpinner();
@@ -58,7 +58,7 @@ toggleBtn.addEventListener("click", () => {
 generateBtn.addEventListener("click", () => {
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
-  const url = `http://localhost:8080/trng/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
+  const url = `http://192.168.136.27:8080/trng/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
   const button = document.getElementById('generate-btn');
   button.disabled = true;
   const button2 = document.getElementById('export-btn');
@@ -187,7 +187,7 @@ function showTimeAlert(requiredBits) {
   var currentBits = 0;
   var remainderBits = 0;
 
-  fetch("http://localhost:8080/trng/getCount")
+  fetch("http://192.168.136.27:8080/trng/getCount")
       .then((response) => response.json())
       .then((data) => {
         currentBits = data;
