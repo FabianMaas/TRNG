@@ -65,6 +65,20 @@ label {
   margin-right: 10px;
 }
 
+footer {
+  text-align: center;
+  padding: 10px;
+}
+
+footer a {
+  color: #000;
+  text-decoration: none;
+}
+
+footer i {
+  font-size: 24px;
+}
+
 table {
   font-family: monospace, Arial, sans-serif;
   max-width: 100%;
@@ -132,6 +146,7 @@ tr:hover {
 /* Class Styles */
 
 .container {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -203,4 +218,11 @@ tr:hover {
 .toggle-label {
   margin-right: 10px;
   font-weight: bold;
+}
+
+.footer-github {
+  text-align: center;
+  font-size: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
