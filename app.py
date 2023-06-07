@@ -6,6 +6,7 @@ from models import db, Randbyte
 import time
 import math
 import os
+import re
 
 
 app = Flask(__name__)
@@ -37,13 +38,21 @@ def get_random_hex():
         response = make_response('system not ready; try init', 432)
         return response
     
-    quantity = request.args.get('quantity',default=1, type=int)
-    num_bits = request.args.get('numBits', default=1, type=int)
-
+    quantity = request.args.get('quantity',default=1)
+    num_bits = request.args.get('numBits', default=1)
+    print(num_bits)
+    if not test_string(str(quantity)) or not test_string(str(num_bits)):
+        response = make_response('invalid query parameter', 400)
+        return response
+    
+    quantity = int(quantity)
+    num_bits = int(num_bits)
+    
     if ((quantity < 1) or (num_bits < 1)):
         response = make_response('invalid query parameter', 400)
         return response
-
+    
+    
     test_blocks = math.ceil(((quantity*num_bits) / 256))
     test_rows = (test_blocks * 256) / 8
 
@@ -105,6 +114,10 @@ def start():
 
 @app.route('/randomNum/shutdown', methods=['GET'])
 def stop_laser():
+    if not laser_process.is_alive():
+        response = make_response('shutdown is not possible if system is not initialized', 400)
+        return response
+    
     laser.setStopFlag()
 
     laser_process.terminate()
@@ -209,6 +222,17 @@ def __bin_to_hex(bin_array):
         hex_string = format(int(binary, 2), '0' + str(len(binary) // 4) + 'X')
         hex_array.append(hex_string)
     return hex_array
+
+
+def test_string(string):
+    pattern = r'^[1-9][0-9]*$'
+    print(string)
+    if re.match(pattern, string):
+        print("True")
+        return True
+    else:
+        print("False")
+        return False
 
 
 if __name__ == '__main__':
