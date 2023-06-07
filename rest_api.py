@@ -8,6 +8,7 @@ import multiprocessing
 from multiprocessing import Event
 import time
 import math
+import os
 
 
 rest_api = Flask(__name__)
