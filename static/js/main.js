@@ -305,6 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (savedTheme === 'dark') {
     body.classList.toggle('dark');
     toggleBtn.classList.toggle('animate');
+    github_icon.src = 'static/img/github-mark-white.png';
   } else {
 
   }
