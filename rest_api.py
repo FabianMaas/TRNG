@@ -9,6 +9,8 @@ from multiprocessing import Event
 import time
 import math
 import os
+import re
+
 
 
 rest_api = Flask(__name__)
@@ -67,9 +69,16 @@ def get_random_hex():
         response = make_response('system not ready; try init', 432)
         return response
     
-    quantity = request.args.get('quantity',default=1, type=int)
-    num_bits = request.args.get('numBits', default=1, type=int)
+    quantity = request.args.get('quantity',default=1)
+    num_bits = request.args.get('numBits', default=1)
 
+    if not contains_only_numbers(str(quantity)) or not contains_only_numbers(str(num_bits)):
+        response = make_response('invalid query parameter', 400)
+        return response
+
+    quantity = int(quantity)
+    num_bits = int(num_bits)
+    
     if ((quantity < 1) or (num_bits < 1)):
         response = make_response('invalid query parameter', 400)
         return response
@@ -164,6 +173,10 @@ def shutdown_system():
     Notes:
         The random number generator will be set to 'standby mode' after the shutdown.
     """
+    if not __laser_process.is_alive():
+        response = make_response('shutdown is not possible if system is not initialized', 400)
+        return response
+    
     __laser.setStopFlag()
     __engine.reset()
 
@@ -296,18 +309,33 @@ def __get_not_tested_bits(actually_required_rows):
     return rows_arr
 
 
+def contains_only_numbers(string):
+    """
+    Validates if a string consists of only positive integers.\n
+    Parameters:
+        string (str): The string to be validated.\n
+    Returns:
+        bool: True if the string consists of only positive integers, False otherwise.
+    """
+    pattern = r'^[1-9][0-9]*$'
+    print(string)
+    if re.match(pattern, string):
+        print("True")
+        return True
+    else:
+        print("False")
+        return False
+
+
 def __row_arr_to_split_arr(rows_arr, quantity, num_bits):
     """
-    Converts a row array into a split array of fixed-length substrings.
-
+    Converts a row array into a split array of fixed-length substrings.\n
     Args:
         rows_arr (list): A list of strings representing rows each containing 8 bit.\n
         quantity (int): The number of substrings to split the row array into.\n
-        num_bits (int): The desired length of each substring.
-
+        num_bits (int): The desired length of each substring.\n
     Returns:
-        list: A list of fixed-length substrings created from the row array.
-
+        list: A list of fixed-length substrings created from the row array.\n
     Example:
         rows_arr = ['11001100', '10101010', '00110011', '10100110']\n
         quantity = 2\n
@@ -330,18 +358,14 @@ def __row_arr_to_split_arr(rows_arr, quantity, num_bits):
 
 def __bin_to_hex(bin_array):
     """
-    Converts a list of binary strings to a list of HEX-encoded strings.
-
+    Converts a list of binary strings to a list of HEX-encoded strings.\n
     This function takes a list of binary strings and converts each string to a corresponding HEX-encoded string.\n
     The binary strings are padded with leading zeros to ensure each binary string has a length divisible by 4 before conversion.\n
-    The resulting HEX-encoded strings are returned in a list.
-
+    The resulting HEX-encoded strings are returned in a list.\n
     Args:
-        bin_array (list): A list of binary strings.
-
+        bin_array (list): A list of binary strings.\n
     Returns:
         list: A list of HEX-encoded strings.
-
     """    
     hex_array = []
     for binary in bin_array:
