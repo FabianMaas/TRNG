@@ -351,10 +351,10 @@ def __bin_to_hex(bin_array):
     
 
 if __name__ == "__main__":
-    #cert_file = os.path.join(os.path.dirname(__file__), 'cert.pem')
-    #key_file = os.path.join(os.path.dirname(__file__), 'key.pem')
+    cert_file = os.path.join(os.path.dirname(__file__), '/home/Wave/certs/cert-wave.pem')
+    key_file = os.path.join(os.path.dirname(__file__), '/home/Wave/certs/cert-wave-key.pem')
     #app.run(host='localhost', port=443, ssl_context=(cert_file, key_file))
 
     with rest_api.app_context():
         db.create_all()
-    rest_api.run(host='0.0.0.0', port=8080, threaded=True)
+    rest_api.run(host='0.0.0.0', port=8080, threaded=True, port=443, ssl_context=(cert_file, key_file))
