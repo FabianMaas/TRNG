@@ -8,11 +8,12 @@ const toggleBtn = document.getElementById("toggleBtn");
 const alertDiv = document.getElementById("alertDiv");
 const infoAlertDiv = document.getElementById("infoAlertDiv");
 const github_icon = document.getElementById("github-icon");
+const ipAddress = "172.16.78.61" 
 let isRunning = false;
 
 toggleBtn.addEventListener("click", () => {
   if (!isRunning) {
-    fetch("http://192.168.137.27:8080/trng/randomNum/init")
+    fetch(`http://${ipAddress}:8080/trng/randomNum/init`)
       .then((response) => {
         console.log("Started");
         const button = document.getElementById('generate-btn');
@@ -28,7 +29,7 @@ toggleBtn.addEventListener("click", () => {
         console.error("Error starting:", error);
       });
   } else {
-    fetch("http://192.168.137.27:8080/trng/randomNum/shutdown")
+    fetch(`http://${ipAddress}:8080/trng/randomNum/shutdown`)
       .then((response) => {
         console.log("Stopped");
         hideSpinner();
@@ -60,7 +61,7 @@ toggleBtn.addEventListener("click", () => {
 generateBtn.addEventListener("click", () => {
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
-  const url = `http://192.168.137.27:8080/trng/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
+  const url = `http://${ipAddress}:8080/trng/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
   
   if(quantity < 1 || numBits < 1){
     showInfoAlert();
@@ -195,7 +196,7 @@ function showTimeAlert(requiredBits) {
   var currentBits = 0;
   var remainderBits = 0;
 
-  fetch("http://192.168.137.27:8080/trng/getCount")
+  fetch(`http://${ipAddress}:8080/trng/getCount`)
       .then((response) => response.json())
       .then((data) => {
         currentBits = data;
