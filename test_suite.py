@@ -1,12 +1,83 @@
 #!/usr/bin/env python3
+"""
+This file contains a test suite for evaluating the randomness of bit sequences.
+It includes several statistical tests commonly used to assess the quality of random number generators.
+
+Note: This file assumes that the bit sequence is represented as a list of integers, 
+where 0 represents a zero bit and 1 represents a one bit.
+"""
+
 
 import math
 import random
 
+
 class TestSuite:
+    """
+    A class that represents a test suite for evaluating the randomness of bit sequences.
+
+    Methods:
+        run_all_tests(bit_arr): Runs all the tests in the test suite on the given bit sequence.
+        __banner(): Prints a banner with the title of the test suite.
+        __run_test(bit_sequence): Performs the run test to check the randomness of a bit sequence.
+        __long_run_test(bit_sequence, k): Performs the long run test to check the randomness of a bit sequence.
+        __poker_test(bit_sequence): Performs the poker test to check the randomness of a bit sequence.
+        __monobit_test(bit_sequence): Performs the monobit test to to check the randomness of a bit sequence.
+        __equal_distribution_test(bit_sequence): Performs the equal distribution test to check the randomness of a bit sequence.
+        __autocorrelation_test(bit_sequence): Performs the autocorrelation test to check the randomness of a bit sequence.
+        __get_valid_bit_sequence(): Asks the user to enter a valid bit sequence and returns it as a string of 0's and 1's.
+    """
 
 
-    def banner(self):
+    def run_all_tests(self, bit_arr):
+        """
+        Runs a series of tests on a bit sequence.
+
+        Args:
+            bit_arr (list): A list of bits representing the bit sequence.
+
+        Returns:
+            bool: True if the sequence passes at least two tests, False otherwise.
+
+        Prints the test bit sequence and performs the following tests on it:
+        1. Run Test: Checks if the sequence contains a run of consecutive bits.
+        2. Long Run Test: Checks if the sequence contains a long run of consecutive bits.
+        3. Poker Test: Checks the distribution of different bit patterns in the sequence.
+        4. Equal Distribution Test: Checks if the number of ones and zeros in the sequence is approximately equal.
+        5. Autocorrelation Test: Measures the correlation between consecutive bits in the sequence.
+
+        The number of tests passed is calculated by adding the results of each test.
+        If the number of passed tests is greater than or equal to 3, the function returns True.
+        Otherwise, it returns False.
+        """
+        bit_sequence = ''.join(bit_arr)
+        print("test bit_sequence =",bit_sequence)
+        try:
+            run = self.__run_test(bit_sequence)
+        except:
+            print("Run Test:                Failed!")
+            run = 0
+        longrun = self.__long_run_test(bit_sequence,  int(len(bit_sequence)/2))
+        poker = self.__poker_test(bit_sequence)
+        #monobit = self.__monobit_test(randomNumberString)
+        equaldistribution = self.__equal_distribution_test(bit_sequence)
+        autocorrelation = self.__autocorrelation_test(bit_sequence)
+        passed_tests = run + longrun + poker + equaldistribution + autocorrelation
+        print("\nTest passed:", passed_tests, "/5")
+        if (passed_tests >= 3) :
+            return True
+        else:
+            return False
+        
+        
+    def __banner(self):
+        """
+        Prints a banner with a custom design.
+
+        The banner is displayed using ASCII art and includes a custom design.
+        It consists of a series of lines containing characters forming the design.
+        The banner is printed to the console, followed by a line of hashtags for separation.
+        """
         banner = "\n".join([
             '████████ ██████  ███    ██  ██████      ████████ ███████ ███████ ████████     ███████ ██    ██ ██ ████████ ███████',
             '   ██    ██   ██ ████   ██ ██              ██    ██      ██         ██        ██      ██    ██ ██    ██    ██',
@@ -22,77 +93,58 @@ class TestSuite:
         print('\n##################################################################################################################\n')
 
 
-    def run_all_tests(self, bit_arr):
-        bit_sequence = ''.join(bit_arr)
-        print("test bit_sequence =",bit_sequence)
-        try:
-            run = self.run_test(bit_sequence)
-        except:
-            print("Run Test:                Failed!")
-            run = 0
-        longrun = self.long_run_test(bit_sequence,5)
-        #poker = self.poker_test(randomNumberString)
-        #monobit = self.monobit_test(randomNumberString)
-        equaldistribution = self.equal_distribution_test(bit_sequence)
-        #disjointness = self.disjointness_test(randomNumberString)
-        autocorrelation = self.autocorrelation_test(bit_sequence)
-        passed_tests = run + longrun + equaldistribution + autocorrelation
-        print("\nTest passed:", passed_tests, "/4")
-        if (passed_tests >= 2) :
-            return True
-        else:
-            return False
-
-    '''
-    To test a bit sequence for randomness with the Run test, 
-    you first need to count the number of runs in the sequence. 
-    A "run" is a consecutive group of the same bit value.
-    We then calculate the expected number of runs and variance based on the number of bits 
-    in the sequence and the probability of 1 bits (pi) in the sequence. 
-    We also calculate the Z-score, which represents the ratio of the deviation 
-    of the observed number of runs from the expected number of runs to the expected variance. 
-    Finally, we compare the Z-score with the critical values (-1.96 and 1.96) 
-    and determine whether the bit sequence is random or not.
-    '''
-    def run_test(self, bit_sequence):
-        # Count the number of runs in the bit sequence
-        num_runs = 1
-        for i in range(len(bit_sequence)-1):
-            if bit_sequence[i] != bit_sequence[i+1]:
-                num_runs += 1
-
-        # Calculate the expected number of runs and variance
+    def __run_test(self, bit_sequence):
+        """
+        Performs the runs test to check the randomness of a bit sequence.\n
+        The run test examines the number of runs and the imbalance of '1' runs in the bit sequence. A run
+        is defined as a consecutive sequence of the same bit. The test compares the observed number of runs
+        and '1' runs to the expected values based on a random sequence.\n
+        Args:
+            bit_sequence (str): A sequence of bits represented as a string of '0's and '1's.
+        
+        Returns:
+            bool: True if the sequence passes the runs test for randomness, False otherwise.
+        """
         n = len(bit_sequence)
-        pi = sum(int(bit) for bit in bit_sequence) / n
-        expected_runs = 1 + 2*pi*(n-1)
-        variance = (2*n-1)*(2*pi*(1-pi))
-        #print("expected runs = ", expected_runs)
-        #print("runs count = ", num_runs)
+
+        # Count the total number of runs and the number of runs of '1's
+        total_runs = 1
+        ones_runs = 0
+        for i in range(1, n):
+            if bit_sequence[i] != bit_sequence[i - 1]:
+                total_runs += 1
+                if bit_sequence[i] == '1':
+                    ones_runs += 1
+    
+        # Calculate the expected number of runs and the standard deviation
+        expected_runs = (2 * len(bit_sequence) - 1) / 3
+        std_deviation = (16 * len(bit_sequence) - 29) / 90 ** 0.5
 
         # Calculate the Z-score
-        z_score = (num_runs - expected_runs) / variance**0.5
+        z_score = (ones_runs - expected_runs) / std_deviation
 
-        # Compare the Z-score with the critical values
-        if z_score < -1.96 or z_score > 1.96:
-            #print("z score =",z_score)
-            print("Run Test:                Failed!")
-            return False
-            
-        else:
-            #print("z score =",z_score)
-            print("Run Test:                Passed!")
+        # Check if the Z-score is within the range of -1.96 to 1.96 (95% confidence level)
+        if -1.96 <= z_score <= 1.96:
+            print("run test passed")
             return True
+        else:
+            print("run test nooot passed")
+            return False
 
 
-    '''
-    The Run test is a simple test that 
-    checks the proportion of runs of length 1 and 2 (sequences of consecutive 0's or 1's),
-    while the Long Run test is a more powerful test 
-    that checks the number of consecutive runs (sequences of consecutive 0's or 1's) 
-    of a given length k.
-    '''
-    def long_run_test(self, bit_sequence, k):
-        # Count the number of runs of length k in the bit sequence
+    def __long_run_test(self, bit_sequence, k):
+        """
+        Performs the long run test to check for an excessive number of runs of length k in the bit sequence.\n
+        The long run test examines the number of runs of length k in the bit sequence and compares it to the expected
+        number of runs. If the observed number of runs falls outside the expected range, the test fails.
+
+        Args:
+            bit_sequence (str): A sequence of bits represented as a string of '0's and '1's.
+            k (int): The length of runs to be tested.
+
+        Returns:
+            bool: True if the number of runs of length k is within the expected range, False otherwise.
+        """        
         num_runs = 0
         for i in range(len(bit_sequence)-k+1):
             if bit_sequence[i:i+k] in ['0'*k, '1'*k]:
@@ -118,18 +170,18 @@ class TestSuite:
             return True
 
 
-    '''
-    The function first divides the sequence into blocks 
-    of k bits each, and counts the number of occurrences 
-    of each possible k-bit pattern in these blocks. 
-    It then calculates the test statistic x, using these 
-    frequencies and the total number of blocks m. Finally, 
-    it calculates the p-value of the test statistic and compares 
-    it to a significance level alpha of 0.01, to determine 
-    whether to accept or reject the null hypothesis that the 
-    sequence is random.
-    '''
-    def poker_test(self, bit_sequence):
+    def __poker_test(self, bit_sequence):
+        """
+        Performs the poker test to check for non-randomness in a bit sequence.\n
+        The poker test examines the distribution of 4-bit patterns (poker hands) in the bit sequence
+        and compares it to the expected distribution. If the distribution significantly deviates from
+        the expected distribution, the test fails.\n
+        Args:
+            bit_sequence (str): A sequence of bits represented as a string of '0's and '1's.
+
+        Returns:
+            bool: True if the bit sequence passes the poker test, False otherwise.
+        """
         counts = [0] * 16
         for i in range(0, len(bit_sequence), 4):
             bits = bit_sequence[i:i+4]
@@ -154,14 +206,19 @@ class TestSuite:
             return False
             
     
-    '''
-    (Same as equal distribution test)
-    The Monobit test is a statistical test used to test 
-    the randomness of a binary bit sequence. 
-    It checks whether the proportion of 1s and 0s 
-    in the bit sequence is approximately equal.
-    '''
-    def monobit_test(self, bit_sequence):
+    def __monobit_test(self, bit_sequence):
+        """
+        Performs the monobit test to check for bias in a bit sequence.\n
+        The monobit test examines the proportion of '1's in the bit sequence and compares it to the
+        expected proportion (0.5). If the proportion significantly deviates from 0.5, the test fails,
+        indicating bias in the sequence.
+
+        Args:
+            bit_sequence (str): A sequence of bits represented as a string of '0's and '1's.
+
+        Returns:
+            bool: True if the bit sequence passes the monobit test, False otherwise.
+        """
         # Count the number of 1s in the bit sequence
         num_ones = sum(int(bit) for bit in bit_sequence)
 
@@ -181,7 +238,19 @@ class TestSuite:
             return True
     
 
-    def equal_distribution_test(self, bit_sequence):
+    def __equal_distribution_test(self, bit_sequence):
+        """
+        Performs the equal distribution test to check for bias in a bit sequence.\n
+        The equal distribution test examines the proportion of '1's in the bit sequence and compares it to the
+        expected proportion (0.5). If the proportion significantly deviates from 0.5, the test fails,
+        indicating bias in the sequence.
+
+        Args:
+            bit_sequence (str): A sequence of bits represented as a string of '0's and '1's.
+
+        Returns:
+            bool: True if the bit sequence passes the equal distribution test, False otherwise.
+        """
         # Count the number of 0s and 1s in the bit sequence
         n0 = bit_sequence.count('0')
         n1 = bit_sequence.count('1')
@@ -201,59 +270,19 @@ class TestSuite:
             print("Equal Distribution Test: Failed!")
             return False
 
-    
-    '''
-    The Disjointness test is a statistical test 
-    used to test the independence and randomness of 
-    two binary bit sequences. The test checks whether 
-    the two sequences are independent of each other, 
-    meaning that the values of one sequence do not 
-    provide any information about the values of the other sequence.
-    '''
-    def disjointness_test(self, seq1, seq2):
-        # Check that the two sequences have the same length
-        if len(seq1) != len(seq2):
-            #print("The sequences are not of equal length")
-            return
 
-        # Calculate the number of times the sequences disagree
-        num_disagreements = 0
-        for i in range(len(seq1)):
-            if seq1[i] != seq2[i]:
-                num_disagreements += 1
+    def __autocorrelation_test(self, bit_sequence):
+        """
+        Performs the autocorrelation test to check for serial dependence in a bit sequence.\n
+        The autocorrelation test examines the serial dependence of the bit sequence by calculating
+        the autocorrelation coefficients and a test statistic. It then compares the test statistic to
+        a critical value to determine whether the sequence is serially independent.
+        Args:
+            bit_sequence (str): A sequence of bits represented as a string of '0's and '1's.
 
-        # Calculate the expected number of disagreements
-        n = len(seq1)
-        p = 0.5
-        expected_disagreements = n * p * p
-
-        # Calculate the variance
-        variance = n * p * (1-p) * 2
-
-        # Calculate the Z-score
-        z_score = (num_disagreements - expected_disagreements) / math.sqrt(variance)
-
-        # Compare the Z-score with the critical values
-        if z_score < -1.96 or z_score > 1.96:
-            print("Disjointness Test:           Failed!")
-            return False
-        else:
-            print("Disjointness Test:           Passed!")
-            return True
-
-    
-    '''
-    The function first calculates the autocorrelation 
-    coefficients of the sequence, up to a maximum lag of k_max, 
-    which is half the length of the sequence. 
-    It then calculates the test statistic t, 
-    using these autocorrelation coefficients and the sum of 
-    the bits in the sequence. Finally, it calculates the p-value 
-    of the test statistic and compares it to a significance level 
-    alpha of 0.01, to determine whether to accept or reject 
-    the null hypothesis that the sequence is random.
-    '''
-    def autocorrelation_test(self, bit_sequence):
+        Returns:
+            bool: True if the bit sequence passes the autocorrelation test, False otherwise.
+        """
         n = len(bit_sequence)
         k_max = int(n / 2)
         s = sum([int(bit_sequence[i]) * 2 - 1 for i in range(n)])
@@ -283,18 +312,10 @@ class TestSuite:
             return False
 
 
-    def random_bits(self, num_bits):
-        bits = []
-        for i in range(num_bits):
-            bits.append(str(random.choice([0, 1])))
-        return ''.join(bits)
-
-
-    '''
-    Asks the user to enter a valid bit sequence and returns it as a string of 0's and 1's.
-    '''
-    def get_valid_bit_sequence(self):
-        
+    def __get_valid_bit_sequence(self):
+        '''
+        Asks the user to enter a valid bit sequence and returns it as a string of 0's and 1's.
+        '''
         while True:
             bit_sequence = input("Please enter a bit sequence (a string of 0's and 1's):\n")
             if all(bit in ['0', '1'] for bit in bit_sequence):
@@ -306,14 +327,9 @@ class TestSuite:
 if __name__ == '__main__':
     
     testsuite = TestSuite()
-    testsuite.banner()
-    
-    #rand1 = testsuite.random_bits(256)
-    #rand2 = '1010100000010001000100010001001001110110110010010100000111100100111001101100100000000010010101100011010101010011110111100100001101001111010100000010110110001110100001100001010101111110100000010001010101010100010011010100111111000010010111111110000110101011'
-
-    randInput = testsuite.get_valid_bit_sequence()
+    testsuite.__banner()
+    randInput = testsuite.__get_valid_bit_sequence()
    
-
     print('\n##################################################################################################################\n')
 
     testsuite.run_all_tests(randInput)
