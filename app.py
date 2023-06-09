@@ -1,7 +1,7 @@
 import multiprocessing
 from flask import Flask, request, jsonify, render_template, redirect, url_for, make_response
 from lasersensor import Lasersensor
-from testsuite import TestSuite
+from test_suite import TestSuite
 from models import db, Randbyte
 import time
 import math
