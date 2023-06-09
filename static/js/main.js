@@ -17,7 +17,7 @@ let isRunning = false;
 startStopBtn.addEventListener("click", () => {
   if (!isRunning) {
     // Initialize the TRNG
-    fetch(`${protocol}://${ipAddress}:8080/trng/randomNum/init`)
+    fetch(`${protocol}://${ipAddress}:${port}/trng/randomNum/init`)
       .then((response) => {
         console.log("Started");
         // Enable generate button and show canvas
@@ -36,7 +36,7 @@ startStopBtn.addEventListener("click", () => {
       });
   } else {
     // Shutdown the TRNG
-    fetch(`${protocol}://${ipAddress}:8080/trng/randomNum/shutdown`)
+    fetch(`${protocol}://${ipAddress}:${port}/trng/randomNum/shutdown`)
       .then((response) => {
         console.log("Stopped");
         hideSpinner();
@@ -71,7 +71,7 @@ startStopBtn.addEventListener("click", () => {
 generateBtn.addEventListener("click", () => {
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
-  const url = `${protocol}://${ipAddress}:8080/trng/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
+  const url = `${protocol}://${ipAddress}:${port}/trng/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
   
   if(quantity < 1 || numBits < 1){
     showInfoAlert();
@@ -220,7 +220,7 @@ function showTimeAlert(requiredBits) {
   var remainderBits = 0;
 
   // Fetch the current count of generated bits
-  fetch(`${protocol}://${ipAddress}:8080/trng/getCount`)
+  fetch(`${protocol}://${ipAddress}:${port}/trng/getCount`)
       .then((response) => response.json())
       .then((data) => {
         currentBits = data;
