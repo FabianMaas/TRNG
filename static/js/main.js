@@ -8,6 +8,7 @@ const estimatedWaitTimeAlert = document.getElementById("estimatedWaitTimeAlert")
 const inputErrorAlert = document.getElementById("inputErrorAlert");
 const github_icon = document.getElementById("github-icon");
 const ipAddress = "172.16.78.61" // IP address for communication with rest api
+const protocol = "https" // Defines if HTTP or HTTPS is used
 let isRunning = false;
 
 
@@ -15,7 +16,7 @@ let isRunning = false;
 startStopBtn.addEventListener("click", () => {
   if (!isRunning) {
     // Initialize the TRNG
-    fetch(`http://${ipAddress}:8080/trng/randomNum/init`)
+    fetch(`${protocol}://${ipAddress}:8080/trng/randomNum/init`)
       .then((response) => {
         console.log("Started");
         // Enable generate button and show canvas
@@ -34,7 +35,7 @@ startStopBtn.addEventListener("click", () => {
       });
   } else {
     // Shutdown the TRNG
-    fetch(`http://${ipAddress}:8080/trng/randomNum/shutdown`)
+    fetch(`${protocol}://${ipAddress}:8080/trng/randomNum/shutdown`)
       .then((response) => {
         console.log("Stopped");
         hideSpinner();
@@ -69,7 +70,7 @@ startStopBtn.addEventListener("click", () => {
 generateBtn.addEventListener("click", () => {
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
-  const url = `http://${ipAddress}:8080/trng/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
+  const url = `${protocol}://${ipAddress}:8080/trng/randomNum/getRandom?quantity=${quantity}&numBits=${numBits}`;
   
   if(quantity < 1 || numBits < 1){
     showInfoAlert();
@@ -218,7 +219,7 @@ function showTimeAlert(requiredBits) {
   var remainderBits = 0;
 
   // Fetch the current count of generated bits
-  fetch(`http://${ipAddress}:8080/trng/getCount`)
+  fetch(`${protocol}://${ipAddress}:8080/trng/getCount`)
       .then((response) => response.json())
       .then((data) => {
         currentBits = data;
