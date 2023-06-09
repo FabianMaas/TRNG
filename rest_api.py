@@ -1,16 +1,82 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for, make_response
+"""
+This Python file implements a True Random Number Generator (TRNG) REST API using the Flask framework. 
+The TRNG system consists of a laser sensor, a stepper engine, a gyroscope, and a database for storing random bits.
+
+Attributes:
+
+    rest_api (Flask): The Flask application object.
+    __laser (LaserSensor): Instance of the LaserSensor class for generating random bits.
+    __engine (StepperEngine): Instance of the StepperEngine class for controlling the stepper motor.
+    __gyroscope (Gyroscope): Instance of the Gyroscope class for retrieving orientation angles.
+    __testsuite (TestSuite): Instance of the TestSuite class for performing tests on random bit sequences.
+    __laser_process (multiprocessing.Process): Process object for running the laser sensor.
+    __db_write_process (multiprocessing.Process): Process object for writing random bits to the database.
+    __engine_process (multiprocessing.Process): Process object for controlling the stepper motor.
+    __test_bit_sequence (bool): Flag indicating whether to test the generated bit sequence or not.
+
+Endpoints:
+
+    '/': Redirects to the TRNG page.
+    '/trng': Renders the TRNG page.
+    '/trng/randomNum/getRandom': Retrieves random bits from the database and converts them to HEX encoding.
+    '/trng/randomNum/init': Initializes the TRNG system.
+    '/trng/randomNum/shutdown': Shuts down the TRNG system.
+    '/trng/getCount': Retrieves the count of stored random bits from the database.
+
+Helper Functions:
+
+    __wait_for_rows(number_rows): Waits until the specified number of rows is available in the database.
+    __get_tested_bits(test_rows, actually_required_rows): Retrieves and tests a specified number of rows from the database, ensuring the success of the tests before returning the requested rows.
+    __get_not_tested_bits(actually_required_rows): Retrieves and deletes the specified number of rows from the database, returning the corresponding values.
+    __contains_only_numbers(string): Validates if a string consists of only positive integers.
+    __row_arr_to_split_arr(rows_arr, quantity, num_bits): Converts a row array into a split array of fixed-length substrings.
+    __bin_to_hex(bin_array): Converts a list of binary strings to a list of HEX-encoded strings.
+
+Imports:
+
+    math: Provides mathematical functions for calculations used in the code.
+    multiprocessing: Enables the creation and management of multiple processes for parallel execution.
+    os: Provides functions for interacting with the operating system, such as file path operations.
+    re: Provides support for regular expressions used for string pattern matching and validation.
+    time: Provides functions for time-related operations, such as delays and timestamps.
+    Flask: A web framework used for creating the RESTful API endpoints and handling HTTP requests.
+    jsonify: A Flask function used to convert Python objects to JSON-formatted responses.
+    make_response: A Flask function used to create custom HTTP responses.
+    redirect: A Flask function used to perform HTTP redirects.
+    render_template: A Flask function used for rendering HTML templates.
+    request: A Flask object that represents an incoming HTTP request.
+    url_for: A Flask function used for generating URLs for endpoints.
+    models: A module that contains the database models for the application.
+    db: A database instance used for interacting with the SQLite database.
+    gyroscope: A module that provides functionality for interacting with a gyroscope sensor.
+    laser_sensor: A module that provides functionality for interacting with a laser sensor.
+    stepper_engine: A module that provides functionality for controlling a stepper motor.
+    test_suite: A module that contains test functions for evaluating the quality of random bit sequences.
+
+Note:
+
+    The TRNG system requires proper initialization before random numbers can be generated.
+    The laser sensor, stepper motor, and gyroscope processes are run as separate multiprocessing processes.
+    The random bits are stored in an SQLite database.
+    The TRNG page provides user interface elements to request and display random numbers.
+    The generated random bits can be retrieved in HEX-encoded format.
+    The system supports testing of the generated bit sequence using various tests provided by the TestSuite class.
+    The system can be shut down, and the random number generator can be set to 'standby mode' after shutdown.
+"""
+
+
+import math
+import multiprocessing
+import os
+import re
+import time
+
+from flask import Flask, jsonify, make_response, redirect, render_template, request, url_for
+from models import Randbyte, db
+from gyroscope import Gyroscope
 from laser_sensor import LaserSensor
 from stepper_engine import StepperEngine
 from test_suite import TestSuite
-from gyroscope import Gyroscope
-from models import db, Randbyte
-import multiprocessing
-from multiprocessing import Event
-import time
-import math
-import os
-import re
-
 
 
 rest_api = Flask(__name__)
@@ -27,6 +93,7 @@ __engine_process = multiprocessing.Process(target=__engine.start)
 
 __test_bit_sequence = True
 
+
 @rest_api.route('/')
 def index():
     """
@@ -34,7 +101,7 @@ def index():
     This endpoint '/' performs a redirect to the TRNG page, which provides access to a True Random Number Generator.\n
     The endpoint returns an HTTP response with a status code of 301  and a description indicating the redirection.\n
     Returns:
-        flask.wrappers.Response: An HTTP response representing the redirect to the TRNG page.
+    - flask.wrappers.Response: An HTTP response representing the redirect to the TRNG page.
     """
     response = make_response(redirect(url_for('trng')))
     response.status_code = 301
@@ -49,7 +116,7 @@ def trng():
     This endpoint '/trng' renders the TRNG page, which provides access to a True Random Number Generator.
     The page typically contains user interface elements to request and display random numbers.\n
     Returns:
-        flask.wrappers.Response: An HTTP response representing the rendered TRNG page.
+    - flask.wrappers.Response: An HTTP response representing the rendered TRNG page.
     """
     return render_template('index.html')
 
@@ -61,9 +128,9 @@ def get_random_hex():
     This endpoint '/trng/randomNum/getRandom' retrieves random bits from the SQLite database and converts them to HEX encoding.\n
     The quantity and number of bits per array can be specified as query parameters.\n
     Returns:
-        flask.wrappers.Response: An HTTP response containing the HEX-encoded bit arrays.\n
+    - flask.wrappers.Response: An HTTP response containing the HEX-encoded bit arrays.\n
     Raises:
-        HTTPException: If the system is not ready and needs initialization (status code 432).
+    - HTTPException: If the system is not ready and needs initialization (status code 432).
     """
     if not __laser_process.is_alive():
         response = make_response('system not ready; try init', 432)
@@ -72,7 +139,7 @@ def get_random_hex():
     quantity = request.args.get('quantity',default=1)
     num_bits = request.args.get('numBits', default=1)
 
-    if not contains_only_numbers(str(quantity)) or not contains_only_numbers(str(num_bits)):
+    if not __contains_only_numbers(str(quantity)) or not __contains_only_numbers(str(num_bits)):
         response = make_response('invalid query parameter', 400)
         return response
 
@@ -118,9 +185,9 @@ def init_system():
     This endpoint '/trng/randomNum/init' initializes the true random number generator system by starting the necessary processes and components.\n
     The system requires multiple global variables (__laser_process, __db_write_process, and __engine_process) to be set properly.\n
     Returns:
-        flask.wrappers.Response: An HTTP response indicating the initialization status.\n
+    - flask.wrappers.Response: An HTTP response indicating the initialization status.\n
     Raises:
-        HTTPException: If the system fails to initialize within a timeout of 60 seconds (status code 555).
+    - HTTPException: If the system fails to initialize within a timeout of 60 seconds (status code 555).
     """    
     global __laser_process
     global __db_write_process
@@ -133,9 +200,7 @@ def init_system():
     if __laser_process.is_alive():
         return "system already initialized"
     
-    __laser.setStartFlag()
-    
-    error_event = Event()
+    error_event = multiprocessing.Event()
     if not __laser_process.is_alive():
         __laser_process = multiprocessing.Process(target=__laser.start)
         __laser_process.start()
@@ -169,16 +234,13 @@ def shutdown_system():
     This endpoint '/trng/randomNum/shutdown' shuts down the random number generator system by stopping the necessary processes and resetting components.\n
     The system relies on global variables (__laser_process, __db_write_process, and __engine_process) to perform the shutdown.\n
     Returns:
-        flask.wrappers.Response: An HTTP response indicating the successful shutdown.\n
+    - flask.wrappers.Response: An HTTP response indicating the successful shutdown.\n
     Notes:
         The random number generator will be set to 'standby mode' after the shutdown.
     """
     if not __laser_process.is_alive():
         response = make_response('shutdown is not possible if system is not initialized', 400)
         return response
-    
-    __laser.setStopFlag()
-    __engine.reset()
 
     __laser_process.terminate()
     __db_write_process.terminate()
@@ -200,7 +262,7 @@ def get_safed_number_count():
     This endpoint '/trng/getCount' retrieves the count of stored random bits from the database.\n
     It calculates the total number of bits by multiplying the count of database rows with 8, because the DB stores 8 bit per row.\n
     Returns:
-        flask.wrappers.Response: An HTTP response containing the count of stored random numbers in bits.
+    - flask.wrappers.Response: An HTTP response containing the count of stored random numbers in bits.
     """
     with rest_api.app_context():
         rows = db.session.query(Randbyte).count()
@@ -212,10 +274,8 @@ def get_safed_number_count():
 def __wait_for_rows(number_rows):
     """
     Waits until the specified number of rows is available in the database.\n
-    Args:
-        number_rows (int): The desired number of rows to wait for.\n
-    Returns:
-        None\n
+    Parameters:
+    - number_rows (int): The desired number of rows to wait for.\n
     Note:
         This method uses a loop to continuously check the count of rows in the database
         until the desired number of rows is reached. It sleeps for 1 second between each check.\n
@@ -228,11 +288,11 @@ def __get_tested_bits(test_rows, actually_required_rows):
     """
     Retrieves and tests a specified number of rows from the database,
     ensuring the success of the tests before returning the requested rows.\n
-    Args:
-        test_rows (int): The number of rows to be tested.
-        actually_required_rows (int): The number of rows required in the final result.\n
+    Parameters:
+    - test_rows (int): The number of rows to be tested.
+    - actually_required_rows (int): The number of rows required in the final result.\n
     Returns:
-        list: A list of the requested rows if the tests are successful,
+    - list: A list of the requested rows if the tests are successful,
               otherwise a response indicating test failure.\n
     Note:
         This method retrieves the specified number of rows from the database and
@@ -289,10 +349,10 @@ def __get_not_tested_bits(actually_required_rows):
     """
     Retrieves and also deletes the specified number of rows from the database,
     and returns the corresponding values.\n
-    Args:
-        actually_required_rows (int): The number of rows required in the final result.\n
+    Parameters:
+    - actually_required_rows (int): The number of rows required in the final result.\n
     Returns:
-        list: A list of the values from the requested rows.\n
+    - list: A list of the values from the requested rows.\n
     Note:
         This method waits until the specified number of rows is available in the database.
         Once the required rows are available, it retrieves and also deletes them from the database,
@@ -309,13 +369,13 @@ def __get_not_tested_bits(actually_required_rows):
     return rows_arr
 
 
-def contains_only_numbers(string):
+def __contains_only_numbers(string):
     """
     Validates if a string consists of only positive integers.\n
     Parameters:
-        string (str): The string to be validated.\n
+    - string (str): The string to be validated.\n
     Returns:
-        bool: True if the string consists of only positive integers, False otherwise.
+    - bool: True if the string consists of only positive integers, False otherwise.
     """
     pattern = r'^[1-9][0-9]*$'
     print(string)
@@ -330,12 +390,12 @@ def contains_only_numbers(string):
 def __row_arr_to_split_arr(rows_arr, quantity, num_bits):
     """
     Converts a row array into a split array of fixed-length substrings.\n
-    Args:
-        rows_arr (list): A list of strings representing rows each containing 8 bit.\n
-        quantity (int): The number of substrings to split the row array into.\n
-        num_bits (int): The desired length of each substring.\n
+    Parameters:
+    - rows_arr (list): A list of strings representing rows each containing 8 bit.\n
+    - quantity (int): The number of substrings to split the row array into.\n
+    - num_bits (int): The desired length of each substring.\n
     Returns:
-        list: A list of fixed-length substrings created from the row array.\n
+    - list: A list of fixed-length substrings created from the row array.\n
     Example:
         rows_arr = ['11001100', '10101010', '00110011', '10100110']\n
         quantity = 2\n
@@ -362,10 +422,10 @@ def __bin_to_hex(bin_array):
     This function takes a list of binary strings and converts each string to a corresponding HEX-encoded string.\n
     The binary strings are padded with leading zeros to ensure each binary string has a length divisible by 4 before conversion.\n
     The resulting HEX-encoded strings are returned in a list.\n
-    Args:
-        bin_array (list): A list of binary strings.\n
+    Parameters:
+    - bin_array (list): A list of binary strings.\n
     Returns:
-        list: A list of HEX-encoded strings.
+    - list: A list of HEX-encoded strings.
     """    
     hex_array = []
     for binary in bin_array:
@@ -378,8 +438,7 @@ def __bin_to_hex(bin_array):
 if __name__ == "__main__":
     cert_file = os.path.join(os.path.dirname(__file__), '/home/Wave/certs/cert-wave.pem')
     key_file = os.path.join(os.path.dirname(__file__), '/home/Wave/certs/cert-wave-key.pem')
-    #app.run(host='localhost', port=443, ssl_context=(cert_file, key_file))
 
     with rest_api.app_context():
         db.create_all()
-    rest_api.run(host='0.0.0.0', port=8080, threaded=True, port=443, ssl_context=(cert_file, key_file))
+    rest_api.run(host='0.0.0.0', threaded=True, port=443, ssl_context=(cert_file, key_file))

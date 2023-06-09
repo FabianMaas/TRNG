@@ -1,26 +1,81 @@
-import RPi.GPIO as GPIO
-import os, time, datetime
-import random
+"""
+This file provides the LaserSensor class for controlling a laser sensor using Raspberry Pi GPIO pins.
+
+The LaserSensor class allows reading sensor data, writing data to a database, and managing event-based callbacks for sensor events. 
+It utilizes the RPi.GPIO library for GPIO pin manipulation, the time library for delays and timing calculations, 
+the datetime library for time-based operations, the random library for generating random bits, 
+the models module for interacting with the database, and the multiprocessing library for event handling.
+
+Imports:
+- datetime: Provides classes for manipulating dates and times.
+- models: Contains the data models for the application.
+- multiprocessing: Supports the execution of multiple processes in parallel.
+- os: Provides a way of using operating system-dependent functionality.
+- random: Generates random numbers and provides random selection functionality.
+- RPi.GPIO: Allows control of Raspberry Pi GPIO pins.
+- time: Provides various time-related functions.
+
+Classes:
+- LaserSensor: Controls a laser sensor and manages data reading and writing.
+"""
+
+
+import datetime
 import models
 import multiprocessing
+import os
+import random
+import RPi.GPIO as GPIO
+import time
 
 
 class LaserSensor:
-
+    """
+    Represents a laser sensor controlled using Raspberry Pi GPIO pins.\n
+    Attributes:
+    - __queue_top (multiprocessing.Queue): A queue for storing data from the top laser sensor.
+    - __queue_bottom (multiprocessing.Queue): A queue for storing data from the bottom laser sensor.
+    - __top_down (bool): A flag indicating if the top laser sensor is currently down.
+    - __bottom_down (bool): A flag indicating if the bottom laser sensor is currently down.
+    - __list_top (list): A list for tracking data from the top laser sensor.
+    - __list_bottom (list): A list for tracking data from the bottom laser sensor.\n
+    Methods:
+    - start(self): Starts the sensor and begins monitoring the queues.
+    - write_to_db(self, rest_api, error_event: multiprocessing.Event): Constantly checks the data queues and writes to the database when the queue reaches 8 bits.
+    - __loop(self): Main loop for monitoring the laser sensors.
+    - __callback_func1(self, channel): Callback function for handling events from the first laser sensor.
+    - __callback_func2(self, channel): Callback function for handling events from the second laser sensor.
+    - __callback_func3(self, channel): Callback function for handling events from the third laser sensor.
+    - __callback_func4(self, channel): Callback function for handling events from the fourth laser sensor.
+    - __add_time_based_random_bits(self, queue): Adds time-based random bits to the specified queue.
+    """
     __queue_top = multiprocessing.Queue()
     __queue_bottom = multiprocessing.Queue()
-    __is_running = False
     __top_down = False
     __bottom_down = False
     __list_top = []
     __list_bottom = []
 
+
+    def start(self):
+        """
+        Starts the laser sensor and begins monitoring the queues.\n
+        Parameters:
+        - self: The current instance of the class.
+        """
+        try:
+            self.__loop()
+        except Exception as e:
+            print("EXCEPTION from queue loop: " + str(e))
+            pass
+
+
     def write_to_db(self, rest_api, error_event: multiprocessing.Event):
         """
         Checks the data queues constantly and writes to the db,
-        if the queue reaches 8 Bit.
-
-        Params: 
+        if the queue reaches 8 Bit.\n
+        Parameters:
+        - self: The current instance of the class.
         - rest_api is an flask instance object.
         - error_event is an object of the type Event from multiprocessing library.
         """
@@ -100,27 +155,27 @@ class LaserSensor:
                     last_executed_time = datetime.datetime.now()
             
             time.sleep(1) 
-            if not self.__is_running:
-                break
-
-    def setStopFlag(self):
-        self.__is_running = False
-
-    def setStartFlag(self):
-        self.__is_running = True
-
-    def getIsActive(self):
-        return self.__is_running
-
-    def start(self):
-        try:
-            self.__loop()
-        except Exception as e:
-            print("EXCEPTION from queue loop: " + str(e))
-            pass
 
 
     def __loop(self):
+        """
+        Main loop for monitoring the laser sensors.\n
+        This function sets up GPIO pins for receiving signals from the laser sensors and adds event detection callbacks.
+        It continuously runs in a loop, checking the status of the laser sensors and removing event detection as needed.
+        The loop also includes a sleep period of 0.1 seconds between iterations.\n
+        Parameters:
+        - self: The current instance of the class.\n
+        Pin Configuration:
+        - RECEIVER_PIN1: GPIO pin 19
+        - RECEIVER_PIN2: GPIO pin 13
+        - RECEIVER_PIN3: GPIO pin 26
+        - RECEIVER_PIN4: GPIO pin 12\n
+        Callback Functions:
+        - __callback_func1: Callback function for handling events from the first laser sensor.
+        - __callback_func2: Callback function for handling events from the second laser sensor.
+        - __callback_func3: Callback function for handling events from the third laser sensor.
+        - __callback_func4: Callback function for handling events from the fourth laser sensor.
+        """
         RECEIVER_PIN1 = 19
         RECEIVER_PIN2 = 13
         RECEIVER_PIN3 = 26
@@ -142,7 +197,7 @@ class LaserSensor:
         GPIO.add_event_detect(RECEIVER_PIN4, GPIO.RISING, callback=self.__callback_func4, bouncetime=50)
 
         try:
-            while self.__is_running:
+            while True:
 
                 if(self.__top_down):
                     GPIO.remove_event_detect(RECEIVER_PIN1)
@@ -161,50 +216,92 @@ class LaserSensor:
 
 
     def __callback_func1(self, channel):
+        """
+        Callback function for handling events from the first laser sensor.\n
+        This function is called when a rising edge event is detected on the specified channel.
+        It checks the status of the laser sensor and adds the corresponding value to the top laser sensor queue.
+        Optionally, additional time-based random bits can be added using the __add_time_based_random_bits function.
+        It also prints a message indicating the value added to the queue.\n
+        Parameters:
+        - self: The current instance of the class.\n
+        - channel: The GPIO channel on which the event was detected.
+        """
         if GPIO.input(channel):
             if(not self.__top_down):
                 self.__queue_top.put(0)
-                '''
-                microsecond = bin(datetime.datetime.now().microsecond)
-                bits = microsecond[len(microsecond)-2:]
-                for bit in bits:
-                    self.__queue_top.put(bit)
-                '''
+                # optional more bits with additional time factor
+                # self.__add_time_based_random_bits(self.__queue_top)
                 print("first: 0")         
 
+
     def __callback_func2(self, channel):
+        """
+        Callback function for handling events from the second laser sensor.\n
+        This function is called when a rising edge event is detected on the specified channel.
+        It checks the status of the laser sensor and adds the corresponding value to the top laser sensor queue.
+        Optionally, additional time-based random bits can be added using the __add_time_based_random_bits function.
+        It also prints a message indicating the value added to the queue.\n
+        Parameters:
+        - self: The current instance of the class.\n
+        - channel: The GPIO channel on which the event was detected.
+        """
         if GPIO.input(channel):
             if(not self.__top_down):
                 self.__queue_top.put(1)
-                '''
-                microsecond = bin(datetime.datetime.now().microsecond)
-                bits = microsecond[len(microsecond)-2:]
-                for bit in bits:
-                    self.__queue_top.put(bit)
-                '''
+                # optional more bits with additional time factor
+                # self.__add_time_based_random_bits(self.__queue_top)
                 print("first: 1")
     
+    
     def __callback_func3(self, channel):
+        """
+        Callback function for handling events from the third laser sensor.\n
+        This function is called when a rising edge event is detected on the specified channel.
+        It checks the status of the laser sensor and adds the corresponding value to the bottom laser sensor queue.
+        Optionally, additional time-based random bits can be added using the __add_time_based_random_bits function.
+        It also prints a message indicating the value added to the queue.\n
+        Parameters:
+        - self: The current instance of the class.\n
+        - channel: The GPIO channel on which the event was detected.
+        """
         if GPIO.input(channel):
             if(not self.__bottom_down):
                 self.__queue_bottom.put(0)
-                '''
-                microsecond = bin(datetime.datetime.now().microsecond)
-                
-                bits = microsecond[len(microsecond)-2:]
-                for bit in bits:
-                    self.__queue_bottom.put(bit)
-                '''
+                # optional more bits with additional time factor
+                # self.__add_time_based_random_bits(self.__queue_bottom)
                 print("second: 0")
 
+
     def __callback_func4(self, channel):
+        """
+        Callback function for handling events from the third laser sensor.\n
+        This function is called when a rising edge event is detected on the specified channel.
+        It checks the status of the laser sensor and adds the corresponding value to the bottom laser sensor queue.
+        Optionally, additional time-based random bits can be added using the __add_time_based_random_bits function.
+        It also prints a message indicating the value added to the queue.\n
+        Parameters:
+        - self: The current instance of the class.\n
+        - channel: The GPIO channel on which the event was detected.
+        """
         if GPIO.input(channel):
             if(not self.__bottom_down):
                 self.__queue_bottom.put(1)
-                '''
-                microsecond = bin(datetime.datetime.now().microsecond)
-                bits = microsecond[len(microsecond)-2:]
-                for bit in bits:
-                    self.__queue_bottom.put(bit)
-                '''
+                # optional more bits with additional time factor
+                # self.__add_time_based_random_bits(self.__queue_bottom)
                 print("second: 1")
+
+
+    def __add_time_based_random_bits(self, queue):
+        """
+        Adds time-based random bits to the specified queue.\n
+        This function generates random bits based on the current microsecond value and adds them to the given queue.
+        It retrieves the microsecond value using the datetime module, converts it to a binary string, and extracts the last two digits.
+        It then iterates over each bit in the extracted string and adds it to the queue.\n
+        Parameters:
+        - self: The current instance of the class.\n
+        - queue: The queue to which the random bits will be added.
+        """
+        microsecond = bin(datetime.datetime.now().microsecond)
+        bits = microsecond[len(microsecond)-2:]
+        for bit in bits:
+            queue.put(bit)
