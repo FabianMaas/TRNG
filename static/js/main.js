@@ -7,8 +7,9 @@ const resultTable = document.getElementById("result-table");
 const estimatedWaitTimeAlert = document.getElementById("estimatedWaitTimeAlert");
 const inputErrorAlert = document.getElementById("inputErrorAlert");
 const github_icon = document.getElementById("github-icon");
-const ipAddress = "172.16.78.61" // IP address for communication with rest api
 const protocol = "https" // Defines if HTTP or HTTPS is used
+const ipAddress = "172.16.78.61" // IP address for communication with rest api
+const port = "443" // Port for communication with rest api
 let isRunning = false;
 
 
