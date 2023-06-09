@@ -1,39 +1,45 @@
-const startBtn = document.getElementById("start-btn");
-const stopBtn = document.getElementById("stop-btn");
+// Get references to HTML elements
+const startStopBtn = document.getElementById("startStopBtn");
 const generateBtn = document.getElementById("generate-btn");
 const quantityInput = document.getElementById("quantity-input");
 const numBitsInput = document.getElementById("numBits-input");
 const resultTable = document.getElementById("result-table");
-const toggleBtn = document.getElementById("toggleBtn");
-const alertDiv = document.getElementById("alertDiv");
-const infoAlertDiv = document.getElementById("infoAlertDiv");
+const estimatedWaitTimeAlert = document.getElementById("estimatedWaitTimeAlert");
+const inputErrorAlert = document.getElementById("inputErrorAlert");
 const github_icon = document.getElementById("github-icon");
-const ipAddress = "172.16.78.61" 
+const ipAddress = "172.16.78.61" // IP address for communication with rest api
 let isRunning = false;
 
-toggleBtn.addEventListener("click", () => {
+
+// Event listener for the start/stopp button
+startStopBtn.addEventListener("click", () => {
   if (!isRunning) {
+    // Initialize the TRNG
     fetch(`http://${ipAddress}:8080/trng/randomNum/init`)
       .then((response) => {
         console.log("Started");
+        // Enable generate button and show canvas
         const button = document.getElementById('generate-btn');
         button.disabled = false;
         const canvas = document.getElementById('canvas');
         canvas.hidden = false;
-        toggleBtn.textContent = "Stop";
-        toggleBtn.classList.add("stop");
-        toggleBtn.style.backgroundColor = "red";
+        // Update toggle button appearance and state
+        startStopBtn.textContent = "Stop";
+        startStopBtn.classList.add("stop");
+        startStopBtn.style.backgroundColor = "red";
         isRunning = true;
       })
       .catch((error) => {
         console.error("Error starting:", error);
       });
   } else {
+    // Shutdown the TRNG
     fetch(`http://${ipAddress}:8080/trng/randomNum/shutdown`)
       .then((response) => {
         console.log("Stopped");
         hideSpinner();
         resetTable();
+        // Disable generate and export buttons, reset input values, hide canvas
         const button = document.getElementById('generate-btn');
         button.disabled = true;
         const button2 = document.getElementById('export-btn');
@@ -44,11 +50,12 @@ toggleBtn.addEventListener("click", () => {
         numBits_input.value = 1;
         const canvas = document.getElementById('canvas');
         canvas.hidden = true;
-        let alert = alertDiv;
+        // Hide alerts and update toggle button appearance and state
+        let alert = estimatedWaitTimeAlert;
         alert.hidden = true;
-        toggleBtn.textContent = "Start";
-        toggleBtn.classList.remove("stop");
-        toggleBtn.style.backgroundColor = "green";
+        startStopBtn.textContent = "Start";
+        startStopBtn.classList.remove("stop");
+        startStopBtn.style.backgroundColor = "green";
         isRunning = false;
       })
       .catch((error) => {
@@ -58,6 +65,7 @@ toggleBtn.addEventListener("click", () => {
 });
 
 
+// Event listener for the generate button
 generateBtn.addEventListener("click", () => {
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
@@ -79,21 +87,17 @@ generateBtn.addEventListener("click", () => {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      //console.log(data.randomBits);
       exportToFile(data.randomBits);
+      // Generate table rows for random hex values
       const tableRows = data.randomBits.map((num, index) => {
         const tableData1 = document.createElement("td");
         const tableData2 = document.createElement("td");
         const tableData3 = document.createElement("td");
         tableData1.textContent = index + 1;
-        //console.log(num);
         numLineBreak = insertLineBreaks(num,64);
-        //console.log(numLineBreak);
         tableData2.innerHTML = numLineBreak;
-        //tableData2.textContent = numLineBreak;
         tableData2.style.fontFamily = "monospace";
         tableData2.style.whiteSpace = "pre-wrap";
-        //tableData2.textContent = num;
         const button = document.createElement("button");
         button.textContent = "Copy";
         button.addEventListener("click", function () {
@@ -106,6 +110,7 @@ generateBtn.addEventListener("click", () => {
         tableRow.appendChild(tableData3);
         return tableRow;
       });
+      // Add table rows to the result table
       resultTable.innerHTML =
         "<tr><th>Nr.</th><th>Random Hex Values</th><th>Actions</th></tr>";
       tableRows.forEach((row) => resultTable.appendChild(row));
@@ -120,12 +125,16 @@ generateBtn.addEventListener("click", () => {
 
 });
 
+
+// Copy a row to the clipboard
 function copyRow(row) {
   const numberValue = row.querySelector("td:nth-child(2)").textContent;
   const stringWithoutLineBreaks = numberValue.replace(/\r?\n|\r/g, '');
   navigator.clipboard.writeText(stringWithoutLineBreaks);
 }
 
+
+// Export hex values to a text file
 function exportToFile(hexArray) {
   const arrayWithoutLineBreaks = hexArray.map(str => str.replace(/\r?\n|\r/g, ''));
   const fileContents = arrayWithoutLineBreaks.join('\n');
@@ -150,6 +159,8 @@ function exportToFile(hexArray) {
   };
 }
 
+
+// Get the current date and time as a formatted string
 function getCurrentDate() {
   const now = new Date();
   const year = now.getFullYear();
@@ -166,18 +177,24 @@ function getCurrentDate() {
   return formattedDateTime;
 }
 
+
+// Show the loading spinner
 function showSpinner() {
   console.log("showSpinner");
   const spinner = document.getElementById("loading-spinner");
   spinner.style.display = "block";
 }
 
+
+// Hide the loading spinner
 function hideSpinner() {
   console.log("hideSpinner");
   const spinner = document.getElementById("loading-spinner");
   spinner.style.display = "none";
 }
 
+
+// Reset the result table
 function resetTable() {
   var table = document.getElementById("result-table");
   var rowCount = table.rows.length;
@@ -186,16 +203,21 @@ function resetTable() {
   }
 }
 
+
+// Insert line breaks in a string at a specified interval
 function insertLineBreaks(str, breakInterval) {
   var regex = new RegExp(`(.{${breakInterval}})`, 'g');
   return str.replace(regex, '$1\n');
 }
 
+
+// Show an alert with the estimated time to wait based on the number of required bits
 function showTimeAlert(requiredBits) {
   
   var currentBits = 0;
   var remainderBits = 0;
 
+  // Fetch the current count of generated bits
   fetch(`http://${ipAddress}:8080/trng/getCount`)
       .then((response) => response.json())
       .then((data) => {
@@ -211,7 +233,7 @@ function showTimeAlert(requiredBits) {
         
         var description = "Bits currently stored: " + currentBits + "<br>Bits to be generated: " + remainderBits + "<br>Estimated time to wait: " + time + " (hh:mm:ss)";
 
-        let alert = alertDiv;
+        let alert = estimatedWaitTimeAlert;
         alert.innerHTML = description;
         alert.hidden = false;
 
@@ -225,6 +247,8 @@ function showTimeAlert(requiredBits) {
       });
 }
 
+
+// Convert seconds to a time string (hh:mm:ss)
 function convertSecondsToTime(seconds) {
   var hours = Math.floor(seconds / 3600);
   var minutes = Math.floor((seconds % 3600) / 60);
@@ -234,10 +258,14 @@ function convertSecondsToTime(seconds) {
   return timeString;
 }
 
+
+// Pad a number with leading zeros if necessary
 function padNumber(number) {
   return number.toString().padStart(2, "0");
 }
 
+
+// Show an information alert for invalid input
 function showInfoAlert(){
   const quantity = quantityInput.value;
   const numBits = numBitsInput.value;
@@ -256,7 +284,7 @@ function showInfoAlert(){
     numBitsInput.value = 1;
   }
 
-  let alert = infoAlertDiv;
+  let alert = inputErrorAlert;
   alert.innerHTML = description;
   alert.hidden = false;
   setTimeout(function() {
@@ -264,12 +292,14 @@ function showInfoAlert(){
   }, 3000);
 }
 
+
+// Toggle between light and dark theme
 function toggleTheme() {
   const body = document.querySelector('body');
-  const toggleBtn = document.querySelector('.toggle-btn');
+  const startStopBtn = document.querySelector('.toggle-btn');
   
   body.classList.toggle('dark');
-  toggleBtn.classList.toggle('animate');
+  startStopBtn.classList.toggle('animate');
 
   if (document.body.classList.contains('dark')) {
     console.log('Die Klasse "dark" ist gesetzt.');
@@ -282,10 +312,14 @@ function toggleTheme() {
   }
 }
 
+
+// Set the theme preference in a cookie
 function setThemePreference(theme) {
   document.cookie = `themePreference=${theme}; expires=${new Date(Date.now() + 31536000000).toUTCString()}; path=/; SameSite=Strict`;
 }
 
+
+// Check if the theme preference cookie exists and apply the theme
 function getThemePreference() {
   const cookies = document.cookie.split(';');
   for (let i = 0; i < cookies.length; i++) {
@@ -298,13 +332,16 @@ function getThemePreference() {
   return 'light';
 }
 
+
+// Event listener that listens for the 'DOMContentLoaded' event, 
+// which is triggered when the initial HTML document has been completely loaded and parsed.
 document.addEventListener('DOMContentLoaded', function() {
   const body = document.querySelector('body');
-  const toggleBtn = document.querySelector('.toggle-btn');
+  const startStopBtn = document.querySelector('.toggle-btn');
   const savedTheme = getThemePreference();
   if (savedTheme === 'dark') {
     body.classList.toggle('dark');
-    toggleBtn.classList.toggle('animate');
+    startStopBtn.classList.toggle('animate');
     github_icon.src = 'static/img/github-mark-white.png';
   } else {
 
