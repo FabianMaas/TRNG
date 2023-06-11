@@ -177,6 +177,7 @@ Now we come to the building instructions for the box located beneath the Galton 
 </details>
 
 However, note that the lid should not be glued down yet. This will allow you to lay the cables later. The box is already stable enough with just one side glued.
+<br>
 
 #### Slide
 Finally, we move on to the slide, which connects the board with the lift. A file is still needed for this step.
@@ -208,16 +209,38 @@ After assembling the slide, you can also glue the "funnel" at the end of the sli
 </details>
 
 **Tip:** Ensure that the funnel is tight enough at the end to accommodate exactly one marble on the back wall.
+
+<br>
+At the end, when everything is glued together, you can also insert the pieces from the 3D scanner into the cutouts on the boards. The picture allows you to clearly see which item should go where, making it relatively simple to put everything together. It is recommended to use superglue to securely attach all the 3D items in place.
+
+<details open>
+<summary>Configuration:</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/69453948/5800345b-8da9-4e8e-a76b-27cc53ce52bd" width="450" height="600">
+</details>
+
+<br>
+
 ### Marble lift
 TODO
+<br>
+
 ### Stepper engine
 TODO
+<br>
+
 ### RasberryPi
 TODO
+<br>
+
 #### Circuit board
 TODO
+<br>
+
 #### RasberryPi holder
 TODO
+<br>
+
 #### Sensor system
 In this step, the sensors are installed.
 The two brackets for the laserdiodes are filled with two laserdiodes each bracket and are
@@ -232,10 +255,13 @@ photodiodes with their brackets are moved slightly until the control lamp lights
 <summary>Sensor system:</summary>
 <br>
 <img src="https://github.com/FabianMaas/TRNG/assets/69453948/66927b07-3723-4440-8e28-be69d0ad9c5f" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/69453948/34980d81-b6a2-48f2-9f35-9d26d2ad0d2a" width="450" height="600">
 </details>
 
 The picture shows an aligned (below) and an unaligned (above) laser. For the top photodiode, only the power indicator light is on, but the laser signal light is off.
 The acrylic glass can be added to the system. It is important that the glass is not glued or
 fixed to the rest of the Galton Board.
+<br>
+
 ## Improvement ideas
 TODO
