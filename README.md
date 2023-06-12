@@ -177,11 +177,11 @@ This is an example of how to list things you need to use the software and how to
 ### Switching to dark theme
 
 <p align="center">
-  <img width="70%" height="70%" src="https://i.imgur.com/SDJixBz.png">
+  <img width="70%" height="70%" src="static/img/dark_theme_1.png">
 </p>
 <br>
 <p align="center">
-  <img width="70%" height="70%" src="https://i.imgur.com/SDJixBz.png">
+  <img width="70%" height="70%" src="static/img/dark_theme_2.png">
 </p>
 
 ---
