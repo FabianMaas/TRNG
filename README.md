@@ -71,15 +71,15 @@
 ## :mag: About The Project
 
 
-| ![Bild 1](static/img/Galton_Board.png) | ![Bild 2](static/img/galton.gif) |
-|:---:|:---:|
+![Bild 1](static/img/Galton_Board.png) ![Bild 2](static/img/galton.gif)
+![Bild 1](static/img/gui_light.png)
 
-
-
+<!-- test 
 <div style="display: flex; align-items: center;">
   <img src="static/img/gui_light.png" style="width: 49%;" alt="Beschreibung des Bildes">
   <img src="static/img/gui_dark.png" style="width: 50%; margin-top: auto; margin-bottom: auto;" alt="Beschreibung des Bildes">
-</div>
+</div> 
+-->
 
 <br>
 
