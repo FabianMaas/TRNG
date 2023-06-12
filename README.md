@@ -144,18 +144,26 @@ This is an example of how to list things you need to use the software and how to
 
 ---
 
-<!-- USAGE EXAMPLES -->
-## :thinking: Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
----
-
 ## :camera_flash: Screenshots
+
+### Starting the system
+
+<p align="center">
+  <img width="70%" height="70%" src="https://i.imgur.com/SDJixBz.png">
+</p>
+
+### Generating random numbers
+
+<p align="center">
+  <img width="70%" height="70%" src="https://i.imgur.com/SDJixBz.png">
+</p>
+
+### Exporting the generated random numbers
+
+<p align="center">
+  <img width="70%" height="70%" src="https://i.imgur.com/SDJixBz.png">
+</p>
+
 
 ---
 
@@ -165,19 +173,53 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 TRNG
 ├── LICENSE
 ├── README.md
-├── app.py
+├── docs
+│   └── models
+│       ├── 3D
+│       │   ├── GaltonBoard
+│       │   │   ├── Corner.stl
+│       │   │   ├── Corner_Marble_ Exit.stl
+│       │   │   ├── Hopper_ Part_Level_2.stl
+│       │   │   ├── Hopper_Part_Level_1.stl
+│       │   │   ├── Laser_Diode_Mount.stl
+│       │   │   ├── Photoresistor_Mount.stl
+│       │   │   └── Tube_Mount.stl
+│       │   └── MarblePump
+│       │       ├── Base.stl
+│       │       ├── Cap_Crankshaft.stl
+│       │       ├── Connector_Stepperengine.stl
+│       │       ├── Crankshaft.stl
+│       │       ├── Housing.stl
+│       │       ├── Journal_Crankshaft.stl
+│       │       ├── Pins.stl
+│       │       ├── Piston.stl
+│       │       ├── Slide.stl
+│       │       └── Tube_Mount.stl
+│       ├── Building_instructions.md
+│       └── lasercutter
+│           ├── Glas.svg
+│           ├── Prototype.svg
+│           └── Rutsche.svg
+├── hardware
+│   ├── gyroscope.py
+│   ├── laser_sensor.py
+│   └── stepper_engine.py
 ├── instance
 │   └── TRNG.db
-├── lasersensor.py
-├── models.py
+├── models
+│   └── models.py
 ├── requirements.txt
+├── rest_api.py
 ├── static
 │   ├── css
 │   │   └── main.css
 │   ├── img
+│   │   ├── Galton_Board.png
 │   │   ├── galton.gif
 │   │   ├── github-mark-white.png
 │   │   ├── github-mark.png
+│   │   ├── gui_dark.png
+│   │   ├── gui_light.png
 │   │   ├── logo.png
 │   │   └── spinner.gif
 │   └── js
@@ -185,9 +227,10 @@ TRNG
 │       └── main.js
 ├── templates
 │   └── index.html
-└── test_suite.py
+└── tests
+    └── test_suite.py
 
-7 directories, 17 files
+16 directories, 43 files
 ```
 ---
 
