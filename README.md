@@ -55,7 +55,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#construction_worker_man-built-with">Built With</a></li>
       </ul>
     </li>
     <li>
@@ -85,7 +85,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ---
 
-### Built With
+### :construction_worker_man: Built With
 * [![Python3][Python]][Python-url]
 * [![Flask][Flask]][Flask-url]
 * [![SQLite][SQLite]][SQLite-url]
