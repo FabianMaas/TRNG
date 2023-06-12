@@ -21,7 +21,7 @@ Classes:
 
 
 import datetime
-import models
+import models.models as models
 import multiprocessing
 import os
 import random
@@ -51,8 +51,8 @@ class LaserSensor:
     """
     __queue_top = multiprocessing.Queue()
     __queue_bottom = multiprocessing.Queue()
-    __top_down = False
-    __bottom_down = False
+    __top_down = multiprocessing.Event
+    __bottom_down = multiprocessing.Event
     __list_top = []
     __list_bottom = []
 
@@ -96,19 +96,19 @@ class LaserSensor:
 
             print("Bottom queue size: " + str(self.__queue_bottom.qsize()))
             print("Top queue size: " + str(self.__queue_top.qsize()))
-            print("Bottom down: " + str(self.__bottom_down))
-            print("Top down: " + str(self.__top_down))
+            print("Bottom down: " + str(self.__bottom_down.is_set()))
+            print("Top down: " + str(self.__top_down.is_set()))
 
 
             tmp_rand_arr = []
 
-            if ((self.__queue_top.qsize() >= 8 and not self.__top_down) or (self.__queue_bottom.qsize() >= 8 and not self.__bottom_down)):
+            if ((self.__queue_top.qsize() >= 8 and not self.__top_down.is_set()) or (self.__queue_bottom.qsize() >= 8 and not self.__bottom_down.is_set())):
                 tmp_rand_arr.clear()
 
-                if (not self.__bottom_down) and self.__queue_bottom.qsize() > self.__queue_top.qsize():
+                if (not self.__bottom_down.is_set()) and self.__queue_bottom.qsize() > self.__queue_top.qsize():
                     print("first if---------------------------------")
                     count = 0
-                    while (not self.__bottom_down) and count < 8:
+                    while (not self.__bottom_down.is_set()) and count < 8:
                         try:
                             tmp = self.__queue_bottom.get()
                             tmp_rand_arr.append(tmp)
@@ -117,7 +117,7 @@ class LaserSensor:
                             if len(self.__list_bottom) >= 32:
                                 print("DEBUG bottom-list: " + str(self.__list_bottom))
                                 if self.__list_bottom.count(0) > 30 or self.__list_bottom.count(1) > 30:
-                                    self.__bottom_down = True   
+                                    self.__bottom_down.set() 
                                     continue
 
                                 self.__list_bottom.pop(0)
@@ -126,10 +126,10 @@ class LaserSensor:
                         except Exception as e:
                             print("EXCEPTION from top queue write: " + str(e))
                             pass    
-                elif (not self.__top_down) and self.__queue_top.qsize() > self.__queue_bottom.qsize():
+                elif (not self.__top_down.is_set()) and self.__queue_top.qsize() > self.__queue_bottom.qsize():
                     print("second if---------------------------------")
                     count = 0
-                    while (not self.__top_down) and count < 8:
+                    while (not self.__top_down.is_set()) and count < 8:
                         try:
                             tmp = self.__queue_top.get()
                             tmp_rand_arr.append(tmp)
@@ -138,7 +138,7 @@ class LaserSensor:
                             if len(self.__list_top) >= 32:
                                 print("DEBUG top-list: " + str(self.__list_top))
                                 if self.__list_top.count(0) > 30 or self.__list_top.count(1) > 30:
-                                    self.__top_down = True  
+                                    self.__top_down.set()
                                     continue
 
                                 self.__list_top.pop(0)
@@ -201,11 +201,11 @@ class LaserSensor:
         try:
             while True:
 
-                if(self.__top_down):
+                if(self.__top_down.is_set()):
                     GPIO.remove_event_detect(RECEIVER_PIN1)
                     GPIO.remove_event_detect(RECEIVER_PIN2)
 
-                if(self.__bottom_down):
+                if(self.__bottom_down.is_set()):
                     GPIO.remove_event_detect(RECEIVER_PIN3)
                     GPIO.remove_event_detect(RECEIVER_PIN4)
                     
@@ -229,7 +229,7 @@ class LaserSensor:
         - channel: The GPIO channel on which the event was detected.
         """
         if GPIO.input(channel):
-            if(not self.__top_down):
+            if(not self.__top_down.is_set()):
                 self.__queue_top.put(0)
                 # optional more bits with additional time factor
                 # self.__add_time_based_random_bits(self.__queue_top)
@@ -248,7 +248,7 @@ class LaserSensor:
         - channel: The GPIO channel on which the event was detected.
         """
         if GPIO.input(channel):
-            if(not self.__top_down):
+            if(not self.__top_down.is_set()):
                 self.__queue_top.put(1)
                 # optional more bits with additional time factor
                 # self.__add_time_based_random_bits(self.__queue_top)
@@ -267,7 +267,7 @@ class LaserSensor:
         - channel: The GPIO channel on which the event was detected.
         """
         if GPIO.input(channel):
-            if(not self.__bottom_down):
+            if(not self.__bottom_down.is_set()):
                 self.__queue_bottom.put(0)
                 # optional more bits with additional time factor
                 # self.__add_time_based_random_bits(self.__queue_bottom)
@@ -286,7 +286,7 @@ class LaserSensor:
         - channel: The GPIO channel on which the event was detected.
         """
         if GPIO.input(channel):
-            if(not self.__bottom_down):
+            if(not self.__bottom_down.is_set()):
                 self.__queue_bottom.put(1)
                 # optional more bits with additional time factor
                 # self.__add_time_based_random_bits(self.__queue_bottom)

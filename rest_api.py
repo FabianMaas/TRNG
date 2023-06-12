@@ -72,11 +72,11 @@ import re
 import time
 
 from flask import Flask, jsonify, make_response, redirect, render_template, request, url_for
-from models import Randbyte, db
-from gyroscope import Gyroscope
-from laser_sensor import LaserSensor
-from stepper_engine import StepperEngine
-from test_suite import TestSuite
+from models.models import Randbyte, db
+from hardware.gyroscope import Gyroscope
+from hardware.laser_sensor import LaserSensor
+from hardware.stepper_engine import StepperEngine
+from tests.test_suite import TestSuite
 
 
 rest_api = Flask(__name__)
