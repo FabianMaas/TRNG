@@ -119,7 +119,8 @@ class TestSuite:
         # Calculate the expected number of runs and the standard deviation
         expected_runs = (2 * len(bit_sequence) - 1) / 3
         std_deviation = (16 * len(bit_sequence) - 29) / 90 ** 0.5
-
+        if(std_deviation == 0):
+            return False
         # Calculate the Z-score
         z_score = (ones_runs - expected_runs) / std_deviation
 
@@ -157,7 +158,8 @@ class TestSuite:
 
         # Calculate the variance
         variance = (n-k+3) * p * (1-p)
-
+        if(variance == 0):
+            return False
         # Calculate the Z-score
         z_score = (num_runs - expected_runs) / math.sqrt(variance)
 
@@ -225,7 +227,8 @@ class TestSuite:
         # Calculate the proportion of 1s in the bit sequence
         n = len(bit_sequence)
         prop_ones = num_ones / n
-
+        if(n == 0):
+            return False
         # Calculate the test statistic
         s = (prop_ones - 0.5) / math.sqrt(n)
 
@@ -258,7 +261,8 @@ class TestSuite:
         #print("1 count = ", n1)
 
         length = len(bit_sequence)
-
+        if length == 0:
+            return False
         percentageOfOnes =  n0 / length
 
         # Random if Percentage deviation is less then 5 %

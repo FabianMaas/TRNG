@@ -338,7 +338,7 @@ def __get_tested_bits(test_rows, actually_required_rows):
 
         response = make_response(
             'tests for the requested bit sequence failed',
-            500,
+            543,
         )
         return response 
     

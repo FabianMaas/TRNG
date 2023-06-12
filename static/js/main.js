@@ -233,7 +233,7 @@ function showTimeAlert(requiredBits) {
         var seconds = remainderBits/2;
         var time = convertSecondsToTime(seconds);
         
-        var description = "Bits currently stored: " + currentBits + "<br>Bits to be generated: " + remainderBits + "<br>Estimated time to wait: " + time + " (hh:mm:ss)";
+        var description = "Bits currently buffered: " + currentBits + "<br>Bits to be generated: " + remainderBits + "<br>Estimated time to wait: " + time + " (hh:mm:ss)";
 
         let alert = estimatedWaitTimeAlert;
         alert.innerHTML = description;
