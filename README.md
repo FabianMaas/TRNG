@@ -1,7 +1,3 @@
-# DEVELOP BRANCH
-## [Building instructions](https://github.com/FabianMaas/TRNG/blob/dev/docs/models/Building_instructions.md)
-
-
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
 <!--
@@ -11,8 +7,6 @@
 *** Don't forget to give the project a star!
 *** Thanks again! Now go create something AMAZING! :D
 -->
-
-
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -152,7 +146,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
+## [Building instructions](https://github.com/FabianMaas/TRNG/blob/dev/docs/models/Building_instructions.md)
 
 <!-- ROADMAP -->
 ## Roadmap
