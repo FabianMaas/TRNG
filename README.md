@@ -53,7 +53,7 @@
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#runner-getting-started">Getting Started</a>
       <ul>
         <li><a href="#pushpin-prerequisites">Prerequisites</a></li>
         <li><a href="#-installation">Installation</a></li>
@@ -69,7 +69,7 @@
 ---
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## :mag: About The Project
 
 [![Product Name Screen Shot][gui-dark]](https://example.com)
 
@@ -93,7 +93,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 ---
 
 <!-- GETTING STARTED -->
-## Getting Started
+## :runner: Getting Started
 
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
@@ -109,7 +109,7 @@ This is an example of how to list things you need to use the software and how to
   ```
 ---
 
-### ⚡ Installation
+### :zap: Installation
 
 1. Clone the repo
    ```sh
@@ -129,7 +129,7 @@ This is an example of how to list things you need to use the software and how to
 ---
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## :thinking: Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
@@ -139,11 +139,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 ---
 
-## 📸 **Screenshots**
+## :camera_flash: Screenshots
 
 ---
 
-## 🌲 **Project tree**
+## :evergreen_tree: Project tree
 
 ```text
 TRNG
@@ -180,7 +180,7 @@ TRNG
 ---
 
 <!-- LICENSE -->
-## License
+## :scroll: License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
@@ -189,7 +189,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
-## Contact
+## :mailbox_with_mail: Contact
 
 Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
 
@@ -200,7 +200,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## :sparkles: Acknowledgments
 
 * []()
 * []()
