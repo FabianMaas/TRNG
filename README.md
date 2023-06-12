@@ -33,7 +33,8 @@
 <h3 align="center">True Random Number Generator</h3>
 
   <p align="center">
-    project_description
+    Am awesome TRNG based on a modified galton board.<br>
+    Includes a REST API and a simple frontend.
     <br />
     <a href="https://github.com/FabianMaas/TRNG"><strong>Explore the docs »</strong></a>
     <br />
@@ -73,7 +74,11 @@
 
 [![Product Name Screen Shot][gui-dark]](https://example.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+The Galton Board is a Physical True Random Number Generator. The goal is to generate
+random numbers that can be used for cryptographic processes. It is based on a physical
+noise source and generates random numbers that fulfill the required PTG.2 standard of the
+Federal Office for Information Security (BSI).
+We offer a REST API interface or a web application with a user interface for operation
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
