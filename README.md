@@ -217,7 +217,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [issues-shield]: https://img.shields.io/github/issues/FabianMaas/TRNG.svg?style=for-the-badge
 [issues-url]: https://github.com/FabianMaas/TRNG/issues
 [license-shield]: https://img.shields.io/github/license/FabianMaas/TRNG.svg?style=for-the-badge
-[license-url]: https://github.com/FabianMaas/TRNG/blob/master/LICENSE.txt
+[license-url]: https://github.com/FabianMaas/TRNG/blob/master/LICENSE
 [product-screenshot]: images/screenshot.png
 [Python]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org/
