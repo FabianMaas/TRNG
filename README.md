@@ -33,7 +33,7 @@
 <h3 align="center">True Random Number Generator</h3>
 
   <p align="center">
-    Am awesome TRNG based on a modified galton board.<br>
+    An awesome TRNG based on a modified galton board.<br>
     Includes a REST API and a simple frontend.
     <br />
     <a href="https://github.com/FabianMaas/TRNG"><strong>Explore the docs »</strong></a>
@@ -160,15 +160,29 @@ This is an example of how to list things you need to use the software and how to
 ### Generating random numbers
 
 <p align="center">
-  <img width="70%" height="70%" src="https://i.imgur.com/SDJixBz.png">
+  <img width="70%" height="70%" src="static/img/generate_numbers_1.png">
 </p>
+<br>
+<p align="center">
+  <img width="70%" height="70%" src="static/img/generate_numbers_2.png">
+</p>
+
 
 ### Exporting the generated random numbers
 
 <p align="center">
-  <img width="70%" height="70%" src="https://i.imgur.com/SDJixBz.png">
+  <img width="70%" height="70%" src="static/img/generate_numbers_3.png">
 </p>
 
+### Switching to dark theme
+
+<p align="center">
+  <img width="70%" height="70%" src="https://i.imgur.com/SDJixBz.png">
+</p>
+<br>
+<p align="center">
+  <img width="70%" height="70%" src="https://i.imgur.com/SDJixBz.png">
+</p>
 
 ---
 
@@ -182,29 +196,15 @@ TRNG
 │   └── models
 │       ├── 3D
 │       │   ├── GaltonBoard
-│       │   │   ├── Corner.stl
-│       │   │   ├── Corner_Marble_ Exit.stl
-│       │   │   ├── Hopper_ Part_Level_2.stl
-│       │   │   ├── Hopper_Part_Level_1.stl
-│       │   │   ├── Laser_Diode_Mount.stl
-│       │   │   ├── Photoresistor_Mount.stl
-│       │   │   └── Tube_Mount.stl
+│       │   │   ├── ...
+│       │   │   └── ...
 │       │   └── MarblePump
-│       │       ├── Base.stl
-│       │       ├── Cap_Crankshaft.stl
-│       │       ├── Connector_Stepperengine.stl
-│       │       ├── Crankshaft.stl
-│       │       ├── Housing.stl
-│       │       ├── Journal_Crankshaft.stl
-│       │       ├── Pins.stl
-│       │       ├── Piston.stl
-│       │       ├── Slide.stl
-│       │       └── Tube_Mount.stl
+│       │       ├── ...
+│       │       └── ...
 │       ├── Building_instructions.md
 │       └── lasercutter
-│           ├── Glas.svg
-│           ├── Prototype.svg
-│           └── Rutsche.svg
+│           ├── ...
+│           └── ...
 ├── hardware
 │   ├── gyroscope.py
 │   ├── laser_sensor.py
@@ -219,14 +219,8 @@ TRNG
 │   ├── css
 │   │   └── main.css
 │   ├── img
-│   │   ├── Galton_Board.png
-│   │   ├── galton.gif
-│   │   ├── github-mark-white.png
-│   │   ├── github-mark.png
-│   │   ├── gui_dark.png
-│   │   ├── gui_light.png
-│   │   ├── logo.png
-│   │   └── spinner.gif
+│   │   ├── ...
+│   │   └── ...
 │   └── js
 │       ├── background.js
 │       └── main.js
