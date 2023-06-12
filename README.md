@@ -70,9 +70,10 @@
 <!-- ABOUT THE PROJECT -->
 ## :mag: About The Project
 <p align="center">
-  <img src="static/img/Galton_Board.png" alt="Beschreibung des Bildes">
+  <img src="static/img/Galton_Board.png" style="width: 50%; display: inline-block;" alt="Beschreibung des Bildes">
+  <img src="static/img/gui_dark.png" style="width: 50%; display: inline-block;" alt="Beschreibung des Bildes">
 </p>
-[![Product Name Screen Shot][gui-dark]](https://example.com)
+
 The Galton Board is a Physical True Random Number Generator.<br>
 The goal is to generate random numbers that can be used for cryptographic processes.<br>
 It is based on a physical noise source and generates random numbers that fulfill the required PTG.2 standard of the
