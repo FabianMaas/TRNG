@@ -69,10 +69,11 @@
 
 <!-- ABOUT THE PROJECT -->
 ## :mag: About The Project
-<p align="center">
-  <img src="static/img/Galton_Board.png" style="width: 50%; display: inline-block;" alt="Beschreibung des Bildes">
-  <img src="static/img/gui_dark.png" style="width: 50%; display: inline-block;" alt="Beschreibung des Bildes">
-</p>
+<div style="display: flex;">
+  <img src="static/img/Galton_Board.png" style="width: 50%; flex: 1;" alt="Beschreibung des Bildes">
+  <img src="static/img/gui_dark.png" style="width: 50%; flex: 1;" alt="Beschreibung des Bildes">
+</div>
+
 
 The Galton Board is a Physical True Random Number Generator.<br>
 The goal is to generate random numbers that can be used for cryptographic processes.<br>
