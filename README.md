@@ -111,14 +111,14 @@ We offer a REST API interface or a web application with a user interface for ope
 <!-- GETTING STARTED -->
 ## :runner: Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To get a local copy of the project up and running follow these simple example steps.
 
 ---
 
 ### :pushpin: Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+The project must run on a raspberry pi because it uses hardware components (gpio pins).
+For installing the dependencies you should use the latest version of pip.
 * pip
   ```sh
   pip install --upgrade pip
@@ -233,7 +233,9 @@ TRNG
 ```
 ---
 
-## [Building instructions](https://github.com/FabianMaas/TRNG/blob/dev/docs/models/Building_instructions.md)
+## Building the galton board
+
+- [Building instructions](https://github.com/FabianMaas/TRNG/blob/dev/docs/models/Building_instructions.md)
 
 ---
 
