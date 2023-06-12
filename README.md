@@ -36,7 +36,7 @@
     An awesome TRNG based on a modified galton board.<br>
     Includes a REST API and a simple frontend.
     <br />
-    <a href="https://github.com/FabianMaas/TRNG"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/FabianMaas/TRNG/tree/main/docs/models"><strong>Explore the docs »</strong></a>
     <br />
   </p>
 </div>
