@@ -58,6 +58,7 @@
       <ul>
         <li><a href="#pushpin-prerequisites">Prerequisites</a></li>
         <li><a href="#zap-installation">Installation</a></li>
+        <li><a href="#white_check_mark-start-the-rest-api">REST API</a></li> 
       </ul>
     </li>
     <li><a href="#camera_flash-screenshots">Screenshots</a></li>
@@ -141,6 +142,12 @@ For installing the dependencies you should use the latest version of pip.
    pip install -r requirements.txt
    ```
 
+---
+
+### :white_check_mark: Start the REST API
+- ```sh
+  python3 rest_api.py
+  ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
