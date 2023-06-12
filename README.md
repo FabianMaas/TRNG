@@ -69,9 +69,17 @@
 
 <!-- ABOUT THE PROJECT -->
 ## :mag: About The Project
-<div style="display: flex;">
-  <img src="static/img/Galton_Board.png" style="width: 50%; flex: 1;" alt="Beschreibung des Bildes">
-  <img src="static/img/gui_dark.png" style="width: 50%; flex: 1;" alt="Beschreibung des Bildes">
+
+
+| ![Bild 1](static/img/Galton_Board.png) | ![Bild 2](static/img/gui_dark.png) |
+|:---:|:---:|
+| Bild 1 | Bild 2 |
+
+
+<div>
+  <img src="static/img/Galton_Board.png" style="float: left; width: 50%;" alt="Beschreibung des Bildes">
+  <img src="static/img/gui_dark.png" style="float: left; width: 50%;" alt="Beschreibung des Bildes">
+  <div style="clear: both;"></div>
 </div>
 
 
