@@ -222,7 +222,65 @@ At the end, when everything is glued together, you can also insert the pieces fr
 <br>
 
 ### Marble lift
-TODO
+To bring the marbles back up to the top of the galton board we use a marble lift. It uses a piston system to stack the marbles on top of each other. First you want to make sure that you have everything in front of you. The following picture shows all the parts you need.  
+
+<details open>
+<summary>All parts:</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/f1f9d594-ecbc-4fdd-8dbb-3b89befbe0d5" width="450" height="600">
+</details>
+
+There might be some parts with support structures, which were added by the 3D printer. You must remove them to be able to assemble the parts. In the pictures below you can see the support structure of the sliding part. The first picture shows the part with the support structure and the second shows it without.
+
+<details open>
+<summary>Support structre:</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/173810d7-738a-42b6-9f9a-0abafc703b7f" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/b77e1374-ff14-41d7-81f9-b8f453433965" width="450" height="600">
+</details>
+
+The next step will be the trickiest, because we need to get the crankshaft in place. In the following there will be series of pictures which fit this expiration:
+1. These are all the parts you need for the crankshaft (Pictures 1, 2 and 3)
+2. In the fourth picture you can see how the cranshaft will be stuck together inside the sliding part. As you can see you need the connector tube and two of the angled square sticks. The short side of the sticks will go inside the connector tube. (Don't put them in yet!!! This is just for demonstration)
+3. The sliding part will sit inside of the part with the two holes, we call it housing. Before you place it there, like in picutre one, we must put the connector tube inside of it, like in picture three.
+
+<details open>
+<summary>Assembling the crankshaft: Part 1:</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/cd97e0a1-cc87-42bb-baa5-70b5c8ea8c53" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/611a08bd-bdb8-465e-89c4-7a13fa6b6331" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/c74290e4-0d16-411f-99d5-b437a82be122" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/9c4c7890-233d-4280-8751-1a98e083912b" width="450" height="600">
+</details>
+<br>
+
+4. The next few steps are easier with a second person that helps with the process.
+5. You must fit the two angled square sticks through the holes on each side of the housing, so that the angle is inside the housing. The first picture below shows it.
+6. Now you must manage to stick one stick inside the connector tube.
+7. The second person must now pull both sides of the housing away from each other, like in the second picture below.
+8. While the second person is pulling it apart, you must connect the other stick to the connector pipe.
+9. If the sticks and the pipe are stuck tight togther you must put the crankshaft brackets, as you can see on the last two pictures, on top of each crankshaft side.  
+10. The assembling of the crankshaft is done.
+
+<details open>
+<summary>Assembling the crankshaft: Part 2:</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/cde1e3c1-0f6a-4180-9288-2f96c7a4852e" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/6283e6f0-0572-49b1-81f4-2b7c9bf9200e" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/fce31fbd-d201-4ecf-8f32-2e75c5d376bd" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/fa367e22-b9ef-4cf9-8776-a42f398c40d8" width="450" height="600">
+</details>
+<br>
+
+There are three more steps until the marble lift is done. First you must insert the piston, so that the open part of the piston fits onto the crankshaft tube inside of the sliding part. You can drop the piston from the top tough one of the holes of the housing. The second step is to slide the whole thing into the base, as you see in the first picture below. And finally put the connection for the hose on. There should be 4 pins which fit inside into the 4 holes on top of the lift. These are the connection parts between the lift itself and the hose. Now you can place the hose holder part on top of the lift aligned with the 4 pins.
+
+<details open>
+<summary>Connecting the hose:</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/60ff1ec3-f30c-465d-89ae-d1cb56d75c34" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/29f694f8-5878-42e6-a530-f26dc7734e38" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/afc7d267-544e-4c2e-b63e-ad382d222c0b" width="450" height="600">
+</details>
 <br>
 
 ### Stepper engine
