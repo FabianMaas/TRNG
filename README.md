@@ -60,7 +60,8 @@
         <li><a href="#zap-installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#thinking-usage">Usage</a></li>
+    <li><a href="#camera_flash-screenshots">Screenshots</a></li>
+    <li><a href="#construction_worker_man-building-the-galton-board">Building the galton board</a></li>
     <li><a href="#scroll-license">License</a></li>
   </ol>
 </details>
@@ -233,7 +234,7 @@ TRNG
 ```
 ---
 
-## Building the galton board
+## :construction_worker_man: Building the galton board
 
 - [Building instructions](https://github.com/FabianMaas/TRNG/blob/dev/docs/models/Building_instructions.md)
 
