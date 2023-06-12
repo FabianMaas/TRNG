@@ -91,7 +91,7 @@ __laser_process = multiprocessing.Process(target=__laser.start)
 __db_write_process = multiprocessing.Process(target=__laser.write_to_db, args=(rest_api,))
 __engine_process = multiprocessing.Process(target=__engine.start)
 
-__test_bit_sequence = True
+__test_bit_sequence = False
 
 
 @rest_api.route('/')

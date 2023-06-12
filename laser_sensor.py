@@ -106,6 +106,7 @@ class LaserSensor:
                 tmp_rand_arr.clear()
 
                 if (not self.__bottom_down) and self.__queue_bottom.qsize() > self.__queue_top.qsize():
+                    print("first if---------------------------------")
                     count = 0
                     while (not self.__bottom_down) and count < 8:
                         try:
@@ -126,6 +127,7 @@ class LaserSensor:
                             print("EXCEPTION from top queue write: " + str(e))
                             pass    
                 elif (not self.__top_down) and self.__queue_top.qsize() > self.__queue_bottom.qsize():
+                    print("second if---------------------------------")
                     count = 0
                     while (not self.__top_down) and count < 8:
                         try:
