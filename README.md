@@ -70,8 +70,9 @@
 <!-- ABOUT THE PROJECT -->
 ## :mag: About The Project
 
+| ![Bild 1](static/img/Galton_Board.png) |  ![Bild 2](static/img/galton.gif) |
+|:--------------------:|:--------------------:|
 
-![Bild 1](static/img/Galton_Board.png) ![Bild 2](static/img/galton.gif)
 ![Bild 1](static/img/gui_light.png)
 
 <!-- test 
