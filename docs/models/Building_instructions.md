@@ -341,4 +341,6 @@ fixed to the rest of the Galton Board.
 <br>
 
 ## Improvement ideas
-TODO
+Since the project was developed unter the conditions of a prototype, the existing concept can be improved and expanded.
+
+For example, a gyroscope can be used for better taring. This would attached to the Galton Board at a suitable location, aligned accordingly and integrated with this data in the code.
