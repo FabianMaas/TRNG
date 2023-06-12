@@ -157,7 +157,9 @@ class TestSuite:
 
         # Calculate the variance
         variance = (n-k+3) * p * (1-p)
-
+        # print(variance)
+        if(variance == 0):
+            return False
         # Calculate the Z-score
         z_score = (num_runs - expected_runs) / math.sqrt(variance)
 

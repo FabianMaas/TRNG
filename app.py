@@ -16,7 +16,7 @@ laser = Lasersensor()
 testsuite = TestSuite()
 laser_process = multiprocessing.Process(target=laser.producer)
 db_write_process = multiprocessing.Process(target=laser.write_to_db, args=(app,))
-test_bit_sequence = True
+test_bit_sequence = False
 
 
 @app.route('/')
