@@ -69,9 +69,10 @@
 
 <!-- ABOUT THE PROJECT -->
 ## :mag: About The Project
-
+<p align="center">
+  <img src="static/img/Galton_Board.png" alt="Beschreibung des Bildes">
+</p>
 [![Product Name Screen Shot][gui-dark]](https://example.com)
-
 The Galton Board is a Physical True Random Number Generator.<br>
 The goal is to generate random numbers that can be used for cryptographic processes.<br>
 It is based on a physical noise source and generates random numbers that fulfill the required PTG.2 standard of the
@@ -203,6 +204,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [license-url]: https://github.com/FabianMaas/TRNG/blob/master/LICENSE
 [gui-light]: static/img/gui_light.png
 [gui-dark]: static/img/gui_dark.png
+[galton-board]: static/img/Galton_Board.png
 [Python]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org/
 [Flask]: https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white
