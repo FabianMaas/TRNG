@@ -40,56 +40,69 @@ Our variation of a galton board uses only two compartments instead of many. Ever
 <table>
     <tr>
       <th>Material</th>
-      <th>Anzahl/Maße</th>
+      <th>Count
+      <th>Measures</th>
     </tr>
   <tbody>
     <tr>
       <td>MDF</td>
       <td>???</td>
+      <td>???</td>
     </tr>
     <tr>
       <td>ABS</td>
       <td>???</td>
+      <td>???</td>
     </tr>
-        <tr>
+    <tr>
       <td>PLA</td>
       <td>???</td>
-    </tr>
-        <tr>
-      <td>Acryl</td>
       <td>???</td>
     </tr>
-        <tr>
+    <tr>
+      <td>Acryl plate</td>
+      <td>???</td>
+      <td>???</td>
+    </tr>
+    <tr>
       <td>Metal rod</td>
-      <td>2x 2,1cm</td>
+      <td>2x</td>
+      <td>21 x 2(diameter)mm</td>
     </tr>
-        <tr>
+    <tr>
       <td>RasberryPi</td>
-      <td>1x, ...</td>
+      <td>1x</td>
+      <td>Model B</td>
     </tr>
-        <tr>
+    <tr>
       <td>Stepper engine</td>
-      <td>1x, ...</td>
-    </tr>
-        <tr>
-      <td>Laser</td>
-      <td>4x, ...</td>
-    </tr>
-        <tr>
-      <td>Photodiodes</td>
-      <td>4x, ...</td>
-    </tr>
-            <tr>
-      <td>Tube</td>
+      <td>1x</td>
       <td>???</td>
     </tr>
-            <tr>
+    <tr>
+      <td>Laser</td>
+      <td>4x</td>
+      <td>5mW, 650nm</td>
+    </tr>
+    <tr>
+      <td>Photodiodes</td>
+      <td>4x</td>
+      <td>32 x 14mm, 3,3V-5V operating voltage, an analog output</td>
+    </tr>
+    <tr>
+      <td>Tube</td>
+      <td>1x</td>
+      <td>15mm diameter inside, 18mm diameter outside</td>
+    </tr>
+    <tr>
       <td>Height-adjustable feet</td>
       <td>4x</td>
+      <td>50 x 50mm</td>
     </tr>
-            <tr>
+    <tr>
       <td>Marbles</td>
-      <td>40x, 14mm</td>
+      <td>40x</td>
+      <td>Acryl, 14mm</td>
     </tr>
     
   </tbody>
