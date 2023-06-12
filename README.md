@@ -79,7 +79,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][gui-dark]](https://example.com)
 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
@@ -218,7 +218,8 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [issues-url]: https://github.com/FabianMaas/TRNG/issues
 [license-shield]: https://img.shields.io/github/license/FabianMaas/TRNG.svg?style=for-the-badge
 [license-url]: https://github.com/FabianMaas/TRNG/blob/master/LICENSE
-[product-screenshot]: images/screenshot.png
+[gui-light]: static/img/gui_light.png
+[gui-dark]: static/img/gui_dark.png
 [Python]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54
 [Python-url]: https://www.python.org/
 [Flask]: https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white
@@ -230,4 +231,4 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [CSS3]: https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white
 [CSS3-url]: https://www.w3.org/standards/webdesign/htmlcss
 [JavaScript]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
-[JavaScript-url]: https://www.ecma-international.org/publications-and-standards/standards/ecma-262/ 
+[JavaScript-url]: https://www.ecma-international.org/publications-and-standards/standards/ecma-262/
