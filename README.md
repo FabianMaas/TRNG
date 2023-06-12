@@ -74,11 +74,12 @@
 
 [![Product Name Screen Shot][gui-dark]](https://example.com)
 
-The Galton Board is a Physical True Random Number Generator. The goal is to generate
-random numbers that can be used for cryptographic processes. It is based on a physical
-noise source and generates random numbers that fulfill the required PTG.2 standard of the
-Federal Office for Information Security (BSI).
-We offer a REST API interface or a web application with a user interface for operation
+The Galton Board is a Physical True Random Number Generator.<br>
+The goal is to generate random numbers that can be used for cryptographic processes.<br>
+It is based on a physical noise source and generates random numbers that fulfill the required PTG.2 standard of the
+Federal Office for Information Security (BSI).<br>
+<br> 
+We offer a REST API interface or a web application with a user interface for operation.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
