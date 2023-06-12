@@ -73,14 +73,15 @@
 
 | ![Bild 1](static/img/Galton_Board.png) | ![Bild 2](static/img/gui_dark.png) |
 |:---:|:---:|
-| Bild 1 | Bild 2 |
 
 
-<div>
-  <img src="static/img/Galton_Board.png" style="float: left; width: 50%;" alt="Beschreibung des Bildes">
-  <img src="static/img/gui_dark.png" style="float: left; width: 50%;" alt="Beschreibung des Bildes">
-  <div style="clear: both;"></div>
+
+<div style="display: flex; align-items: center;">
+  <img src="static/img/Galton_Board.png" style="width: 40%;" alt="Beschreibung des Bildes">
+  <img src="static/img/gui_dark.png" style="width: 40%; margin-top: auto; margin-bottom: auto;" alt="Beschreibung des Bildes">
 </div>
+
+
 
 
 The Galton Board is a Physical True Random Number Generator.<br>
