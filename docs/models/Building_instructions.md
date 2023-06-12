@@ -108,11 +108,13 @@ The following SVG files should be printed on MDF:
 
 - Prototype.svg
 - UnderBox.svg
-- TODO
+- Rutsche.svg
+- RutscheUndDeckel.svg
+
 
 The SVG file for the acrylic material is:
 
-- Glass.svg
+- Glas.svg
 
 After cutting all the components, you will have the following parts:
 <details open>
