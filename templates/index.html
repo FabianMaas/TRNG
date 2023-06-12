@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>TRNG WaveTech</title>
+  <link rel="shortcut icon" href="static/img/logo.png" />
+  <link rel="stylesheet" type="text/css" href="static/css/main.css" />
+</head>
+
+<body>
+  <canvas id="canvas" hidden="true"></canvas>
+  <div class="container content">
+    
+    <h1>True Random Number Generator</h1>
+
+    <img src="static/img/logo.png" style="max-width: 200px; max-height: auto; margin-bottom: 20px;" alt="logo_wavetech" />
+    
+    <div class="toggle-container">
+      <span class="toggle-label">Light/Dark</span>
+      <div class="toggle-btn" onclick="toggleTheme()"></div>
+    </div>
+    
+    <div>
+      <button id="startStopBtn" class="button">Start</button>
+    </div>
+
+    <div>
+      <label for="quantity-input">Quantity:</label>
+      <input type="number" id="quantity-input" name="quantity" min="1" max="1000" class="my-input" value="1"/>
+      <label for="numBits-input">NumBits:</label>
+      <input type="number" id="numBits-input" name="numBits" min="1" max="1000" class="my-input" value="1"/>
+      <button disabled="true" id="generate-btn" class="button">Generate Random Hex Values</button>
+      <button disabled="true" id="export-btn" class="button">Export Random Hex Values</button>
+    </div>
+
+    <div id="estimatedWaitTimeAlert" class="alert" hidden="true"></div>
+    <div id="inputErrorAlert" class="alert" hidden="true"></div>
+
+    <div id="loading-spinner" style="display: none;">
+      <img src="static/img/spinner.gif" alt="Loading...">
+    </div>
+
+    <table id="result-table"></table>
+
+    <footer class="footer-github">
+      <p>Made with ❤️ by WaveTech</p>
+      <a href="https://github.com/FabianMaas/TRNG"  target="_blank">
+        <img id="github-icon" src="static/img/github-mark.png" width="24" height="24" alt="GitHub">
+      </a>
+    </footer>
+
+  </div>
+
+  <script src="static/js/main.js"></script>
+  <script src="static/js/background.js"></script>
+
+</body>
+
+</html>
