@@ -378,7 +378,18 @@ This chapter describes our self engineered circuit diagram, please refer to the 
 <br>
 
 #### RasberryPi holder
-TODO
+
+Use the following file to print the holder of the Raspberry Pi. Add it next to the stepper motor and insert the Pi into its holding.
+
+- RaPi_Holder.stl
+
+<details open>
+<summary>RaspberryPi holder:</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/92106620/b8b3cdf4-15b0-4bd5-afc0-06d0cc712b0e" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/92106620/48b0c037-050c-46aa-99b2-de8cd8404b85" width="450" height="600">
+</details>
+
 <br>
 
 #### Sensor system
