@@ -261,6 +261,8 @@ The following STL files should be printed with ABS:
 ### Marble lift
 To bring the marbles back up to the top of the galton board we use a marble lift. It uses a piston system to stack the marbles on top of each other. First you want to make sure that you have everything in front of you. The following picture shows all the parts you need.  
 
+To do this, print the ten stl.-files of the Marble Pump section.
+
 <details open>
 <summary>All parts:</summary>
 <br>
