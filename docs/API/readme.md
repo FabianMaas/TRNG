@@ -20,7 +20,7 @@ For productive operation https://\<ip\>:443 should be used.
 ## /
 `Redirects to the TRNG page.`
 
-| Methode | URL                            | Header                         |
+| Method  | URL                            | Header                         |
 |---------|--------------------------------|--------------------------------|
 | GET     | http://localhost:8080/         | Accept: text/html              |
 
@@ -68,7 +68,7 @@ For productive operation https://\<ip\>:443 should be used.
 ## /trng
 `Renders the TRNG page.`
 
-| Methode | URL                            | Header                         |
+| Method  | URL                            | Header                         |
 |---------|--------------------------------|--------------------------------|
 | GET     | http://localhost:8080/trng     | Accept: text/html              |
 
@@ -171,7 +171,7 @@ For productive operation https://\<ip\>:443 should be used.
 ## /trng/randomNum/init
 `Initializes the TRNG system.`
 
-| Methode | URL                                       | Header                         |
+| Method  | URL                                       | Header                         |
 |---------|-------------------------------------------|--------------------------------|
 | GET     | http://localhost:8080/trng/randomNum/init | Accept: \*/\*                  |
 
@@ -213,7 +213,7 @@ For productive operation https://\<ip\>:443 should be used.
 ## /trng/randomNum/shutdown
 `Shuts down the TRNG system.`
 
-| Methode | URL                                           | Header                         |
+| Method  | URL                                           | Header                         |
 |---------|-----------------------------------------------|--------------------------------|
 | GET     | http://localhost:8080/trng/randomNum/shutdown | Accept: \*/\*                  |
 
@@ -255,9 +255,9 @@ For productive operation https://\<ip\>:443 should be used.
 ## /trng/randomNum/getRandom
 `Retrieves random bits from the database and converts them to HEX encoding.`
 
-| Methode | URL                                            | Header                         |
-|---------|------------------------------------------------|--------------------------------|
-| GET     | http://localhost:8080/trng/randomNum/getRandom | Accept: \*/\*                  |
+| Method  | URL                                            | Query Parameter                         | Header                         | 
+|---------|------------------------------------------------|-----------------------------------------|--------------------------------|
+| GET     | http://localhost:8080/trng/randomNum/getRandom | quantity(default=1), numBits(default=1) | Accept: \*/\*                  |
 
 
 - <strong>Request</strong>
