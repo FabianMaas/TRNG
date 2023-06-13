@@ -243,6 +243,13 @@ After assembling the slide, you can also glue the "funnel" at the end of the sli
 <br>
 At the end, when everything is glued together, you can also insert the pieces from the 3D scanner into the cutouts on the boards. The picture allows you to clearly see which item should go where, making it relatively simple to put everything together. It is recommended to use superglue to securely attach all the 3D items in place.
 
+The following STL files should be printed with ABS:
+
+- Hopper_Part_Level1.stl
+- Hopper_Part_Level2.stl
+- Laser_Diode_Mount.stl
+- Photoresistor_Mount.stl
+
 <details open>
 <summary>Configuration:</summary>
 <br>
