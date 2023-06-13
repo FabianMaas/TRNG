@@ -306,7 +306,7 @@ For productive operation https://\<ip\>:443 should be used.
 ## /trng/getCount
 ` Retrieves the count of stored random bits from the database.`
 
-| Methode | URL                                            | Header                         |
+| Method  | URL                                            | Header                         |
 |---------|------------------------------------------------|--------------------------------|
 | GET     | http://localhost:8080/trng/getCount           | Accept: \*/\*                  |
 
