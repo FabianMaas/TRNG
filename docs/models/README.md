@@ -390,11 +390,12 @@ Use the following file to print the holder of the Raspberry Pi. Add it next to t
 <br>
 
 #### Circuit board
-This chapter describes our self engineered circuit diagram, please refer to the picture below if you intent to use an own circuit board aswell.
+This chapter describes our self engineered circuit diagram, please refer to the picture below if you intent to use an own circuit board aswell. An example of how to wire the circuit diagram would look like this:
 
 <details open>
-<summary>Circuit diagram:</summary>
+<summary>Example:</summary>
 <br>
+<img src="https://github.com/FabianMaas/TRNG/assets/69453948/a18f7c77-9da0-499d-b79c-6d2cf7bf4f3e" width="450" height="600">
 <img src="https://github.com/FabianMaas/TRNG/assets/62900645/18c3d3d0-ba20-48e5-b35a-523e463197f6">
 </details>
 <br>
