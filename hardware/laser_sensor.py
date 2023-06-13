@@ -96,8 +96,8 @@ class LaserSensor:
 
             print("Bottom queue size: " + str(self.__queue_bottom.qsize()))
             print("Top queue size: " + str(self.__queue_top.qsize()))
-            print("Bottom down: " + str(self.__bottom_down.is_set()))
-            print("Top down: " + str(self.__top_down.is_set()))
+            #print("Bottom down: " + str(self.__bottom_down.is_set()))
+            #print("Top down: " + str(self.__top_down.is_set()))
 
 
             tmp_rand_arr = []
