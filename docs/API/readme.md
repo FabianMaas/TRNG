@@ -173,12 +173,12 @@ For productive operation https://\<ip\>:443 should be used.
 
 | Methode | URL                                       | Header                         |
 |---------|-------------------------------------------|--------------------------------|
-| GET     | http://localhost:8080/trng/randomNum/init | Accept: */*                    |
+| GET     | http://localhost:8080/trng/randomNum/init | Accept: \*/\*                  |
 
 - <strong>Request</strong>
 
   ```text
-  GET /randomNum/init HTTP/1.1
+  GET /trng/randomNum/init HTTP/1.1
   Host: localhost:8080
   sec-ch-ua: 
   sec-ch-ua-mobile: ?0
@@ -215,12 +215,12 @@ For productive operation https://\<ip\>:443 should be used.
 
 | Methode | URL                                           | Header                         |
 |---------|-----------------------------------------------|--------------------------------|
-| GET     | http://localhost:8080/trng/randomNum/shutdown | Accept: */*                    |
+| GET     | http://localhost:8080/trng/randomNum/shutdown | Accept: \*/\*                  |
 
 - <strong>Request</strong>
 
   ```text
-  GET /randomNum/shutdown HTTP/1.1
+  GET /trng/randomNum/shutdown HTTP/1.1
   Host: localhost:8080
   sec-ch-ua: 
   sec-ch-ua-mobile: ?0
@@ -257,13 +257,13 @@ For productive operation https://\<ip\>:443 should be used.
 
 | Methode | URL                                            | Header                         |
 |---------|------------------------------------------------|--------------------------------|
-| GET     | http://localhost:8080/trng/randomNum/getRandom | Accept: */*                    |
+| GET     | http://localhost:8080/trng/randomNum/getRandom | Accept: \*/\*                  |
 
 
 - <strong>Request</strong>
 
   ```text
-  GET /randomNum/getRandom?quantity=3&numBits=512 HTTP/1.1
+  GET /trng/randomNum/getRandom?quantity=3&numBits=512 HTTP/1.1
   Host: localhost:8080
   sec-ch-ua: 
   sec-ch-ua-mobile: ?0
@@ -308,13 +308,13 @@ For productive operation https://\<ip\>:443 should be used.
 
 | Methode | URL                                            | Header                         |
 |---------|------------------------------------------------|--------------------------------|
-| GET     | http://localhost:8080//trng/getCount           | Accept: */*                    |
+| GET     | http://localhost:8080/trng/getCount           | Accept: \*/\*                  |
 
 
 - <strong>Request</strong>
 
   ```text
-  GET /getCount HTTP/1.1
+  GET /trng/getCount HTTP/1.1
   Host: localhost:8080
   sec-ch-ua: 
   sec-ch-ua-mobile: ?0
