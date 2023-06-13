@@ -248,8 +248,7 @@ TRNG
 
 ## :construction_worker_man: Building the galton board
 
-- [Building instructions](https://github.com/FabianMaas/TRNG/blob/dev/docs/models/Building_instructions.md)
-
+- [Building instructions](https://github.com/FabianMaas/TRNG/blob/main/docs/models/README.md)
 ---
 
 <!-- LICENSE -->
