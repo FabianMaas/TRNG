@@ -6,6 +6,16 @@ For productive operation https://\<ip\>:443 should be used.
 
 ---
 
+  <ol>
+    <li><a href="">/</a></li>
+    <li><a href="#trng">/trng</a></li>
+    <li><a href="#trngrandomnuminit">/trng/randomNum/init</a></li>
+    <li><a href="#trngrandomnumshutdown">/trng/randomNum/shutdown</a></li>
+    <li><a href="#trngrandomnumgetrandom">/trng/randomNum/getRandom</a></li>
+  </ol>
+
+---
+
 ## /
 `Redirects to the TRNG page.`
 
