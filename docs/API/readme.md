@@ -194,7 +194,7 @@ For productive operation https://\<ip\>:443 should be used.
   Connection: close
   ```
   
-  - <strong>Response</strong>
+- <strong>Response</strong>
 
   ```text
   HTTP/1.1 200 OK
@@ -236,7 +236,7 @@ For productive operation https://\<ip\>:443 should be used.
   Connection: close
   ```
   
-  - <strong>Response</strong>
+- <strong>Response</strong>
 
   ```text
   HTTP/1.1 200 OK
