@@ -72,7 +72,7 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     <tr>
       <td>RasberryPi</td>
       <td>1x</td>
-      <td>Model B, with offical power supply</td>
+      <td>Model B Version 3, with offical power supply</td>
     </tr>
     <tr>
       <td>Stepper motor</td>
