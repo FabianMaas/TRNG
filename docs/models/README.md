@@ -82,7 +82,7 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     <tr>
       <td>Power supply for stepper motor</td>
       <td>1x</td>
-      <td>12V; 1,5A</td>
+      <td>12V; 1.5A</td>
     </tr>  
     <tr>
       <td>Laser</td>
@@ -92,12 +92,12 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     <tr>
       <td>Photodiodes</td>
       <td>4x</td>
-      <td>32 x 14mm; 3,3V-5V operating voltage</td>
+      <td>32 x 14mm; 3.3V-5V operating voltage</td>
     </tr>
 	  <tr>
       <td>Jumper Cables</td>
       <td>40x</td>
-      <td>16x blue, 16x red, 8x black</td>
+      <td>16x blue; 16x red; 8x black</td>
     </tr>
     <tr>
       <td>Tube</td>
