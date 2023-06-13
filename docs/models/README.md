@@ -372,10 +372,14 @@ photodiodes with their brackets are moved slightly until the control lamp lights
 <img src="https://github.com/FabianMaas/TRNG/assets/69453948/34980d81-b6a2-48f2-9f35-9d26d2ad0d2a" width="450" height="600">
 </details>
 
-The picture shows an aligned (below) and an unaligned (above) laser. For the top photodiode, only the power indicator light is on, but the laser signal light is off.
+The picture below shows an aligned (below) and an unaligned (above) laser. For the top photodiode, only the power indicator light is on, but the laser signal light is off.
 The acrylic glass can be added to the system. It is important that the glass is not glued or
 fixed to the rest of the Galton Board.
+
+<img src="https://github.com/FabianMaas/TRNG/assets/92106620/504cc159-0be0-4fe1-863e-9b0c04acff6c" width="450" height="600">
+
 <br>
+
 
 ## Improvement ideas
 Since the project was developed unter the conditions of a prototype, the existing concept can be improved and expanded.
