@@ -65,7 +65,7 @@
 <!-- ABOUT THE PROJECT -->
 ## :mag: About The Project
 
-| ![Bild 1](static/img/Galton_Board.png) |  ![Bild 2](static/img/galton.gif) |
+| ![Bild 1](https://github.com/FabianMaas/TRNG/assets/92106620/b4ba7bbb-67d8-496f-b47d-590d7f5666ef) |  ![Bild 2](static/img/galton.gif) |
 |:--------------------:|:--------------------:|
 
 ![Bild 1](static/img/gui_light.png)
