@@ -29,6 +29,7 @@ Our variation of a galton board uses only two compartments instead of many. Ever
 - Laser cutter
 - 3D printer
 - Superglue
+- Wood glue
 - Soldering iron
 - Sandpaper and file
 - Screwdriver or drill
