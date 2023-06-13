@@ -62,7 +62,15 @@
         <li><a href="#white_check_mark-startup-of-the-rest-api">Startup of the api</a></li> 
       </ul>
     </li>
-    <li><a href="#camera_flash-screenshots">Screenshots</a></li>
+    <li>
+      <a href="#camera_flash-screenshots">Screenshots</a>
+      <ul>
+        <li><a href="#starting-the-system">Starting the system</a></li>
+        <li><a href="#generating-random-numbers">Generation</a></li>
+        <li><a href="#exporting-the-generated-random-numbers">Export</a></li>
+        <li><a href="#switching-to-dark-theme">Dark theme</a></li>
+      </ul>
+    </li>  
     <li><a href="#construction_worker_man-building-the-galton-board">Building the galton board</a></li>
     <li><a href="#scroll-license">License</a></li>
   </ol>
