@@ -10,7 +10,7 @@
 	    -  [Box](#box)
 	    - [Slide](#slide)
 	- [Marble lift](#marble-lift)
-	- [Stepper engine](#stepper-engine)
+	- [Stepper motor](#stepper-motor)
 	- [RasberryPi](#rasberrypi)
 		- [Circuit board](#circuit-board)
 		- [RasberryPi holder](#rasberrypi-holder)
@@ -67,32 +67,37 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     <tr>
       <td>Metal rod</td>
       <td>2x</td>
-      <td>21 x 2(diameter)mm</td>
+      <td>21 x 5(diameter)mm</td>
     </tr>
     <tr>
       <td>RasberryPi</td>
       <td>1x</td>
-      <td>Model B</td>
+      <td>Model B, with offical power supply</td>
     </tr>
     <tr>
-      <td>Stepper engine</td>
+      <td>Stepper motor</td>
       <td>1x</td>
       <td>???</td>
     </tr>
     <tr>
+      <td>Power supply for stepper motor</td>
+      <td>1x</td>
+      <td>12V; 1,5A</td>
+    </tr>  
+    <tr>
       <td>Laser</td>
       <td>4x</td>
-      <td>5mW, 650nm</td>
+      <td>5mW; 650nm</td>
     </tr>
     <tr>
       <td>Photodiodes</td>
       <td>4x</td>
-      <td>32 x 14mm, 3,3V-5V operating voltage, an analog output</td>
+      <td>32 x 14mm; 3,3V-5V operating voltage</td>
     </tr>
     <tr>
       <td>Tube</td>
       <td>1x</td>
-      <td>15mm diameter inside, 18mm diameter outside</td>
+      <td>15mm diameter inside; 18mm diameter outside</td>
     </tr>
     <tr>
       <td>Height-adjustable feet</td>
@@ -102,7 +107,7 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     <tr>
       <td>Marbles</td>
       <td>40x</td>
-      <td>Acryl, 14mm</td>
+      <td>Acryl; 14mm</td>
     </tr>
     
   </tbody>
@@ -302,8 +307,14 @@ There are three more steps until the marble lift is done. First you must insert 
 </details>
 <br>
 
-### Stepper engine
-TODO
+### Stepper motor
+The stepper motor must be placed on one of the two sides of the lift. You must install the connector tube for the connection between the stepper motor and the lift. Just press the end of the crankshaft, which sticks out of the side of the lift, into the connector tube (the greepn part in the picture). You must do the same with the shaft of the stepper motor. If it fits tight, you need to make sure that both parts, the motor and the lift, are placed perfecly and then should be mounted to the base.
+
+<details open>
+<summary>Connecting the stepper motor</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/129375472/90779872-0386-490d-8c08-e112c2e64319" width="450" height="600">
+</details>
 <br>
 
 ### RasberryPi
