@@ -263,8 +263,11 @@ Additionally, print the following files to connect the galton board with the box
 
 The normal corner is needed three times and the corner at the marble exit only once.
 
+<details open>
+<summary>Corner:</summary>
+<br>
 <img src="https://github.com/FabianMaas/TRNG/assets/92106620/572d176a-71f3-4bc1-9890-47e7ef13b3da" width="450" height="600">
-
+</details>
 
 <br>
 
@@ -339,9 +342,12 @@ Print the file Tube_Mount.stl to attach the upper part of the tube with the top 
 
 To close the loop of the marbles, add the slide between the marble exit of the Galton Board and the open entry of the marble pump.
 
+<details open>
+<summary>Marble pump attachment:</summary>
+<br>
 <img src="https://github.com/FabianMaas/TRNG/assets/92106620/72510a96-30c1-4778-bce5-af79dcb656dd" width="450" height="600">
 <img src="https://github.com/FabianMaas/TRNG/assets/92106620/1d1bcb55-2528-430d-ba9e-1b99a0429c8e" width="450" height="600">
-
+</details>
 
 <br>
 
@@ -363,7 +369,12 @@ TODO
 
 #### Circuit board
 This chapter describes our self engineered circuit diagram, please refer to the picture below if you intent to use an own circuit board aswell.
-![GaltonBoardSchaltplan](https://github.com/FabianMaas/TRNG/assets/62900645/18c3d3d0-ba20-48e5-b35a-523e463197f6)
+
+<details open>
+<summary>Circuit diagram:</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/62900645/18c3d3d0-ba20-48e5-b35a-523e463197f6">
+</details>
 <br>
 
 #### RasberryPi holder
@@ -391,8 +402,11 @@ The picture below shows an aligned (below) and an unaligned (above) laser. For t
 The acrylic glass can be added to the system. It is important that the glass is not glued or
 fixed to the rest of the Galton Board.
 
+<details open>
+<summary>Laser alignment:</summary>
+<br>
 <img src="https://github.com/FabianMaas/TRNG/assets/92106620/504cc159-0be0-4fe1-863e-9b0c04acff6c" width="450" height="600">
-
+</details>
 <br>
 
 
