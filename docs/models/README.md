@@ -12,8 +12,8 @@
 	- [Marble lift](#marble-lift)
 	- [Stepper motor](#stepper-motor)
 	- [RasberryPi](#rasberrypi)
-		- [Circuit board](#circuit-board)
 		- [RasberryPi holder](#rasberrypi-holder)
+		- [Circuit board](#circuit-board)
 		- [Sensor system](#sensor-system)
 -   [Improvement ideas](#improvement-ideas)
 ---
@@ -26,6 +26,7 @@ Our variation of a galton board uses only two compartments instead of many. Ever
 
 ## Preparation
 
+### Tools
 - Laser cutter
 - 3D printer
 - Superglue
@@ -359,8 +360,9 @@ The green part is printed with PLA. Use the file Connector_Stepperengine.stl to 
 <br>
 
 ### RasberryPi
-TODO
-<br>
+This section provides instructions on how to connect the components that come with the Raspberry Pi. A bracket is used to stabilize the Raspberry Pi and prevent unnecessary movement or wobbling. 
+
+Additionally, a wiring diagram is provided to ensure the proper connection of individual parts.
 
 #### RasberryPi holder
 
