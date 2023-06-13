@@ -135,8 +135,8 @@ The following SVG files should be printed on MDF:
 
 - Prototype.svg
 - UnderBox.svg
-- Rutsche.svg
-- RutscheUndDeckel.svg
+- Slide.svg
+- Slide2AndTop.svg
 
 
 The SVG file for the acrylic material is:
