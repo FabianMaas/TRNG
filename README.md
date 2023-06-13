@@ -124,7 +124,7 @@ To get a local copy of the project up and running follow these simple steps.
 
 ### :pushpin: Prerequisites
 
-The project must run on a raspberry pi because it uses hardware components (gpio pins).
+The project must run on a raspberry pi because it uses hardware components (gpio pins).<br>
 For installing the dependencies you should use the latest version of pip.
 * pip
   ```sh
