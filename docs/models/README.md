@@ -328,7 +328,8 @@ TODO
 <br>
 
 #### Circuit board
-TODO
+This chapter describes our self engineered circuit diagram, please refer to the picture below if you intent to use an own circuit board aswell.
+![GaltonBoardSchaltplan](https://github.com/FabianMaas/TRNG/assets/62900645/18c3d3d0-ba20-48e5-b35a-523e463197f6)
 <br>
 
 #### RasberryPi holder
