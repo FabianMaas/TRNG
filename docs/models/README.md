@@ -21,11 +21,11 @@
 Our variation of a galton board uses only two compartments instead of many. Every pin inside a galton board has a 0.5 change to be left or right. We use this uniform distribution to generate binary-valued random numbers. Our board has two stages with one pin per stage. Each compartment on each stage produces a bit, either a zero or a one. We use plastic marbles which run trough the system and interrupt laser which are pointed onto sensors. In the end they will get pumped up to the top again with a piston lift.
 
 <p align="center">
-  <img src="https://github.com/FabianMaas/TRNG/assets/129375472/ac940497-4d91-4675-92ab-4f59bd2f3b6b">
+  <img src="https://github.com/FabianMaas/TRNG/assets/92106620/b4ba7bbb-67d8-496f-b47d-590d7f5666ef">
 </p>
 
 ## Preparation
-### Tools
+
 - Laser cutter
 - 3D printer
 - Superglue
