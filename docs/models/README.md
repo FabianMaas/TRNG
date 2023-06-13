@@ -203,6 +203,16 @@ Now we come to the building instructions for the box located beneath the Galton 
 </details>
 
 However, note that the lid should not be glued down yet. This will allow you to lay the cables later. The box is already stable enough with just one side glued.
+
+The box provides a way to hide the large number of cables as much as possible. It features holes on the sides through which side cables can be neatly routed underneath the box, resulting in a cleaner appearance. The same principle applies to the back of the Galton board, ensuring a tidy and organized setup.
+
+<details open>
+<summary>Cable management</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/69453948/9f21d52b-188b-4b30-a60a-47e0c30ceb55" width="450" height="600">
+
+</details>
+
 <br>
 
 #### Slide
