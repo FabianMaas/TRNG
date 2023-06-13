@@ -271,7 +271,7 @@ There might be some parts with support structures, which were added by the 3D pr
 The next step will be the trickiest, because we need to get the crankshaft in place. In the following there will be series of pictures which fit this expiration:
 1. These are all the parts you need for the crankshaft (Pictures 1, 2 and 3)
 2. In the fourth picture you can see how the cranshaft will be stuck together inside the sliding part. As you can see you need the connector tube and two of the angled square sticks. The short side of the sticks will go inside the connector tube. (Don't put them in yet!!! This is just for demonstration)
-3. The sliding part will sit inside of the part with the two holes, we call it housing. Before you place it there, like in picutre one, we must put the connector tube inside of it, like in picture three.
+3. The sliding part will sit inside of the part with the two holes, we call it housing. Before you place it there (as in picutre one), we must put the connector tube inside of it (as in picture three).
 
 <details open>
 <summary>Assembling the crankshaft: Part 1:</summary>
@@ -313,7 +313,7 @@ There are three more steps until the marble lift is done. First you must insert 
 <br>
 
 ### Stepper motor
-The stepper motor must be placed on one of the two sides of the lift. You must install the connector tube for the connection between the stepper motor and the lift. Just press the end of the crankshaft, which sticks out of the side of the lift, into the connector tube (the greepn part in the picture). You must do the same with the shaft of the stepper motor. If it fits tight, you need to make sure that both parts, the motor and the lift, are placed perfecly and then should be mounted to the base.
+The stepper motor must be placed on one of the two sides of the lift. You must install the connector tube for the connection between the stepper motor and the lift. Just press the end of the crankshaft, which sticks out of the side of the lift, into the connector tube (the green part in the picture). You must do the same with the shaft of the stepper motor. If it fits tight, you need to make sure that both parts, the motor and the lift, are placed perfecly and then should be mounted to the base.
 
 <details open>
 <summary>Connecting the stepper motor</summary>
