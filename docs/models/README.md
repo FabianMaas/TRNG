@@ -335,6 +335,8 @@ There are three more steps until the marble lift is done. First you must insert 
 To integrate the marble pump to the rest of the system, connect the tube with the top of the marble pump.
 Print the file Tube_Mount.stl to attach the upper part of the tube with the top of the Galton Board.
 
+**Tip:** The correct Tube_Mount-stl file is in the section Galton Board.
+
 To close the loop of the marbles, add the slide between the marble exit of the Galton Board and the open entry of the marble pump.
 
 <img src="https://github.com/FabianMaas/TRNG/assets/92106620/72510a96-30c1-4778-bce5-af79dcb656dd" width="450" height="600">
