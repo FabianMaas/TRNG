@@ -362,16 +362,6 @@ The green part is printed with PLA. Use the file Connector_Stepperengine.stl to 
 TODO
 <br>
 
-#### Circuit board
-This chapter describes our self engineered circuit diagram, please refer to the picture below if you intent to use an own circuit board aswell.
-
-<details open>
-<summary>Circuit diagram:</summary>
-<br>
-<img src="https://github.com/FabianMaas/TRNG/assets/62900645/18c3d3d0-ba20-48e5-b35a-523e463197f6">
-</details>
-<br>
-
 #### RasberryPi holder
 
 Use the following file to print the holder of the Raspberry Pi. Add it next to the stepper motor and insert the Pi into its holding.
@@ -385,6 +375,16 @@ Use the following file to print the holder of the Raspberry Pi. Add it next to t
 <img src="https://github.com/FabianMaas/TRNG/assets/92106620/48b0c037-050c-46aa-99b2-de8cd8404b85" width="450" height="600">
 </details>
 
+<br>
+
+#### Circuit board
+This chapter describes our self engineered circuit diagram, please refer to the picture below if you intent to use an own circuit board aswell.
+
+<details open>
+<summary>Circuit diagram:</summary>
+<br>
+<img src="https://github.com/FabianMaas/TRNG/assets/62900645/18c3d3d0-ba20-48e5-b35a-523e463197f6">
+</details>
 <br>
 
 #### Sensor system
