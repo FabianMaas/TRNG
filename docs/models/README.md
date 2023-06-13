@@ -51,8 +51,8 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     </tr>
     <tr>
       <td>ABS</td>
-      <td>???</td>
-      <td>???</td>
+      <td>1x</td>
+      <td>~195g or 27.9m</td>
     </tr>
     <tr>
       <td>PLA</td>
