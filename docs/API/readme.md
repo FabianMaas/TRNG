@@ -12,6 +12,7 @@ For productive operation https://\<ip\>:443 should be used.
     <li><a href="#trngrandomnuminit">/trng/randomNum/init</a></li>
     <li><a href="#trngrandomnumshutdown">/trng/randomNum/shutdown</a></li>
     <li><a href="#trngrandomnumgetrandom">/trng/randomNum/getRandom</a></li>
+    <li><a href="#trnggetcount">/trng/getCount</a></li>
   </ol>
 
 ---
@@ -298,4 +299,45 @@ For productive operation https://\<ip\>:443 should be used.
           "192478EC381182ACFCE7C335A386EBDEC667ED6A16C01A7A5A5D94B25436149F6F56320CDD19AF1127271B2DE706319A242FEEBDB69F8553D6AC85A406C57D1B"
       ]
   }
+  ```
+  
+## /trng/getCount
+` Retrieves the count of stored random bits from the database.`
+
+| Methode | URL                                            | Header                         |
+|---------|------------------------------------------------|--------------------------------|
+| GET     | http://localhost:8080//trng/getCount           | Accept: */*                    |
+
+
+- <strong>Request</strong>
+
+  ```text
+  GET /getCount HTTP/1.1
+  Host: localhost:8080
+  sec-ch-ua: 
+  sec-ch-ua-mobile: ?0
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.110 Safari/537.36
+  sec-ch-ua-platform: ""
+  Accept: */*
+  Sec-Fetch-Site: same-origin
+  Sec-Fetch-Mode: cors
+  Sec-Fetch-Dest: empty
+  Referer: http://localhost:8080/trng
+  Accept-Encoding: gzip, deflate
+  Accept-Language: en-US,en;q=0.9
+  Cookie: themePreference=dark
+  Connection: close
+  ```
+  
+- <strong>Response</strong>
+
+  ```text
+  HTTP/1.1 200 OK
+  Server: Werkzeug/2.3.4 Python/3.11.3
+  Date: Tue, 13 Jun 2023 10:52:06 GMT
+  Content-Type: application/json
+  Content-Length: 6
+  Connection: close
+
+  18752
   ```
