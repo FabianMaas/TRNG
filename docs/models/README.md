@@ -96,8 +96,8 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     </tr>
 	  <tr>
       <td>Jumper Cables</td>
-      <td>???</td>
-      <td>???</td>
+      <td>40x</td>
+      <td>16x blue, 16x red, 8x black</td>
     </tr>
     <tr>
       <td>Tube</td>
