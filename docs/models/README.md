@@ -18,7 +18,7 @@
 -   [Improvement ideas](#improvement-ideas)
 ---
 ## Galton Board
-Our variation of a galton board uses only two compartments instead of many. Every pin inside a galton board has a 0.5 change to be left or right. We use this uniform distribution to generate binary-valued random numbers. Our board has two stages with one pin per stage. Each compartment on each stage produces a bit, either a zero or a one. We use plastic marbles which run trough the system and interrupt laser which are pointed onto sensors. In the end they will get pumped up to the top again with a piston lift.
+Our variation of a galton board uses only two compartments instead of many. Every pin inside a galton board has a 50% chance to be left or right. We use this uniform distribution to generate binary-valued random numbers. Our board has two stages with one pin per stage. Each compartment on each stage produces a bit, either a zero or a one. We use plastic marbles which run trough the system and interrupt laser which are pointed onto sensors. In the end they will get pumped up to the top again with a piston lift.
 
 <p align="center">
   <img src="https://github.com/FabianMaas/TRNG/assets/92106620/b4ba7bbb-67d8-496f-b47d-590d7f5666ef">
