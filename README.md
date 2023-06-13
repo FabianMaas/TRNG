@@ -50,6 +50,7 @@
     <li>
       <a href="#mag-about-the-project">About The Project</a>
       <ul>
+        <li><a href="#gear-rest-api-endpoints">REST API</a></li>
         <li><a href="#construction_worker_man-built-with">Built With</a></li>
       </ul>
     </li>
@@ -58,7 +59,7 @@
       <ul>
         <li><a href="#pushpin-prerequisites">Prerequisites</a></li>
         <li><a href="#zap-installation">Installation</a></li>
-        <li><a href="#white_check_mark-start-the-rest-api">REST API</a></li> 
+        <li><a href="#white_check_mark-startup-of-the-rest-api">Startup of the api</a></li> 
       </ul>
     </li>
     <li><a href="#camera_flash-screenshots">Screenshots</a></li>
@@ -97,6 +98,16 @@ We offer a REST API interface or a web application with a user interface for ope
 
 ---
 
+## :gear: REST API endpoints
+- `'/': Redirects to the TRNG page.`
+- `'/trng': Renders the TRNG page.`
+- `'/trng/randomNum/init': Initializes the TRNG system.`
+- `'/trng/randomNum/shutdown': Shuts down the TRNG system.`
+- `'/trng/randomNum/getRandom': Retrieves random bits from the database and converts them to HEX encoding.`
+- `'/trng/getCount': Retrieves the count of stored random bits from the database.`
+
+---
+
 ### :construction_worker_man: Built With
 * [![Python3][Python]][Python-url]
 * [![Flask][Flask]][Flask-url]
@@ -113,7 +124,7 @@ We offer a REST API interface or a web application with a user interface for ope
 <!-- GETTING STARTED -->
 ## :runner: Getting Started
 
-To get a local copy of the project up and running follow these simple example steps.
+To get a local copy of the project up and running follow these simple steps.
 
 ---
 
@@ -144,7 +155,7 @@ For installing the dependencies you should use the latest version of pip.
 
 ---
 
-### :white_check_mark: Start the REST API
+### :white_check_mark: Startup of the REST API
 - ```sh
   python3 rest_api.py
   ```
