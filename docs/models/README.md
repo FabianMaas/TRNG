@@ -46,8 +46,8 @@ Our variation of a galton board uses only two compartments instead of many. Ever
   <tbody>
     <tr>
       <td>MDF</td>
-      <td>1</td>
-      <td>605x550 mm</td>
+      <td>1x</td>
+      <td>~605 x 550mm</td>
     </tr>
     <tr>
       <td>ABS</td>
@@ -61,8 +61,8 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     </tr>
     <tr>
       <td>Acryl plate</td>
-      <td>1</td>
-      <td>231x306 mm</td>
+      <td>1x</td>
+      <td>~231 x 306mm</td>
     </tr>
     <tr>
       <td>Metal rod</td>
