@@ -51,8 +51,8 @@ class LaserSensor:
     """
     __queue_top = multiprocessing.Queue()
     __queue_bottom = multiprocessing.Queue()
-    __top_down = multiprocessing.Event
-    __bottom_down = multiprocessing.Event
+    __top_down = multiprocessing.Event()
+    __bottom_down = multiprocessing.Event()
     __list_top = []
     __list_bottom = []
 
