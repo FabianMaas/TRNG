@@ -78,13 +78,8 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     <tr>
       <td>Stepper motor</td>
       <td>1x</td>
-      <td>???</td>
-    </tr>
-    <tr>
-      <td>Power supply for stepper motor</td>
-      <td>1x</td>
-      <td>12V; 1.5A</td>
-    </tr>  
+      <td>Power supply 12V, 1.5A</td>
+    </tr> 
     <tr>
       <td>Laser</td>
       <td>4x</td>
@@ -103,7 +98,7 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     <tr>
       <td>Tube</td>
       <td>1x</td>
-      <td>15mm diameter inside; 18mm diameter outside</td>
+      <td>15mm diameter inside; 18mm diameter outside; 45cm length</td>
     </tr>
     <tr>
       <td>Height-adjustable feet</td>
