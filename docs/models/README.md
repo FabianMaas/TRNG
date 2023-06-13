@@ -261,7 +261,8 @@ The following STL files should be printed with ABS:
 ### Marble lift
 To bring the marbles back up to the top of the galton board we use a marble lift. It uses a piston system to stack the marbles on top of each other. First you want to make sure that you have everything in front of you. The following picture shows all the parts you need.  
 
-To do this, print the ten stl.-files of the Marble Pump section.
+To do this, print the stl.-files of the Marble Pump section with the material ABS.
+Leave out the following file: Connector_Stepperengine.stl
 
 <details open>
 <summary>All parts:</summary>
@@ -324,6 +325,8 @@ There are three more steps until the marble lift is done. First you must insert 
 
 ### Stepper motor
 The stepper motor must be placed on one of the two sides of the lift. You must install the connector tube for the connection between the stepper motor and the lift. Just press the end of the crankshaft, which sticks out of the side of the lift, into the connector tube (the green part in the picture). You must do the same with the shaft of the stepper motor. If it fits tight, you need to make sure that both parts, the motor and the lift, are placed perfecly and then should be mounted to the base.
+
+The green part is printed with PLA. Use the file Connector_Stepperengine.stl to print the component.
 
 <details open>
 <summary>Connecting the stepper motor</summary>
