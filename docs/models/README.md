@@ -362,7 +362,7 @@ The green part is printed with PLA. Use the file Connector_Stepperengine.stl to 
 ### RasberryPi
 This section provides instructions on how to connect the components that come with the Raspberry Pi. A bracket is used to stabilize the Raspberry Pi and prevent unnecessary movement or wobbling. 
 
-Additionally, a wiring diagram is provided to ensure the proper connection of individual parts.
+Additionally, a circuit board is provided to ensure the proper connection of individual parts.
 
 #### RasberryPi holder
 
