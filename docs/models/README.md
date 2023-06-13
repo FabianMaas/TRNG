@@ -263,6 +263,9 @@ Additionally, print the following files to connect the galton board with the box
 
 The normal corner is needed three times and the corner at the marble exit only once.
 
+<img src="https://github.com/FabianMaas/TRNG/assets/92106620/572d176a-71f3-4bc1-9890-47e7ef13b3da" width="450" height="600">
+
+
 <br>
 
 ### Marble lift
@@ -328,6 +331,16 @@ There are three more steps until the marble lift is done. First you must insert 
 <img src="https://github.com/FabianMaas/TRNG/assets/129375472/29f694f8-5878-42e6-a530-f26dc7734e38" width="450" height="600">
 <img src="https://github.com/FabianMaas/TRNG/assets/129375472/afc7d267-544e-4c2e-b63e-ad382d222c0b" width="450" height="600">
 </details>
+
+To integrate the marble pump to the rest of the system, connect the tube with the top of the marble pump.
+Print the file Tube_Mount.stl to attach the upper part of the tube with the top of the Galton Board.
+
+To close the loop of the marbles, add the slide between the marble exit of the Galton Board and the open entry of the marble pump.
+
+<img src="https://github.com/FabianMaas/TRNG/assets/92106620/72510a96-30c1-4778-bce5-af79dcb656dd" width="450" height="600">
+<img src="https://github.com/FabianMaas/TRNG/assets/92106620/1d1bcb55-2528-430d-ba9e-1b99a0429c8e" width="450" height="600">
+
+
 <br>
 
 ### Stepper motor
