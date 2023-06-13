@@ -56,8 +56,8 @@ Our variation of a galton board uses only two compartments instead of many. Ever
     </tr>
     <tr>
       <td>PLA</td>
-      <td>???</td>
-      <td>???</td>
+      <td>1x</td>
+      <td>~4g</td>
     </tr>
     <tr>
       <td>Acryl plate</td>
