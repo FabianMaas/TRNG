@@ -256,6 +256,13 @@ The following STL files should be printed with ABS:
 <img src="https://github.com/FabianMaas/TRNG/assets/69453948/5800345b-8da9-4e8e-a76b-27cc53ce52bd" width="450" height="600">
 </details>
 
+Additionally, print the following files to connect the galton board with the box unterneath:
+
+- Corner_Marble_Exit.stl
+- Corner.stl
+
+The normal corner is needed three times and the corner at the marble exit only once.
+
 <br>
 
 ### Marble lift
