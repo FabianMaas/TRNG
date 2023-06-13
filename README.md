@@ -1,27 +1,11 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+<!-- markdown project template used: https://github.com/othneildrew/Best-README-Template -->
 <a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
 
 <!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 [![Contributors][contributors-shield]][contributors-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -36,7 +20,7 @@
     An awesome TRNG based on a modified galton board.<br>
     Includes a REST API and a simple frontend.
     <br />
-    <a href="https://github.com/FabianMaas/TRNG/tree/main/docs/models"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/FabianMaas/TRNG/tree/main/docs"><strong>Explore the docs »</strong></a>
     <br />
   </p>
 </div>
@@ -113,6 +97,8 @@ We offer a REST API interface or a web application with a user interface for ope
 - `'/trng/randomNum/shutdown': Shuts down the TRNG system.`
 - `'/trng/randomNum/getRandom': Retrieves random bits from the database and converts them to HEX encoding.`
 - `'/trng/getCount': Retrieves the count of stored random bits from the database.`
+<br />
+<a href="https://github.com/FabianMaas/TRNG/tree/main/docs/API"><strong>REST API Documentation »</strong></a>
 
 ---
 
